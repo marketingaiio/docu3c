@@ -1,0 +1,772 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8BBB884A-7251-4708-B627-6F1E4705C2A3}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>docu3c</RootNamespace>
+    <AssemblyName>docu3c</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44331</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableHandling\TableManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Illustration.png" />
+    <Content Include="Content\Images\TranspBG.png" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="wwwroot\coreui\css\alert.css" />
+    <Content Include="wwwroot\coreui\css\alert.min.css" />
+    <Content Include="wwwroot\coreui\css\avatars.css" />
+    <Content Include="wwwroot\coreui\css\avatars.min.css" />
+    <Content Include="wwwroot\coreui\css\badge.css" />
+    <Content Include="wwwroot\coreui\css\badge.min.css" />
+    <Content Include="wwwroot\coreui\css\breadcrumb-menu.css" />
+    <Content Include="wwwroot\coreui\css\breadcrumb-menu.min.css" />
+    <Content Include="wwwroot\coreui\css\breadcrumb.css" />
+    <Content Include="wwwroot\coreui\css\breadcrumb.min.css" />
+    <Content Include="wwwroot\coreui\css\button-group.css" />
+    <Content Include="wwwroot\coreui\css\button-group.min.css" />
+    <Content Include="wwwroot\coreui\css\buttons.css" />
+    <Content Include="wwwroot\coreui\css\buttons.min.css" />
+    <Content Include="wwwroot\coreui\css\callout.css" />
+    <Content Include="wwwroot\coreui\css\callout.min.css" />
+    <Content Include="wwwroot\coreui\css\card.css" />
+    <Content Include="wwwroot\coreui\css\card.min.css" />
+    <Content Include="wwwroot\coreui\css\carousel.css" />
+    <Content Include="wwwroot\coreui\css\carousel.min.css" />
+    <Content Include="wwwroot\coreui\css\charts.css" />
+    <Content Include="wwwroot\coreui\css\charts.min.css" />
+    <Content Include="wwwroot\coreui\css\close.css" />
+    <Content Include="wwwroot\coreui\css\close.min.css" />
+    <Content Include="wwwroot\coreui\css\code.css" />
+    <Content Include="wwwroot\coreui\css\code.min.css" />
+    <Content Include="wwwroot\coreui\css\custom-forms.css" />
+    <Content Include="wwwroot\coreui\css\custom-forms.min.css" />
+    <Content Include="wwwroot\coreui\css\dropdown-menu-right.css" />
+    <Content Include="wwwroot\coreui\css\dropdown-menu-right.min.css" />
+    <Content Include="wwwroot\coreui\css\dropdown.css" />
+    <Content Include="wwwroot\coreui\css\dropdown.min.css" />
+    <Content Include="wwwroot\coreui\css\footer.css" />
+    <Content Include="wwwroot\coreui\css\footer.min.css" />
+    <Content Include="wwwroot\coreui\css\forms.css" />
+    <Content Include="wwwroot\coreui\css\forms.min.css" />
+    <Content Include="wwwroot\coreui\css\functions.css" />
+    <Content Include="wwwroot\coreui\css\functions.min.css" />
+    <Content Include="wwwroot\coreui\css\grid.css" />
+    <Content Include="wwwroot\coreui\css\grid.min.css" />
+    <Content Include="wwwroot\coreui\css\header.css" />
+    <Content Include="wwwroot\coreui\css\header.min.css" />
+    <Content Include="wwwroot\coreui\css\icon.css" />
+    <Content Include="wwwroot\coreui\css\icon.min.css" />
+    <Content Include="wwwroot\coreui\css\ie-custom-properties.css" />
+    <Content Include="wwwroot\coreui\css\ie-custom-properties.min.css" />
+    <Content Include="wwwroot\coreui\css\images.css" />
+    <Content Include="wwwroot\coreui\css\images.min.css" />
+    <Content Include="wwwroot\coreui\css\input-group.css" />
+    <Content Include="wwwroot\coreui\css\input-group.min.css" />
+    <Content Include="wwwroot\coreui\css\jumbotron.css" />
+    <Content Include="wwwroot\coreui\css\jumbotron.min.css" />
+    <Content Include="wwwroot\coreui\css\layouts.css" />
+    <Content Include="wwwroot\coreui\css\layouts.min.css" />
+    <Content Include="wwwroot\coreui\css\list-group.css" />
+    <Content Include="wwwroot\coreui\css\list-group.min.css" />
+    <Content Include="wwwroot\coreui\css\media.css" />
+    <Content Include="wwwroot\coreui\css\media.min.css" />
+    <Content Include="wwwroot\coreui\css\mixins.css" />
+    <Content Include="wwwroot\coreui\css\mixins.min.css" />
+    <Content Include="wwwroot\coreui\css\modal.css" />
+    <Content Include="wwwroot\coreui\css\modal.min.css" />
+    <Content Include="wwwroot\coreui\css\nav.css" />
+    <Content Include="wwwroot\coreui\css\nav.min.css" />
+    <Content Include="wwwroot\coreui\css\navbar.css" />
+    <Content Include="wwwroot\coreui\css\navbar.min.css" />
+    <Content Include="wwwroot\coreui\css\pagination.css" />
+    <Content Include="wwwroot\coreui\css\pagination.min.css" />
+    <Content Include="wwwroot\coreui\css\popover.css" />
+    <Content Include="wwwroot\coreui\css\popover.min.css" />
+    <Content Include="wwwroot\coreui\css\print.css" />
+    <Content Include="wwwroot\coreui\css\print.min.css" />
+    <Content Include="wwwroot\coreui\css\progress-group.css" />
+    <Content Include="wwwroot\coreui\css\progress-group.min.css" />
+    <Content Include="wwwroot\coreui\css\progress.css" />
+    <Content Include="wwwroot\coreui\css\progress.min.css" />
+    <Content Include="wwwroot\coreui\css\reboot.css" />
+    <Content Include="wwwroot\coreui\css\reboot.min.css" />
+    <Content Include="wwwroot\coreui\css\root.css" />
+    <Content Include="wwwroot\coreui\css\root.min.css" />
+    <Content Include="wwwroot\coreui\css\rtl.css" />
+    <Content Include="wwwroot\coreui\css\rtl.min.css" />
+    <Content Include="wwwroot\coreui\css\sidebar.css" />
+    <Content Include="wwwroot\coreui\css\sidebar.min.css" />
+    <Content Include="wwwroot\coreui\css\spinners.css" />
+    <Content Include="wwwroot\coreui\css\spinners.min.css" />
+    <Content Include="wwwroot\coreui\css\subheader.css" />
+    <Content Include="wwwroot\coreui\css\subheader.min.css" />
+    <Content Include="wwwroot\coreui\css\switches.css" />
+    <Content Include="wwwroot\coreui\css\switches.min.css" />
+    <Content Include="wwwroot\coreui\css\tables.css" />
+    <Content Include="wwwroot\coreui\css\tables.min.css" />
+    <Content Include="wwwroot\coreui\css\toasts.css" />
+    <Content Include="wwwroot\coreui\css\toasts.min.css" />
+    <Content Include="wwwroot\coreui\css\tooltip.css" />
+    <Content Include="wwwroot\coreui\css\tooltip.min.css" />
+    <Content Include="wwwroot\coreui\css\transitions.css" />
+    <Content Include="wwwroot\coreui\css\transitions.min.css" />
+    <Content Include="wwwroot\coreui\css\type.css" />
+    <Content Include="wwwroot\coreui\css\type.min.css" />
+    <Content Include="wwwroot\coreui\css\utilities.css" />
+    <Content Include="wwwroot\coreui\css\utilities.min.css" />
+    <Content Include="wwwroot\coreui\css\variables.css" />
+    <Content Include="wwwroot\coreui\css\variables.min.css" />
+    <Content Include="wwwroot\coreui\css\vendors.css" />
+    <Content Include="wwwroot\coreui\css\vendors.min.css" />
+    <Content Include="wwwroot\coreui\css\widgets.css" />
+    <Content Include="wwwroot\coreui\css\widgets.min.css" />
+    <Content Include="wwwroot\coreui\dist\css\coreui.css" />
+    <Content Include="wwwroot\coreui\dist\css\coreui.min.css" />
+    <Content Include="wwwroot\coreui\dist\js\coreui-utilities.js" />
+    <Content Include="wwwroot\coreui\dist\js\coreui-utilities.min.js" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.bundle.js" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.bundle.min.js" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.esm.js" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.esm.min.js" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.js" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.min.js" />
+    <Content Include="wwwroot\coreui\icons\brand.svg" />
+    <Content Include="wwwroot\coreui\icons\cil-user.svg" />
+    <Content Include="wwwroot\coreui\icons\css\all.css" />
+    <Content Include="wwwroot\coreui\icons\css\all.min.css" />
+    <Content Include="wwwroot\coreui\icons\css\brand.css" />
+    <Content Include="wwwroot\coreui\icons\css\brand.min.css" />
+    <Content Include="wwwroot\coreui\icons\css\flag.css" />
+    <Content Include="wwwroot\coreui\icons\css\flag.min.css" />
+    <Content Include="wwwroot\coreui\icons\css\free.css" />
+    <Content Include="wwwroot\coreui\icons\css\free.min.css" />
+    <Content Include="wwwroot\coreui\icons\flag.svg" />
+    <Content Include="wwwroot\coreui\icons\free.svg" />
+    <Content Include="wwwroot\coreui\js\dist\alert.js" />
+    <Content Include="wwwroot\coreui\js\dist\async-load.js" />
+    <Content Include="wwwroot\coreui\js\dist\button.js" />
+    <Content Include="wwwroot\coreui\js\dist\carousel.js" />
+    <Content Include="wwwroot\coreui\js\dist\class-toggler.js" />
+    <Content Include="wwwroot\coreui\js\dist\collapse.js" />
+    <Content Include="wwwroot\coreui\js\dist\dom\data.js" />
+    <Content Include="wwwroot\coreui\js\dist\dom\event-handler.js" />
+    <Content Include="wwwroot\coreui\js\dist\dom\manipulator.js" />
+    <Content Include="wwwroot\coreui\js\dist\dom\polyfill.js" />
+    <Content Include="wwwroot\coreui\js\dist\dom\selector-engine.js" />
+    <Content Include="wwwroot\coreui\js\dist\dropdown.js" />
+    <Content Include="wwwroot\coreui\js\dist\modal.js" />
+    <Content Include="wwwroot\coreui\js\dist\popover.js" />
+    <Content Include="wwwroot\coreui\js\dist\scrollspy.js" />
+    <Content Include="wwwroot\coreui\js\dist\sidebar.js" />
+    <Content Include="wwwroot\coreui\js\dist\tab.js" />
+    <Content Include="wwwroot\coreui\js\dist\toast.js" />
+    <Content Include="wwwroot\coreui\js\dist\tooltip.js" />
+    <Content Include="wwwroot\coreui\js\index.esm.js" />
+    <Content Include="wwwroot\coreui\js\index.umd.js" />
+    <Content Include="wwwroot\coreui\js\src\alert.js" />
+    <Content Include="wwwroot\coreui\js\src\async-load.js" />
+    <Content Include="wwwroot\coreui\js\src\button.js" />
+    <Content Include="wwwroot\coreui\js\src\carousel.js" />
+    <Content Include="wwwroot\coreui\js\src\class-toggler.js" />
+    <Content Include="wwwroot\coreui\js\src\collapse.js" />
+    <Content Include="wwwroot\coreui\js\src\dom\data.js" />
+    <Content Include="wwwroot\coreui\js\src\dom\event-handler.js" />
+    <Content Include="wwwroot\coreui\js\src\dom\manipulator.js" />
+    <Content Include="wwwroot\coreui\js\src\dom\polyfill.js" />
+    <Content Include="wwwroot\coreui\js\src\dom\selector-engine.js" />
+    <Content Include="wwwroot\coreui\js\src\dropdown.js" />
+    <Content Include="wwwroot\coreui\js\src\modal.js" />
+    <Content Include="wwwroot\coreui\js\src\polyfills.js" />
+    <Content Include="wwwroot\coreui\js\src\popover.js" />
+    <Content Include="wwwroot\coreui\js\src\scrollspy.js" />
+    <Content Include="wwwroot\coreui\js\src\sidebar.js" />
+    <Content Include="wwwroot\coreui\js\src\tab.js" />
+    <Content Include="wwwroot\coreui\js\src\toast.js" />
+    <Content Include="wwwroot\coreui\js\src\tooltip.js" />
+    <Content Include="wwwroot\coreui\js\src\util\index.js" />
+    <Content Include="wwwroot\coreui\js\src\util\sanitizer.js" />
+    <Content Include="wwwroot\coreui\npm-postinstall.js" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="wwwroot\coreui\CHANGELOG.md" />
+    <Content Include="wwwroot\coreui\css\alert.css.map" />
+    <Content Include="wwwroot\coreui\css\alert.min.css.map" />
+    <Content Include="wwwroot\coreui\css\avatars.css.map" />
+    <Content Include="wwwroot\coreui\css\avatars.min.css.map" />
+    <Content Include="wwwroot\coreui\css\badge.css.map" />
+    <Content Include="wwwroot\coreui\css\badge.min.css.map" />
+    <Content Include="wwwroot\coreui\css\breadcrumb-menu.css.map" />
+    <Content Include="wwwroot\coreui\css\breadcrumb-menu.min.css.map" />
+    <Content Include="wwwroot\coreui\css\breadcrumb.css.map" />
+    <Content Include="wwwroot\coreui\css\breadcrumb.min.css.map" />
+    <Content Include="wwwroot\coreui\css\button-group.css.map" />
+    <Content Include="wwwroot\coreui\css\button-group.min.css.map" />
+    <Content Include="wwwroot\coreui\css\buttons.css.map" />
+    <Content Include="wwwroot\coreui\css\buttons.min.css.map" />
+    <Content Include="wwwroot\coreui\css\callout.css.map" />
+    <Content Include="wwwroot\coreui\css\callout.min.css.map" />
+    <Content Include="wwwroot\coreui\css\card.css.map" />
+    <Content Include="wwwroot\coreui\css\card.min.css.map" />
+    <Content Include="wwwroot\coreui\css\carousel.css.map" />
+    <Content Include="wwwroot\coreui\css\carousel.min.css.map" />
+    <Content Include="wwwroot\coreui\css\charts.css.map" />
+    <Content Include="wwwroot\coreui\css\charts.min.css.map" />
+    <Content Include="wwwroot\coreui\css\close.css.map" />
+    <Content Include="wwwroot\coreui\css\close.min.css.map" />
+    <Content Include="wwwroot\coreui\css\code.css.map" />
+    <Content Include="wwwroot\coreui\css\code.min.css.map" />
+    <Content Include="wwwroot\coreui\css\custom-forms.css.map" />
+    <Content Include="wwwroot\coreui\css\custom-forms.min.css.map" />
+    <Content Include="wwwroot\coreui\css\dropdown-menu-right.css.map" />
+    <Content Include="wwwroot\coreui\css\dropdown-menu-right.min.css.map" />
+    <Content Include="wwwroot\coreui\css\dropdown.css.map" />
+    <Content Include="wwwroot\coreui\css\dropdown.min.css.map" />
+    <Content Include="wwwroot\coreui\css\footer.css.map" />
+    <Content Include="wwwroot\coreui\css\footer.min.css.map" />
+    <Content Include="wwwroot\coreui\css\forms.css.map" />
+    <Content Include="wwwroot\coreui\css\forms.min.css.map" />
+    <Content Include="wwwroot\coreui\css\functions.css.map" />
+    <Content Include="wwwroot\coreui\css\functions.min.css.map" />
+    <Content Include="wwwroot\coreui\css\grid.css.map" />
+    <Content Include="wwwroot\coreui\css\grid.min.css.map" />
+    <Content Include="wwwroot\coreui\css\header.css.map" />
+    <Content Include="wwwroot\coreui\css\header.min.css.map" />
+    <Content Include="wwwroot\coreui\css\icon.css.map" />
+    <Content Include="wwwroot\coreui\css\icon.min.css.map" />
+    <Content Include="wwwroot\coreui\css\ie-custom-properties.css.map" />
+    <Content Include="wwwroot\coreui\css\ie-custom-properties.min.css.map" />
+    <Content Include="wwwroot\coreui\css\images.css.map" />
+    <Content Include="wwwroot\coreui\css\images.min.css.map" />
+    <Content Include="wwwroot\coreui\css\input-group.css.map" />
+    <Content Include="wwwroot\coreui\css\input-group.min.css.map" />
+    <Content Include="wwwroot\coreui\css\jumbotron.css.map" />
+    <Content Include="wwwroot\coreui\css\jumbotron.min.css.map" />
+    <Content Include="wwwroot\coreui\css\layouts.css.map" />
+    <Content Include="wwwroot\coreui\css\layouts.min.css.map" />
+    <Content Include="wwwroot\coreui\css\list-group.css.map" />
+    <Content Include="wwwroot\coreui\css\list-group.min.css.map" />
+    <Content Include="wwwroot\coreui\css\media.css.map" />
+    <Content Include="wwwroot\coreui\css\media.min.css.map" />
+    <Content Include="wwwroot\coreui\css\mixins.css.map" />
+    <Content Include="wwwroot\coreui\css\mixins.min.css.map" />
+    <Content Include="wwwroot\coreui\css\modal.css.map" />
+    <Content Include="wwwroot\coreui\css\modal.min.css.map" />
+    <Content Include="wwwroot\coreui\css\nav.css.map" />
+    <Content Include="wwwroot\coreui\css\nav.min.css.map" />
+    <Content Include="wwwroot\coreui\css\navbar.css.map" />
+    <Content Include="wwwroot\coreui\css\navbar.min.css.map" />
+    <Content Include="wwwroot\coreui\css\pagination.css.map" />
+    <Content Include="wwwroot\coreui\css\pagination.min.css.map" />
+    <Content Include="wwwroot\coreui\css\popover.css.map" />
+    <Content Include="wwwroot\coreui\css\popover.min.css.map" />
+    <Content Include="wwwroot\coreui\css\print.css.map" />
+    <Content Include="wwwroot\coreui\css\print.min.css.map" />
+    <Content Include="wwwroot\coreui\css\progress-group.css.map" />
+    <Content Include="wwwroot\coreui\css\progress-group.min.css.map" />
+    <Content Include="wwwroot\coreui\css\progress.css.map" />
+    <Content Include="wwwroot\coreui\css\progress.min.css.map" />
+    <Content Include="wwwroot\coreui\css\reboot.css.map" />
+    <Content Include="wwwroot\coreui\css\reboot.min.css.map" />
+    <Content Include="wwwroot\coreui\css\root.css.map" />
+    <Content Include="wwwroot\coreui\css\root.min.css.map" />
+    <Content Include="wwwroot\coreui\css\rtl.css.map" />
+    <Content Include="wwwroot\coreui\css\rtl.min.css.map" />
+    <Content Include="wwwroot\coreui\css\sidebar.css.map" />
+    <Content Include="wwwroot\coreui\css\sidebar.min.css.map" />
+    <Content Include="wwwroot\coreui\css\spinners.css.map" />
+    <Content Include="wwwroot\coreui\css\spinners.min.css.map" />
+    <Content Include="wwwroot\coreui\css\subheader.css.map" />
+    <Content Include="wwwroot\coreui\css\subheader.min.css.map" />
+    <Content Include="wwwroot\coreui\css\switches.css.map" />
+    <Content Include="wwwroot\coreui\css\switches.min.css.map" />
+    <Content Include="wwwroot\coreui\css\tables.css.map" />
+    <Content Include="wwwroot\coreui\css\tables.min.css.map" />
+    <Content Include="wwwroot\coreui\css\toasts.css.map" />
+    <Content Include="wwwroot\coreui\css\toasts.min.css.map" />
+    <Content Include="wwwroot\coreui\css\tooltip.css.map" />
+    <Content Include="wwwroot\coreui\css\tooltip.min.css.map" />
+    <Content Include="wwwroot\coreui\css\transitions.css.map" />
+    <Content Include="wwwroot\coreui\css\transitions.min.css.map" />
+    <Content Include="wwwroot\coreui\css\type.css.map" />
+    <Content Include="wwwroot\coreui\css\type.min.css.map" />
+    <Content Include="wwwroot\coreui\css\utilities.css.map" />
+    <Content Include="wwwroot\coreui\css\utilities.min.css.map" />
+    <Content Include="wwwroot\coreui\css\variables.css.map" />
+    <Content Include="wwwroot\coreui\css\variables.min.css.map" />
+    <Content Include="wwwroot\coreui\css\vendors.css.map" />
+    <Content Include="wwwroot\coreui\css\vendors.min.css.map" />
+    <Content Include="wwwroot\coreui\css\widgets.css.map" />
+    <Content Include="wwwroot\coreui\css\widgets.min.css.map" />
+    <Content Include="wwwroot\coreui\dist\css\coreui.css.map" />
+    <Content Include="wwwroot\coreui\dist\css\coreui.min.css.map" />
+    <Content Include="wwwroot\coreui\dist\js\coreui-utilities.js.map" />
+    <Content Include="wwwroot\coreui\dist\js\coreui-utilities.min.js.map" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.bundle.js.map" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.bundle.min.js.map" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.esm.js.map" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.esm.min.js.map" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.js.map" />
+    <Content Include="wwwroot\coreui\dist\js\coreui.min.js.map" />
+    <Content Include="wwwroot\coreui\icons\css\all.min.css.map" />
+    <Content Include="wwwroot\coreui\icons\css\brand.css.map" />
+    <Content Include="wwwroot\coreui\icons\css\brand.min.css.map" />
+    <Content Include="wwwroot\coreui\icons\css\flag.css.map" />
+    <Content Include="wwwroot\coreui\icons\css\flag.min.css.map" />
+    <Content Include="wwwroot\coreui\icons\css\free.css.map" />
+    <Content Include="wwwroot\coreui\icons\css\free.min.css.map" />
+    <Content Include="wwwroot\coreui\js\dist\alert.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\async-load.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\button.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\carousel.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\class-toggler.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\collapse.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\dom\data.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\dom\event-handler.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\dom\manipulator.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\dom\polyfill.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\dom\selector-engine.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\dropdown.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\modal.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\popover.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\scrollspy.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\sidebar.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\tab.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\toast.js.map" />
+    <Content Include="wwwroot\coreui\js\dist\tooltip.js.map" />
+    <Content Include="wwwroot\coreui\LICENSE" />
+    <Content Include="wwwroot\coreui\package.json" />
+    <Content Include="wwwroot\coreui\README.md" />
+    <Content Include="wwwroot\coreui\scss\bootstrap.scss" />
+    <Content Include="wwwroot\coreui\scss\coreui.scss" />
+    <Content Include="wwwroot\coreui\scss\layouts\_default.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_alert.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_avatars.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_background-variant.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_badge.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_border-radius.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_borders.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_box-shadow.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_breakpoints.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_buttons.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_card-accent.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_caret.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_clearfix.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_color-scheme.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_deprecate.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_float.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_forms.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_gradients.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_grid-framework.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_grid.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_hover.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_icon.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_image.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_list-group.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_lists.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_ltr.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_nav-divider.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_pagination.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_reset-text.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_resize.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_rtl.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_screen-reader.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_sidebar-width.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_size.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_switches.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_table-row.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_text-emphasis.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_text-hide.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_text-truncate.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_themes.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_transition.scss" />
+    <Content Include="wwwroot\coreui\scss\mixins\_visibility.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\alert.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\avatars.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\badge.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\breadcrumb-menu.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\breadcrumb.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\button-group.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\buttons.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\callout.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\card.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\carousel.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\charts.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\close.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\code.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\custom-forms.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\dropdown-menu-right.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\dropdown.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\footer.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\forms.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\functions.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\grid.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\header.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\icon.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\ie-custom-properties.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\images.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\input-group.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\jumbotron.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\layouts.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\list-group.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\media.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\mixins.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\modal.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\nav.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\navbar.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\pagination.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\popover.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\print.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\progress-group.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\progress.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\reboot.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\root.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\rtl.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\sidebar.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\spinners.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\subheader.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\switches.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\tables.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\toasts.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\tooltip.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\transitions.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\type.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\utilities.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\variables.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\vendors.scss" />
+    <Content Include="wwwroot\coreui\scss\partials\widgets.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_align.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_background.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_borders.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_center.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_clearfix.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_display.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_embed.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_flex.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_float.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_overflow.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_position.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_screenreaders.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_shadows.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_sizing.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_spacing.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_stretched-link.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_text.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_typography.scss" />
+    <Content Include="wwwroot\coreui\scss\utilities\_visibility.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_alerts.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_avatars.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_badges.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_breadcrumb.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_buttons-forms.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_cards.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_carousel.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_close.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_code.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_custom-forms.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_dropdowns.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_footer.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_header.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_images.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_jumbotron.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_links.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_list-group.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_modals.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_navbar.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_navs.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_pagination.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_popovers.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_progress-bars.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_shared.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_sidebar.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_spinners.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_subheader.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_switches.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_tables.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_toasts.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\components\_tooltips.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_body.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_brand-colors.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_colors.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_gradients.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_grid.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_options.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_printing.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_spacing.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_typography.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_utilities.scss" />
+    <Content Include="wwwroot\coreui\scss\variables\_z-index.scss" />
+    <Content Include="wwwroot\coreui\scss\vendors\_perfect-scrollbar.scss" />
+    <Content Include="wwwroot\coreui\scss\vendors\_rfs.scss" />
+    <Content Include="wwwroot\coreui\scss\_alert.scss" />
+    <Content Include="wwwroot\coreui\scss\_avatars.scss" />
+    <Content Include="wwwroot\coreui\scss\_badge.scss" />
+    <Content Include="wwwroot\coreui\scss\_breadcrumb-menu.scss" />
+    <Content Include="wwwroot\coreui\scss\_breadcrumb.scss" />
+    <Content Include="wwwroot\coreui\scss\_button-group.scss" />
+    <Content Include="wwwroot\coreui\scss\_buttons.scss" />
+    <Content Include="wwwroot\coreui\scss\_callout.scss" />
+    <Content Include="wwwroot\coreui\scss\_card.scss" />
+    <Content Include="wwwroot\coreui\scss\_carousel.scss" />
+    <Content Include="wwwroot\coreui\scss\_charts.scss" />
+    <Content Include="wwwroot\coreui\scss\_close.scss" />
+    <Content Include="wwwroot\coreui\scss\_code.scss" />
+    <Content Include="wwwroot\coreui\scss\_custom-forms.scss" />
+    <Content Include="wwwroot\coreui\scss\_dropdown-menu-right.scss" />
+    <Content Include="wwwroot\coreui\scss\_dropdown.scss" />
+    <Content Include="wwwroot\coreui\scss\_footer.scss" />
+    <Content Include="wwwroot\coreui\scss\_forms.scss" />
+    <Content Include="wwwroot\coreui\scss\_functions.scss" />
+    <Content Include="wwwroot\coreui\scss\_grid.scss" />
+    <Content Include="wwwroot\coreui\scss\_header.scss" />
+    <Content Include="wwwroot\coreui\scss\_icon.scss" />
+    <Content Include="wwwroot\coreui\scss\_ie-custom-properties.scss" />
+    <Content Include="wwwroot\coreui\scss\_images.scss" />
+    <Content Include="wwwroot\coreui\scss\_input-group.scss" />
+    <Content Include="wwwroot\coreui\scss\_jumbotron.scss" />
+    <Content Include="wwwroot\coreui\scss\_layouts.scss" />
+    <Content Include="wwwroot\coreui\scss\_list-group.scss" />
+    <Content Include="wwwroot\coreui\scss\_media.scss" />
+    <Content Include="wwwroot\coreui\scss\_mixins.scss" />
+    <Content Include="wwwroot\coreui\scss\_modal.scss" />
+    <Content Include="wwwroot\coreui\scss\_nav.scss" />
+    <Content Include="wwwroot\coreui\scss\_navbar.scss" />
+    <Content Include="wwwroot\coreui\scss\_pagination.scss" />
+    <Content Include="wwwroot\coreui\scss\_popover.scss" />
+    <Content Include="wwwroot\coreui\scss\_print.scss" />
+    <Content Include="wwwroot\coreui\scss\_progress-group.scss" />
+    <Content Include="wwwroot\coreui\scss\_progress.scss" />
+    <Content Include="wwwroot\coreui\scss\_reboot.scss" />
+    <Content Include="wwwroot\coreui\scss\_root.scss" />
+    <Content Include="wwwroot\coreui\scss\_rtl.scss" />
+    <Content Include="wwwroot\coreui\scss\_sidebar.scss" />
+    <Content Include="wwwroot\coreui\scss\_spinners.scss" />
+    <Content Include="wwwroot\coreui\scss\_subheader.scss" />
+    <Content Include="wwwroot\coreui\scss\_switches.scss" />
+    <Content Include="wwwroot\coreui\scss\_tables.scss" />
+    <Content Include="wwwroot\coreui\scss\_toasts.scss" />
+    <Content Include="wwwroot\coreui\scss\_tooltip.scss" />
+    <Content Include="wwwroot\coreui\scss\_transitions.scss" />
+    <Content Include="wwwroot\coreui\scss\_type.scss" />
+    <Content Include="wwwroot\coreui\scss\_utilities.scss" />
+    <Content Include="wwwroot\coreui\scss\_variables.scss" />
+    <Content Include="wwwroot\coreui\scss\_vendors.scss" />
+    <Content Include="wwwroot\coreui\scss\_widgets.scss" />
+    <Content Include="wwwroot\package-lock.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56540</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44331/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
