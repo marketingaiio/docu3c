@@ -81,3 +81,11 @@ D:\WebSites\docu3c\docu3c\bin\Microsoft.WindowsAzure.Storage.dll
 D:\WebSites\docu3c\docu3c\bin\Microsoft.Azure.KeyVault.Core.xml
 D:\WebSites\docu3c\docu3c\bin\Microsoft.WindowsAzure.Storage.pdb
 D:\WebSites\docu3c\docu3c\bin\Microsoft.WindowsAzure.Storage.xml
+D:\WebSites\docu3c\docu3c\bin\System.Data.SqlClient.dll
+D:\WebSites\docu3c\docu3c\bin\System.Data.SqlClient.xml
+D:\WebSites\docu3c\docu3c\bin\EntityFramework.dll
+D:\WebSites\docu3c\docu3c\bin\EntityFramework.SqlServer.dll
+D:\WebSites\docu3c\docu3c\bin\EntityFramework.xml
+D:\WebSites\docu3c\docu3c\bin\EntityFramework.SqlServer.xml
+D:\WebSites\docu3c\docu3c\bin\Microsoft.WindowsAzure.Configuration.dll
+D:\WebSites\docu3c\docu3c\bin\Microsoft.WindowsAzure.Configuration.xml

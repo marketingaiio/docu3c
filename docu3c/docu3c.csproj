@@ -45,16 +45,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.1\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -131,7 +145,44 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentUpload.cs" />
+    <Compile Include="Models\Portfolio.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Portfolio.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Portfolio.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Portfolio.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Portfolio.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Portfolio.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PortfolioDetail.cs">
+      <DependentUpon>Portfolio.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserDetail.cs">
+      <DependentUpon>UserDetails.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserDetails.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserDetails.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserDetails.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserDetails.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserDetails.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserDetails.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableHandling\TableManager.cs" />
   </ItemGroup>
@@ -140,12 +191,37 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Icons\briefcase.svg" />
+    <Content Include="Content\Images\Icons\compass.svg" />
+    <Content Include="Content\Images\Icons\graph.svg" />
+    <Content Include="Content\Images\Icons\settings.svg" />
     <Content Include="Content\Images\Illustration.png" />
     <Content Include="Content\Images\TranspBG.png" />
+    <Content Include="Content\Images\WhiteBG.JPG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Portfolio.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Portfolio.edmx</DependentUpon>
+      <LastGenOutput>Portfolio.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Portfolio.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Portfolio.edmx</DependentUpon>
+      <LastGenOutput>Portfolio.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\UserDetails.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UserDetails.Context.cs</LastGenOutput>
+      <DependentUpon>UserDetails.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\UserDetails.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserDetails.edmx</DependentUpon>
+      <LastGenOutput>UserDetails.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="wwwroot\coreui\css\alert.css" />
@@ -322,6 +398,20 @@
     <Content Include="wwwroot\coreui\js\src\util\index.js" />
     <Content Include="wwwroot\coreui\js\src\util\sanitizer.js" />
     <Content Include="wwwroot\coreui\npm-postinstall.js" />
+    <EntityDeploy Include="Models\UserDetails.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserDetails.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\UserDetails.edmx.diagram">
+      <DependentUpon>UserDetails.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Portfolio.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Portfolio.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Portfolio.edmx.diagram">
+      <DependentUpon>Portfolio.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -712,6 +802,7 @@
     <Content Include="wwwroot\coreui\scss\_vendors.scss" />
     <Content Include="wwwroot\coreui\scss\_widgets.scss" />
     <Content Include="wwwroot\package-lock.json" />
+    <Content Include="Views\Home\DocumentsUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -728,6 +819,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

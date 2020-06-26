@@ -1,13 +1,14 @@
-﻿using docu3c.TableHandling;
+﻿
 using System.Web.Mvc;
 using System.Linq;
+using docu3c.Models;
 
 namespace docu3c.Controllers
 {
     public class LoginController : Controller
     {
         // GET: Login
-        private TableManager TableManagerObj = new TableManager("UserRegistration");
+      //  private TableManager TableManagerObj = new TableManager("UserRegistration");
         string role = string.Empty;
         string userName = string.Empty;
         // GET: Login
@@ -31,34 +32,28 @@ namespace docu3c.Controllers
 
                 if (!string.IsNullOrEmpty(userEmailID) && !string.IsNullOrEmpty(password))
                 {
-                    if (isValid(userEmailID, password))
+
+                    using (docu3cEntities db = new docu3cEntities())
                     {
-                        role = role.Replace(" ", "");
-                        Session["UserEmailID"] = userEmailID;
-                        Session["UserName"] = userName;
-                        Session["Role"] = role;
-                        // return RedirectToAction("Dashboard", "Document");
-                        //if (role.Contains("ChiefExecutiveOfficer"))
-                        //{
-                        return RedirectToAction("Index", "Home");
-                        //}
-                        //else if (role.Contains("FinancialAdvisor"))
-                        //{
-                        //    return RedirectToAction("FinancialAdvisor", "Home");
-                        //}
-                        //else if (role.Contains("Admin"))
-                        //{
-                        //    return RedirectToAction("Get", "Home");
+                        var User = db.UserDetails.Where(a => a.LoginID.Equals(userEmailID) && a.LoginPassword.Equals(password)).FirstOrDefault();
+                       
+                        if (User != null)
+                        {
 
 
-                        //}
+                            role = User.UserRole;
+                            userName = User.FirstName + " " + User.LastName;
+                            role = role.Replace(" ", "");
+                            Session["UserEmailID"] = userEmailID;
+                            Session["UserName"] = userName;
+                            Session["Role"] = role;
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else { ModelState.AddModelError("CustomError", "Please enter the username and password"); 
+                        
+                        }
                     }
-                    else
-                    {
-                        ModelState.AddModelError("CustomError", "Please enter the username and password");
-                    }
-
-
+                   
                 }
                 else
                 {
@@ -69,20 +64,7 @@ namespace docu3c.Controllers
         }
 
 
-        private bool isValid(string userEmailID, string password)
-        {
-            var Users = TableManagerObj.RetrieveEntity<User>("EmailId eq '" + userEmailID + "'");
-            var User = Users.Where(v => v.CPassword == password).FirstOrDefault();
-            if (User != null)
-            {
-
-
-                role = User.RoleType;
-                userName = User.FirstName + " " + User.LastName;
-
-            }
-            return User != null ? true : false;
-        }
+       
         public ActionResult Dashboard()
         {
             if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
