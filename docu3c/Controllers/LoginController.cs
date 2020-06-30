@@ -49,8 +49,10 @@ namespace docu3c.Controllers
                             Session["Role"] = role;
                             return RedirectToAction("Index", "Home");
                         }
-                        else { ModelState.AddModelError("CustomError", "Please enter the username and password"); 
-                        
+                        else {
+                            ViewBag.ErrorMsg = "Please enter the correct username and password";
+                            //ModelState.AddModelError("CustomError", "Please enter the username and password"); 
+
                         }
                     }
                    

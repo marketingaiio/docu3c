@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f642ac7b70f843c9a1dbb7cc5fa132cb" Name="Diagram1">
+        <EntityTypeShape EntityType="docu3cModel.CategoryDetail" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="docu3cModel.CustomerDetail" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="docu3cModel.DocumentDetail" Width="1.5" PointX="8.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="docu3cModel.PortfolioDetail" Width="1.5" PointX="3" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="docu3cModel.SubCategoryDetail" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="docu3cModel.UserDetail" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="docu3cModel.FK_SubCategoryDetails_CategoryDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="docu3cModel.FK_CustomerDetails_PortfolioDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="docu3cModel.FK_CustomerDetails_UserDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="docu3cModel.FK_DocumentDetails_PortfolioDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="docu3cModel.FK_DocumentDetails_UserDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="docu3cModel.FK_PortfolioDetails_UserDetails" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -145,43 +145,41 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryDetail.cs">
+      <DependentUpon>Docu3C.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerDetail.cs">
+      <DependentUpon>Docu3C.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Dashboard.cs" />
+    <Compile Include="Models\Docu3C.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Docu3C.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Docu3C.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Docu3C.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Docu3C.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Docu3C.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DocumentDetail.cs">
+      <DependentUpon>Docu3C.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DocumentUpload.cs" />
-    <Compile Include="Models\Portfolio.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Portfolio.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Portfolio.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Portfolio.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Portfolio.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Portfolio.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\PortfolioDetail.cs">
-      <DependentUpon>Portfolio.tt</DependentUpon>
+      <DependentUpon>Docu3C.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubCategoryDetail.cs">
+      <DependentUpon>Docu3C.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserDetail.cs">
-      <DependentUpon>UserDetails.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserDetails.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserDetails.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserDetails.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserDetails.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserDetails.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserDetails.edmx</DependentUpon>
+      <DependentUpon>Docu3C.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableHandling\TableManager.cs" />
@@ -191,6 +189,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dataTables.bootstrap.css" />
+    <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\dataTables.bootstrap4.css" />
+    <Content Include="Content\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\dataTables.foundation.css" />
+    <Content Include="Content\dataTables.foundation.min.css" />
+    <Content Include="Content\dataTables.jqueryui.css" />
+    <Content Include="Content\dataTables.jqueryui.min.css" />
+    <Content Include="Content\dataTables.semanticui.css" />
+    <Content Include="Content\dataTables.semanticui.min.css" />
     <Content Include="Content\Images\Icons\briefcase.svg" />
     <Content Include="Content\Images\Icons\compass.svg" />
     <Content Include="Content\Images\Icons\graph.svg" />
@@ -198,32 +206,36 @@
     <Content Include="Content\Images\Illustration.png" />
     <Content Include="Content\Images\TranspBG.png" />
     <Content Include="Content\Images\WhiteBG.JPG" />
+    <Content Include="Content\jquery.dataTables.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Portfolio.Context.tt">
+    <Content Include="Models\Docu3C.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Portfolio.edmx</DependentUpon>
-      <LastGenOutput>Portfolio.Context.cs</LastGenOutput>
+      <DependentUpon>Docu3C.edmx</DependentUpon>
+      <LastGenOutput>Docu3C.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Portfolio.tt">
+    <Content Include="Models\Docu3C.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Portfolio.edmx</DependentUpon>
-      <LastGenOutput>Portfolio.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\UserDetails.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>UserDetails.Context.cs</LastGenOutput>
-      <DependentUpon>UserDetails.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\UserDetails.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserDetails.edmx</DependentUpon>
-      <LastGenOutput>UserDetails.cs</LastGenOutput>
+      <DependentUpon>Docu3C.edmx</DependentUpon>
+      <LastGenOutput>Docu3C.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap.js" />
+    <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\dataTables.foundation.js" />
+    <Content Include="Scripts\dataTables.foundation.min.js" />
+    <Content Include="Scripts\dataTables.jqueryui.js" />
+    <Content Include="Scripts\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\dataTables.semanticui.js" />
+    <Content Include="Scripts\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="wwwroot\coreui\css\alert.css" />
     <Content Include="wwwroot\coreui\css\alert.min.css" />
     <Content Include="wwwroot\coreui\css\avatars.css" />
@@ -398,19 +410,12 @@
     <Content Include="wwwroot\coreui\js\src\util\index.js" />
     <Content Include="wwwroot\coreui\js\src\util\sanitizer.js" />
     <Content Include="wwwroot\coreui\npm-postinstall.js" />
-    <EntityDeploy Include="Models\UserDetails.edmx">
+    <EntityDeploy Include="Models\Docu3C.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UserDetails.Designer.cs</LastGenOutput>
+      <LastGenOutput>Docu3C.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\UserDetails.edmx.diagram">
-      <DependentUpon>UserDetails.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\Portfolio.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Portfolio.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Portfolio.edmx.diagram">
-      <DependentUpon>Portfolio.edmx</DependentUpon>
+    <Content Include="Models\Docu3C.edmx.diagram">
+      <DependentUpon>Docu3C.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

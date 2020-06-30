@@ -19,8 +19,236 @@
     <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DocumentDetails" Relationship="docu3cModel.FK_DocumentDetails_UserDetails" FromRole="UserDetail" ToRole="DocumentDetail" />
+    <NavigationProperty Name="DocumentDetails1" Relationship="docu3cModel.FK_DocumentDetails_UserDetails1" FromRole="UserDetail" ToRole="DocumentDetail" />
+    <NavigationProperty Name="CustomerDetails" Relationship="docu3cModel.FK_CustomerDetails_UserDetails" FromRole="UserDetail" ToRole="CustomerDetail" />
+    <NavigationProperty Name="PortfolioDetails" Relationship="docu3cModel.FK_PortfolioDetails_UserDetails" FromRole="UserDetail" ToRole="PortfolioDetail" />
   </EntityType>
   <EntityContainer Name="docu3cEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
+    <EntitySet Name="CustomerDetails" EntityType="docu3cModel.CustomerDetail" />
+    <EntitySet Name="DocumentDetails" EntityType="docu3cModel.DocumentDetail" />
+    <EntitySet Name="PortfolioDetails" EntityType="docu3cModel.PortfolioDetail" />
+    <EntitySet Name="CategoryDetails" EntityType="docu3cModel.CategoryDetail" />
+    <EntitySet Name="SubCategoryDetails" EntityType="docu3cModel.SubCategoryDetail" />
+    <AssociationSet Name="FK_DocumentDetails_UserDetails" Association="docu3cModel.FK_DocumentDetails_UserDetails">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentDetails_UserDetails1" Association="docu3cModel.FK_DocumentDetails_UserDetails1">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDetails_UserDetails" Association="docu3cModel.FK_CustomerDetails_UserDetails">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="CustomerDetail" EntitySet="CustomerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PortfolioDetails_UserDetails" Association="docu3cModel.FK_PortfolioDetails_UserDetails">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="PortfolioDetail" EntitySet="PortfolioDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubCategoryDetails_CategoryDetails" Association="docu3cModel.FK_SubCategoryDetails_CategoryDetails">
+      <End Role="CategoryDetail" EntitySet="CategoryDetails" />
+      <End Role="SubCategoryDetail" EntitySet="SubCategoryDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerDetails_PortfolioDetails" Association="docu3cModel.FK_CustomerDetails_PortfolioDetails">
+      <End Role="PortfolioDetail" EntitySet="PortfolioDetails" />
+      <End Role="CustomerDetail" EntitySet="CustomerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentDetails_PortfolioDetails" Association="docu3cModel.FK_DocumentDetails_PortfolioDetails">
+      <End Role="PortfolioDetail" EntitySet="PortfolioDetails" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="CustomerDetail">
+    <Key>
+      <PropertyRef Name="DocCustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocCustomerID" Type="Int32" Nullable="false" />
+    <Property Name="AdvisorID" Type="Int32" Nullable="false" />
+    <Property Name="PortfolioID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerFirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerEmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNo" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="MartialStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerRelationShipID" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="UserDetail" Relationship="docu3cModel.FK_CustomerDetails_UserDetails" FromRole="CustomerDetail" ToRole="UserDetail" />
+    <NavigationProperty Name="PortfolioDetail" Relationship="docu3cModel.FK_CustomerDetails_PortfolioDetails" FromRole="CustomerDetail" ToRole="PortfolioDetail" />
+  </EntityType>
+  <EntityType Name="DocumentDetail">
+    <Key>
+      <PropertyRef Name="DocumentID" />
+    </Key>
+    <Property Name="DocumentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocCustomerID" Type="Int32" Nullable="false" />
+    <Property Name="PortfolioID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DocumentURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Institution" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="JSONFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FileStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="UserDetail" Relationship="docu3cModel.FK_DocumentDetails_UserDetails" FromRole="DocumentDetail" ToRole="UserDetail" />
+    <NavigationProperty Name="UserDetail1" Relationship="docu3cModel.FK_DocumentDetails_UserDetails1" FromRole="DocumentDetail" ToRole="UserDetail" />
+    <NavigationProperty Name="PortfolioDetail" Relationship="docu3cModel.FK_DocumentDetails_PortfolioDetails" FromRole="DocumentDetail" ToRole="PortfolioDetail" />
+  </EntityType>
+  <EntityType Name="PortfolioDetail">
+    <Key>
+      <PropertyRef Name="PortfolioID" />
+    </Key>
+    <Property Name="PortfolioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PortfolioName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PortfolioDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="UserDetail" Relationship="docu3cModel.FK_PortfolioDetails_UserDetails" FromRole="PortfolioDetail" ToRole="UserDetail" />
+    <NavigationProperty Name="CustomerDetails" Relationship="docu3cModel.FK_CustomerDetails_PortfolioDetails" FromRole="PortfolioDetail" ToRole="CustomerDetail" />
+    <NavigationProperty Name="DocumentDetails" Relationship="docu3cModel.FK_DocumentDetails_PortfolioDetails" FromRole="PortfolioDetail" ToRole="DocumentDetail" />
+  </EntityType>
+  <EntityType Name="CategoryDetail">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+      <PropertyRef Name="CategoryName" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="CreatedBy" />
+      <PropertyRef Name="CreatedOn" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="JSONIdentifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SubCategoryDetails" Relationship="docu3cModel.FK_SubCategoryDetails_CategoryDetails" FromRole="CategoryDetail" ToRole="SubCategoryDetail" />
+  </EntityType>
+  <EntityType Name="SubCategoryDetail">
+    <Key>
+      <PropertyRef Name="SubCategoryID" />
+      <PropertyRef Name="CategoryID" />
+      <PropertyRef Name="SubCategoryName" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="CreatedBy" />
+      <PropertyRef Name="CreatedOn" />
+    </Key>
+    <Property Name="SubCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="SubCategoryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="JSONIdentifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CategoryDetail" Relationship="docu3cModel.FK_SubCategoryDetails_CategoryDetails" FromRole="SubCategoryDetail" ToRole="CategoryDetail" />
+  </EntityType>
+  <Association Name="FK_DocumentDetails_UserDetails">
+    <End Type="docu3cModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <End Type="docu3cModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentDetails_UserDetails1">
+    <End Type="docu3cModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <End Type="docu3cModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDetails_UserDetails">
+    <End Type="docu3cModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <End Type="docu3cModel.CustomerDetail" Role="CustomerDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="CustomerDetail">
+        <PropertyRef Name="AdvisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PortfolioDetails_UserDetails">
+    <End Type="docu3cModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="PortfolioDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubCategoryDetails_CategoryDetails">
+    <End Type="docu3cModel.CategoryDetail" Role="CategoryDetail" Multiplicity="1" />
+    <End Type="docu3cModel.SubCategoryDetail" Role="SubCategoryDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoryDetail">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="SubCategoryDetail">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerDetails_PortfolioDetails">
+    <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />
+    <End Type="docu3cModel.CustomerDetail" Role="CustomerDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PortfolioDetail">
+        <PropertyRef Name="PortfolioID" />
+      </Principal>
+      <Dependent Role="CustomerDetail">
+        <PropertyRef Name="PortfolioID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentDetails_PortfolioDetails">
+    <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />
+    <End Type="docu3cModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PortfolioDetail">
+        <PropertyRef Name="PortfolioID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="PortfolioID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

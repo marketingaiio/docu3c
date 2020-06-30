@@ -14,6 +14,14 @@ namespace docu3c.Models
     
     public partial class UserDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UserDetail()
+        {
+            this.CustomerDetails = new HashSet<CustomerDetail>();
+            this.DocumentDetails = new HashSet<DocumentDetail>();
+            this.PortfolioDetails = new HashSet<PortfolioDetail>();
+        }
+    
         public int UserID { get; set; }
         public string LoginID { get; set; }
         public string LoginPassword { get; set; }
@@ -29,5 +37,12 @@ namespace docu3c.Models
         public System.DateTime CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerDetail> CustomerDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocumentDetail> DocumentDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PortfolioDetail> PortfolioDetails { get; set; }
     }
 }

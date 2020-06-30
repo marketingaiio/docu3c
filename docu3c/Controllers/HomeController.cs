@@ -16,7 +16,61 @@ namespace docu3c.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            Dashboard dashboard = new Dashboard();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                string strUserEmailID = Session["UserEmailID"].ToString();
+                string portfolioName = string.Empty;
+                string CustomerName = string.Empty;
+               
+                string Documents = string.Empty;
+                List<DocumentDetail> CDocumentList = new List<DocumentDetail>();
+               
+                int userId = 0;
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                    userId = db.UserDetails.FirstOrDefault(m => m.LoginID.Equals(strUserEmailID)).UserID;
+                    CDocumentList = db.DocumentDetails.ToList();
+                    //portfolioName = db.UserDetails.FirstOrDefault((m => m.LoginID.Equals(Session["UserEmailID"]))).PortfolioDetails.FirstOrDefault().PortfolioName;
+                    if (User != null)
+                    {
+                        portfolioName = db.PortfolioDetails.FirstOrDefault(m => m.UserID.Equals(userId)).PortfolioName;
+                        ViewData["NoofCustomers"] = db.CustomerDetails.Count();
+                        ViewData["NoofDocumets"] = db.DocumentDetails.Count();
+                        ViewData["NoofCategory"] = db.CategoryDetails.Count();
+                        ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("1")).Count();
+                        ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("2")).Count();
+                        ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("3")).Count();
+                        ViewData["AssetTransferAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("4")).Count();
+                        ViewData["InsuranceContractAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("5")).Count();
+                        ViewData["MiscellaneousInvestments"] = db.DocumentDetails.Where(m => m.Category.Equals("6")).Count();
+                        ViewData["ClientProfiles"] = db.DocumentDetails.Where(m => m.Category.Equals("7")).Count();
+                        var CategoryList = CDocumentList.GroupBy(o => new
+
+                        {
+                            o.Category,
+                            o.SubCategory,
+
+                        }).Select(g => new Dashboard 
+                        {
+
+                            CategoryName = g.Key.Category,
+                            SubCategoryName = g.Key.SubCategory,
+                            DocumentName = g.FirstOrDefault().DocumentName,
+                            iDocumentCount = g.Count(),
+                        }).Where(v => v.AdvisorID == userId)
+
+
+                     .ToList();
+                        
+                    }
+                }
+                dashboard.PortfolioName = portfolioName;
+                return View(dashboard);
+            }
+            else { return RedirectToAction("Login", "Login"); }
+
+               
         }
 
         public ActionResult LogOff()
@@ -28,12 +82,36 @@ namespace docu3c.Controllers
 
         public ActionResult DocumentsUpload()
         {
-            return View();
+            DocumentUpload docUpload = new DocumentUpload();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                string strUserEmailID = Session["UserEmailID"].ToString();
+                string portfolioName = string.Empty;
+                int userId = 0;
+                //PortfolioDetail pd = new PortfolioDetail();
+                using (docu3cEntities db = new docu3cEntities())
+                {
+
+                    userId = db.UserDetails.FirstOrDefault(m => m.LoginID.Equals(strUserEmailID)).UserID;
+                    //portfolioName = db.UserDetails.FirstOrDefault((m => m.LoginID.Equals(Session["UserEmailID"]))).PortfolioDetails.FirstOrDefault().PortfolioName;
+                    if (User != null)
+                    {
+                        portfolioName = db.PortfolioDetails.FirstOrDefault(m => m.UserID.Equals(userId)).PortfolioName;
+                    }
+                }
+               
+                 docUpload.PortfolioName = portfolioName;
+                return View(docUpload);
+            }
+            else
+            { return RedirectToAction("Login", "Login"); }
+            
         }
         [HttpPost]
         public ActionResult DocumentsUpload(HttpPostedFileBase[] files)
         {
-
+            ViewBag.UploadClicked = 1;
+            DocumentUpload docUpload = new DocumentUpload();
             //Ensure model state is valid  
             if (ModelState.IsValid)
             {   //iterating through multiple file collection   
@@ -70,7 +148,7 @@ namespace docu3c.Controllers
 
                 }
             }
-            return View();
+            return View(docUpload);
         }
 
         public ActionResult About()

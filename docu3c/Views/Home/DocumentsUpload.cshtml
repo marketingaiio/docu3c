@@ -16,7 +16,7 @@
 </h5>
  Let's create a portfolio to store all your customer's documents.
 <div class="pagesubtitle">
-    <b>  Portfolio Name: </b> Seattle East
+    <b>  Portfolio Name: </b> @Model.PortfolioName
 </div>
 
 @using (Html.BeginForm("DocumentsUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -24,7 +24,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal" id="upload">
-      
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -33,7 +33,7 @@
                 @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group" >
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Upload" class="btn btn-primary" id="btnUpdate" />
             </div>
@@ -51,11 +51,18 @@
 
     </div>
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script>
-
-    $("#btnUpdate").click(function () {
-              //  alert("button"); // Remove this line if it worked
-                $("#upload").hide();
-                $("#MLButton").show();
-            });
+     alert("Hi");
+    $(document).ready(function () {
+        //$("#MLButton").hide();
+        alert("Hi2");
+        @*if (@ViewBag.UploadClicked= 1) { $("#upload").hide();
+            $("#MLButton").show();}
+        $("#btnUpdate").click(function () {
+            //  alert("button"); // Remove this line if it worked
+            $("#upload").hide();
+            $("#MLButton").show();
+        });*@
+    });
 </script>

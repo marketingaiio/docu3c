@@ -9,5 +9,7 @@ namespace docu3c
         [Required(ErrorMessage = "Please select file.")]
         [Display(Name = "Browse File")]
         public HttpPostedFileBase[] files { get; set; }
+        public string PortfolioName { get; set; }
+
     }
 }
