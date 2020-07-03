@@ -14,6 +14,12 @@ namespace docu3c.Models
     
     public partial class CustomerDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CustomerDetail()
+        {
+            this.DocumentDetails = new HashSet<DocumentDetail>();
+        }
+    
         public int CustomerID { get; set; }
         public int DocCustomerID { get; set; }
         public int AdvisorID { get; set; }
@@ -38,5 +44,7 @@ namespace docu3c.Models
     
         public virtual PortfolioDetail PortfolioDetail { get; set; }
         public virtual UserDetail UserDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocumentDetail> DocumentDetails { get; set; }
     }
 }

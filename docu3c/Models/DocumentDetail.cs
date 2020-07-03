@@ -33,5 +33,6 @@ namespace docu3c.Models
     
         public virtual PortfolioDetail PortfolioDetail { get; set; }
         public virtual UserDetail UserDetail { get; set; }
+        public virtual CustomerDetail CustomerDetail { get; set; }
     }
 }

@@ -132,6 +132,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_DocumentDetails_CustomerDetails">
+    <End Role="CustomerDetails" Type="Self.CustomerDetails" Multiplicity="1" />
+    <End Role="DocumentDetails" Type="Self.DocumentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerDetails">
+        <PropertyRef Name="DocCustomerID" />
+      </Principal>
+      <Dependent Role="DocumentDetails">
+        <PropertyRef Name="DocCustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DocumentDetails_PortfolioDetails">
     <End Role="PortfolioDetails" Type="Self.PortfolioDetails" Multiplicity="1" />
     <End Role="DocumentDetails" Type="Self.DocumentDetails" Multiplicity="*" />
@@ -194,6 +206,10 @@
     <AssociationSet Name="FK_CustomerDetails_UserDetails" Association="Self.FK_CustomerDetails_UserDetails">
       <End Role="UserDetails" EntitySet="UserDetails" />
       <End Role="CustomerDetails" EntitySet="CustomerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentDetails_CustomerDetails" Association="Self.FK_DocumentDetails_CustomerDetails">
+      <End Role="CustomerDetails" EntitySet="CustomerDetails" />
+      <End Role="DocumentDetails" EntitySet="DocumentDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_DocumentDetails_PortfolioDetails" Association="Self.FK_DocumentDetails_PortfolioDetails">
       <End Role="PortfolioDetails" EntitySet="PortfolioDetails" />

@@ -9,28 +9,55 @@
     <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
     <link rel="shortcut icon" href="https://static.wixstatic.com/media/8ba3de_bb65a36e9b9a45e5b726692532ec60fb%7Emv2.png/v1/fill/w_32%2Ch_32%2Clg_1%2Cusm_0.66_1.00_0.01/8ba3de_bb65a36e9b9a45e5b726692532ec60fb%7Emv2.png" />
-    <script src="~/Scripts/jquery-3.3.1.slim.js"></script>
-    @*<script src="~/Scripts/bootstrap.bundle.min.js"></script>*@
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
     @*<script src="~/Scripts/bootstrap.min.js"></script>*@
-    <script src="~/Scripts/jquery.dataTables.min.js"></script>
-   
-    <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
-    <link rel="stylesheet" href="~/wwwroot/coreui/dist/css/coreui.min.css">
-    <link rel="stylesheet" href="~/wwwroot/coreui/dist/css/sidebar.min.css">
+
+
     <script src="~/wwwroot/coreui/dist/js/coreui.js"></script>
     <script src="~/wwwroot/coreui/js/dist/popover.js"></script>
     <script src="~/wwwroot/coreui/js/dist/tooltip.js"></script><!-- HTML to write -->
 
+
+    <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="~/wwwroot/coreui/dist/css/coreui.min.css">
+    <link rel="stylesheet" href="~/wwwroot/coreui/dist/css/sidebar.min.css">
     <link href="~/Content/Site.css" rel="stylesheet" />
+  
+    
 </head>
 <body class="c-app">
 
+    <style>
+
+        .curve-border {
+            border-radius: 30px;
+            width: 95%;
+            height: 80%;
+            padding-bottom: 10px;
+            align-items: center; 
+        }
+
+        .badge-curve {
+            border-radius: 15px;
+        }
+
+        .badge-icon {
+            width: 40%;
+            align-items: center;
+        }
+        
+a:link {
+    color: #115293;
+}
+
+    </style>
+
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar" style="background-color:#2F3082">
         <div class="c-sidebar-brand d-lg-down-none" style="background-color:#fff">
-            <img src="~/Content/Images/WhiteBG.JPG" width="75%" height="70%"  />
-          
+            <img src="~/Content/Images/WhiteBG.JPG" width="75%" height="70%" />
+
         </div>
         <ul class="c-sidebar-nav pt-3">
             @*<li class="c-sidebar-nav-item">
@@ -41,7 +68,7 @@
                     </a>
                 </li>*@
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="#">
+                <a class="c-sidebar-nav-link" href="@Url.Action("Index", "Home")">
                     <svg class="c-sidebar-nav-icon">
                         <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
                     </svg>
@@ -53,7 +80,7 @@
                 <a class="c-sidebar-nav-link" href="#">
                     <svg class="c-sidebar-nav-icon">
                         <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-compass"></use>
-                    </svg> Compliance 
+                    </svg> Compliance
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
@@ -96,16 +123,16 @@
                 </svg>
             </button>
             @*<ul class="c-header-nav d-md-down-none">
-                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Dashboard", "Document")">Dashboard</a></li>
-                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("FormRecognizer", "Home")">Documents</a></li>
-                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Compliance", "Home")">Compliance</a></li>
+                    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Dashboard", "Document")">Dashboard</a></li>
+                    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("FormRecognizer", "Home")">Documents</a></li>
+                    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Compliance", "Home")">Compliance</a></li>
 
-                @if (Session["Role"].ToString() == "Admin")
-                {
-                    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Get", "Home")">Users</a></li>
-                }
+                    @if (Session["Role"].ToString() == "Admin")
+                    {
+                        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Get", "Home")">Users</a></li>
+                    }
 
-            </ul>*@
+                </ul>*@
             <ul class="c-header-nav ml-auto mr-4">
                 <li>
                     @if (Session["UserName"] != null)
@@ -122,7 +149,7 @@
                         </svg>
                     </a>
                 </li>
-               
+
                 <li class="c-header-nav-item d-md-down-none mx-2">
 
                     <a class="c-header-nav-link" href='@Url.Action("Logoff", "Home")'>
@@ -135,9 +162,9 @@
             </ul>
 
         </header>
-        <div class="c-body" style="background:#fff">
+        <div class="c-body" style="background:#F9FAFC">
             <main class="c-main">
-                <div class="container-fluid" >
+                <div class="container-fluid">
                     <!-- Main content here --> @RenderBody()
                 </div>
             </main>

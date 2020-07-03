@@ -2,67 +2,92 @@
 @{
     ViewBag.Title = "Upload Documents";
 }
-<h5>
 
-    @if (Session["UserName"] != null)
-    {
-        <text>
-            Hi <b>@Session["UserName"].ToString() </b>,<br />
 
-        </text>
-
-    }
-
-</h5>
- Let's create a portfolio to store all your customer's documents.
-<div class="pagesubtitle">
-    <b>  Portfolio Name: </b> @Model.PortfolioName
-</div>
-
-@using (Html.BeginForm("DocumentsUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@if (ViewBag.Message != null)
 {
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal" id="upload">
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
-                @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Upload" class="btn btn-primary" id="btnUpdate" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 text-success">
-                @ViewBag.UploadStatus
-            </div>
-        </div>
-
-    </div>
-    <div id="MLButton">
-        <input type="submit" value="Parse" class="btn btn-primary" />
-        <input type="submit" value="classify" class="btn btn-primary" />
-
-    </div>
+    <script type="text/javascript">alert(@ViewBag.Message);</script>
 }
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script>
-     alert("Hi");
-    $(document).ready(function () {
-        //$("#MLButton").hide();
-        alert("Hi2");
-        @*if (@ViewBag.UploadClicked= 1) { $("#upload").hide();
-            $("#MLButton").show();}
-        $("#btnUpdate").click(function () {
-            //  alert("button"); // Remove this line if it worked
-            $("#upload").hide();
-            $("#MLButton").show();
-        });*@
-    });
-</script>
+
+<div class="w-75">
+    <h5>
+
+        @if (Session["UserName"] != null)
+        {
+            <text>
+                Hi <b>@Session["UserName"].ToString() </b>,<br />
+
+            </text>
+
+        }
+
+    </h5>
+    Let's create a portfolio to store all your customer's documents. <br /><br />
+    <div class="pagesubtitle">
+        <b>  Portfolio Name: </b> @Model.PortfolioName
+    </div>
+    <div class="row m-4">
+        <div class="col-md-3">
+
+            Choose Documents
+
+            <div class="card-body p-0 d-flex align-items-center pt-4 ">
+                <div class="mfe-3">
+                    <svg class="c-icon c-icon-xl text-warning">
+                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-folder-open"></use>
+                    </svg>
+                </div>
+                <div>
+
+
+
+                    <div class="text-warning text-uppercase font-weight-bold small">Local Folders</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="card">
+
+                @using (Html.BeginForm("DocumentsUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal" id="upload">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
+                                @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Upload" class="btn btn-primary" id="btnUpdate" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10 text-success">
+                                @ViewBag.UploadStatus
+                            </div>
+                        </div>
+
+                        @*<ul style="list-style-type: none; padding:0">
+                                @foreach (var item in Model)
+                                {
+                                    <li>
+
+                                    </li>
+                                }
+                            </ul>*@
+                    </div>
+
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

@@ -11,5 +11,7 @@ namespace docu3c
         public HttpPostedFileBase[] files { get; set; }
         public string PortfolioName { get; set; }
 
+      
+
     }
 }

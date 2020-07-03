@@ -1,69 +1,121 @@
-﻿@model docu3c.Dashboard
-
+﻿
+@model docu3c.ViewModel.ProfileModel
 
 @{
     ViewBag.Title = "Home Page";
 }
-<h1>Dashboard - Home</h1>
-<a class="c-header-nav-link" href='@Url.Action("DocumentsUpload", "Home")'> Upload Documents </a>
+
+<h5 class="text-primary">@ViewData["PortfolioName"]</h5>
+
 
 
 
 <div class="row">
-    <div class="col-sm-6 col-lg-3">
-        <div class="card overflow-hidden">
-            <div class="card-body p-0 d-flex align-items-center rounded">
-                <div class="bg-gradient-warning p-4 mfe-3">
-                    <svg class="c-icon c-icon-xl">
-                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
-                    </svg>
-                </div>
-                <div>
-                    <div class="text-value text-warning"> @ViewData["NoofCategory"]</div>
+    @*<div class="col-sm-6 col-lg-2">
+            <div class="card overflow-hidden ">
+                <div class="card-body p-0 d-flex align-items-center ">
+                    <div class="bg-gradient-warning p-4 mfe-3">
+                        <svg class="c-icon c-icon-xl">
+                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-value text-warning"> @ViewData["NoofCategory"] </div>
 
 
-                    <div class="text-muted text-uppercase font-weight-bold small">Classification</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="card overflow-hidden">
-            <div class="card-body p-0 d-flex align-items-center">
-                <div class="bg-gradient-warning p-4 mfe-3">
-                    <svg class="c-icon c-icon-xl">
-                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-user"></use>
-                    </svg>
-                </div>
-                <div>
-                    <div class="text-value text-warning"> @ViewData["NoofCustomers"]</div>
-
-
-                    <div class="text-muted text-uppercase font-weight-bold small">Customers</div>
+                        <div class="text-muted text-uppercase font-weight-bold small">Classification</div>
+                    </div>
                 </div>
             </div>
+        </div>*@
+
+
+
+
+
+    <div class="col col-lg-1 ">
+        <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center">
+            <a href="@Url.Action("DocumentDetails", "Home")">
+                <div class="btn  btn-outline-warning text-dark" type="button">
+                    <div class="">
+                        <div class="float-left">
+                            <svg class="c-icon text-white c-icon-lg">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                            </svg>
+                        </div> <div class="text-white text-value-lg pl-1  float-left">&nbsp; @ViewData["NoofCategory"] </div>
+                    </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Category</div>
+                </div>
+            </a>
+
         </div>
     </div>
 
-    <div class="col-sm-6 col-lg-3">
-        <div class="card overflow-hidden">
-            <div class="card-body p-0 d-flex align-items-center">
-                <div class="bg-gradient-warning p-4 mfe-3">
-                    <svg class="c-icon c-icon-xl">
-                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-file"></use>
-                    </svg>
+
+
+
+
+    <div class="col col-lg-1 ">
+        <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+            <a href="@Url.Action("CustomerDetails", "Home")">
+                <div class="btn  btn-default text-dark">
+                    <div class="">
+                        <div class="float-left">
+                            <svg class="c-icon text-primary c-icon-lg ">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-user"></use>
+                            </svg>
+                        </div>
+                        <div class="text-primary text-value-lg float-left ">&nbsp; @ViewData["NoofCustomers"] </div>
+                    </div><br />
+                    <div class="row text-muted text-uppercase font-weight-bold small  ">Customers</div>
                 </div>
-                <div>
+            </a>
 
-                    <div class="text-value text-warning"> @ViewData["NoofDocumets"]</div>
-
-
-                    <div class="text-muted text-uppercase font-weight-bold small">Documents</div>
-
-                </div>
-            </div>
         </div>
     </div>
+
+
+
+
+
+    <div class="col col-lg-1 ">
+        <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+            @*<a href="@Url.Action("InstitutionDetails", "Home")">*@
+                <div class="btn btn-default text-dark">
+                    <div class="">
+                        <div class="float-left">
+                            <svg class="c-icon text-primary c-icon-lg ">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
+                            </svg>
+                        </div>
+                        <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoOfInstitution"] </div>
+                    </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">INSTITUTION</div>
+                </div>
+            @*</a>*@
+        </div>
+    </div>
+
+
+    <div class="col col-lg-1 ">
+        <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+            <a href="@Url.Action("DocumentDetails", "Home")">
+                <div class="btn btn-default text-dark">
+                    <div class="">
+                        <div class="float-left">
+                            <svg class="c-icon text-primary c-icon-lg ">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-description"></use>
+                            </svg>
+                        </div>
+                        <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoofDocumets"] </div>
+                    </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">Documents</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+
+
+
 
 </div>
 
@@ -71,94 +123,135 @@
 
     <div class="col-md-10 mb-4">
         <div class="nav-tabs-boxed">
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs " role="tablist">
                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home-1" role="tab" aria-controls="home">Summary View</a></li>
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile">Detailed View</a></li>
 
             </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="home-1" role="tabpanel">
-                    <div class="row">
+            <div class="tab-content shadow-lg">
+                <div class="tab-pane align-items-center m-5 active" id="home-1" role="tabpanel">
+                    <div class="row justify-content-center">
 
-                        <div class="col-sm-8 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="p-4 mfe-3">
-                                        <svg class="c-icon c-icon-xl">
-                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                        <div class="col-md-2">
+                            <div class="card border-warning curve-border ">
+                                <div class="card-body w-auto">
+                                    <div class="badge-icon m-md-auto">
+                                        <svg class="c-icon text-warning c-icon-3xl">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-bank"></use>
                                         </svg>
                                     </div>
-                                    <div class="text-value-lg text-warning">@ViewData["NewAccountAgreement"]</div>
-                                    <div>New Account Agreements </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-8 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="text-value-lg text-warning">@ViewData["InvestmentManagementAgreement"]</div>
-                                    <div>Investment Management Agreements </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="text-value-lg text-warning">@ViewData["AutomatedFundsTransferAgreement"]</div>
-                                    <div>Automated Fund Transfer Agreement </div>
+                                    <div class="text-value-lg text-warning text-center m-md-auto w-75 pb-2">@ViewData["NewAccountAgreement"]</div>
+                                    <div class="text-center m-md-auto  w-75 ">New Account Agreements </div>
 
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="text-value-lg text-warning">@ViewData["AssetTransferAgreements"]</div>
-                                    <div></div>Asset Transfer Agreements
-                                </div>
 
+
+
+
+
+
+
+                        <div class="col-md-2">
+                            <div class="card border-warning curve-border ">
+                                <div class="card-body w-auto">
+                                    <div class="badge-icon m-md-auto">
+                                        <svg class="c-icon text-warning c-icon-3xl">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-shield-alt"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="text-value-lg text-warning text-center m-md-auto w-75 pb-2">@ViewData["InvestmentManagementAgreement"]</div>
+                                    <div class="text-center m-md-auto  w-75 ">Investment Management Agreements</div>
+
+                                </div>
                             </div>
                         </div>
+
+
+                        <div class="col-md-2">
+                            <div class="card border-warning curve-border">
+                                <div class="card-body w-auto">
+                                    <div class="badge-icon m-md-auto">
+                                        <svg class="c-icon text-warning c-icon-3xl">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-beach-access"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="text-value-lg text-warning text-center m-md-auto w-75 pb-2">@ViewData["AutomatedFundsTransferAgreement"]</div>
+                                    <div class="text-center m-md-auto  w-75 ">Automated Fund Transfer Agreement</div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="card border-warning curve-border">
+                                <div class="card-body w-auto">
+                                    <div class="badge-icon m-md-auto">
+                                        <svg class="c-icon text-warning c-icon-3xl">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-house"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="text-value-lg text-warning text-center m-md-auto w-75 pb-2">@ViewData["AssetTransferAgreements"]</div>
+                                    <div class="text-center m-md-auto  w-75 ">Asset Transfer Agreements</div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
 
 
-                    <div class="row">
-
-                        <div class="col-sm-8 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="p-4 mfe-3">
-                                        <svg class="c-icon c-icon-xl">
-                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                    <div class="row justify-content-center">
+                        <div class="col-md-2">
+                            <div class="card border-warning curve-border">
+                                <div class="card-body w-auto">
+                                    <div class="badge-icon m-md-auto">
+                                        <svg class="c-icon text-warning c-icon-3xl">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-chart-line"></use>
                                         </svg>
                                     </div>
-                                    <div class="text-value-lg text-warning">@ViewData["InsuranceContractAgreements"]</div>
-                                    <div>New Account Agreements </div>
+                                    <div class="text-value-lg text-warning text-center m-md-auto w-75 pb-2">@ViewData["InsuranceContractAgreements"]</div>
+                                    <div class="text-center m-md-auto  w-75 ">Insurance Contract Agreements</div>
 
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="text-value-lg text-warning">@ViewData["MiscellaneousInvestments"]</div>
-                                    <div>Investment Management Agreements </div>
+
+                        <div class="col-md-2">
+                            <div class="card border-warning curve-border">
+                                <div class="card-body w-auto">
+                                    <div class="badge-icon m-md-auto">
+                                        <svg class="c-icon text-warning c-icon-3xl">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-wallet"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="text-value-lg text-warning text-center m-md-auto w-75 pb-2">@ViewData["MiscellaneousInvestments"]</div>
+                                    <div class="text-center m-md-auto  w-75 ">Miscellaneous Investments</div>
 
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="text-value-lg text-warning">@ViewData["ClientProfiles"]</div>
-                                    <div>Automated Fund Transfer Agreement </div>
+
+                        <div class="col-md-2">
+                            <div class="card border-warning curve-border">
+                                <div class="card-body w-auto">
+                                    <div class="badge-icon m-md-auto">
+                                        <svg class="c-icon text-warning c-icon-3xl">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-money"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="text-value-lg text-warning text-center m-md-auto w-75 pb-2">@ViewData["ClientProfiles"]</div>
+                                    <div class="text-center m-md-auto  w-75 ">Client Profiles</div>
 
                                 </div>
                             </div>
                         </div>
+
+
 
 
                     </div>
@@ -169,44 +262,72 @@
 
 
 
-
-                    @*<div class="table-responsive">
-                        <table class="table table-borderless mdl-data-table " id="aitables">
-                            <thead class="thead-dark">
+                    <div class="table-responsive m-6" style="width:95%;margin:2% 0">
+                        <table class="table table-borderless" id="hdataTable">
+                            <thead class="border-bottom">
                                 <tr>
-                                    <th scope="col">Category Name</th>
-                                    <th scope="col">Sub Category Name</th>
-                                    <th scope="col">Customers</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Asset</th>
                                     <th scope="col">Documents</th>
-                                   
+                                    <th scope="col">Customers</th>
+                                    <th scope="col">Institutions</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (Dashboard documentitem in Model)
+                                @foreach (var item in Model.DocumentDetails)
                                 {
-
                                     <tr>
-                                        <td>documentitem.CustomerFirstName   </td>
-                                        <td>Helo</td>
-                                        <td>
-                                            1
+                                        <td>@item.Category    </td>
+                                        <td>@item.SubCategory     </td>
+
+                                        <td> 
                                         </td>
-                                        <td>2</td>
+                                        <td> </td>
+                                        <td> </td>
 
                                     </tr>
+
                                 }
-                                </tbody>
+                            </tbody>
                         </table>
 
-                    </div>*@
+                    </div>
+
+
+
 
 
                 </div>
             </div>
-            </div>
+
+
+
+
+
+
+
+
         </div>
     </div>
+</div>
+<div class="row w-75 justify-content-end">
+    
+    <a class="c-header-nav-link" href='@Url.Action("DocumentsUpload", "Home")'> <div class="btn btn-pill btn-block btn-primary active">Upload Documents</div> </a>
+</div>
+
+<script>
+    //$(document).ready(function () {
+    //       $('#aitables').DataTable();
+    //});
 
 
+    $(document).ready(function () {
 
-</div> 
+        $('#hdataTable').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false, "searching": true
+        });
+    });
+</script>

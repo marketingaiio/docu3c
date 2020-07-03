@@ -1,0 +1,169 @@
+﻿@model docu3c.ViewModel.ProfileModel
+@{
+    ViewBag.Title = "CustomerDetails";
+}
+
+    <script>
+    //$(document).ready(function () {
+    //       $('#aitables').DataTable();
+    //});
+     
+
+        $(document).ready(function () {
+           
+        $('#CdTable').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false, "searching": true
+        });
+    });
+    </script>
+    <div class="row">
+
+
+        <div class="col col-lg-1 ">
+            <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+                <a href="@Url.Action("Index", "Home")">
+                    <div class="btn  btn-default text-dark">
+                        <div class="">
+                            <div class="float-left">
+                                <svg class="c-icon text-primary c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                                </svg>
+                            </div>
+                            <div class="text-primary text-value-lg float-left ">&nbsp; @ViewData["NoofCategory"] </div>
+                        </div><br />
+                              <div class="row text-muted text-uppercase font-weight-bold small  ">Category</div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="col col-lg-1 ">
+            <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center">
+                <a href="@Url.Action("CustomerDetails", "Home")">
+                    <div class="btn  btn-outline-warning text-dark" type="button">
+                        <div class="">
+                            <div class="float-left">
+                                <svg class="c-icon text-white c-icon-lg">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-user"></use>
+                                </svg>
+                            </div> <div class="text-white text-value-lg pl-1  float-left">&nbsp; @ViewData["NoofCustomers"] </div>
+                        </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Customers</div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+
+
+
+               
+
+        <div class="col col-lg-1 ">
+            <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+                @*<a href="@Url.Action("InstitutionDetails", "Home")">*@
+                    <div class="btn btn-default text-dark">
+                        <div class="">
+                            <div class="float-left">
+                                <svg class="c-icon text-primary c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
+                                </svg>
+                            </div>
+                            <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoOfInstitution"] </div>
+                        </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">INSTITUTION</div>
+                    </div>
+                @*</a>*@
+            </div>
+        </div>
+
+
+        <div class="col col-lg-1 ">
+            <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+                <a href="@Url.Action("DocumentDetails", "Home")">
+                    <div class="btn btn-default text-dark">
+                        <div class="">
+                            <div class="float-left">
+                                <svg class="c-icon text-primary c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-description"></use>
+                                </svg>
+                            </div>
+                            <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoofDocumets"] </div>
+                        </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">Documents</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+<div class="row m-1 p-5 curve-border bg-white">
+    <h5 class="text-primary">Customer Details</h5>
+    <div class="table-responsive m-6" style="width:95%;margin:2% 0">
+        <table class="table table-borderless" id="CdTable">
+            <thead class="border-bottom">
+                <tr>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Martial Status</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CustomerDetails)
+                {
+                    <tr>
+                        <td>@item.DocCustomerID  </td>
+                        <td>@item.CustomerFirstName</td>
+
+                        <td>
+                            @item.DOB
+                        </td>
+                        <td>@item.MartialStatus </td>
+
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

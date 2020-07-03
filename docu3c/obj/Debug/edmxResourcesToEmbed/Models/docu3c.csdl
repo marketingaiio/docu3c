@@ -41,6 +41,7 @@
     <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
     <NavigationProperty Name="PortfolioDetail" Relationship="Self.FK_CustomerDetails_PortfolioDetails" FromRole="CustomerDetails" ToRole="PortfolioDetails" />
     <NavigationProperty Name="UserDetail" Relationship="Self.FK_CustomerDetails_UserDetails" FromRole="CustomerDetails" ToRole="UserDetails" />
+    <NavigationProperty Name="DocumentDetails" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="CustomerDetail" ToRole="DocumentDetail" />
   </EntityType>
   <EntityType Name="DocumentDetail">
     <Key>
@@ -64,6 +65,7 @@
     <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
     <NavigationProperty Name="PortfolioDetail" Relationship="Self.FK_DocumentDetails_PortfolioDetails" FromRole="DocumentDetails" ToRole="PortfolioDetails" />
     <NavigationProperty Name="UserDetail" Relationship="Self.FK_DocumentDetails_UserDetails" FromRole="DocumentDetails" ToRole="UserDetails" />
+    <NavigationProperty Name="CustomerDetail" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="DocumentDetail" ToRole="CustomerDetail" />
   </EntityType>
   <EntityType Name="PortfolioDetail">
     <Key>
@@ -223,5 +225,21 @@
       <End Role="UserDetails" EntitySet="UserDetails" />
       <End Role="PortfolioDetails" EntitySet="PortfolioDetails" />
     </AssociationSet>
+    <AssociationSet Name="FK_DocumentDetails_CustomerDetails" Association="docu3cModel.FK_DocumentDetails_CustomerDetails">
+      <End Role="CustomerDetail" EntitySet="CustomerDetails" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_DocumentDetails_CustomerDetails">
+    <End Type="docu3cModel.CustomerDetail" Role="CustomerDetail" Multiplicity="1" />
+    <End Type="docu3cModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerDetail">
+        <PropertyRef Name="DocCustomerID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="DocCustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

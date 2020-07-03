@@ -17,6 +17,7 @@
         <AssociationConnector Association="docu3cModel.FK_DocumentDetails_PortfolioDetails" ManuallyRouted="false" />
         <AssociationConnector Association="docu3cModel.FK_DocumentDetails_UserDetails" ManuallyRouted="false" />
         <AssociationConnector Association="docu3cModel.FK_PortfolioDetails_UserDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="docu3cModel.FK_DocumentDetails_CustomerDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

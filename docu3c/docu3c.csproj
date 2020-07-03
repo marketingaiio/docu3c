@@ -140,6 +140,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BlobHandling\BlobManager.cs" />
+    <Compile Include="Controllers\docu3cAPIClient.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -183,6 +185,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableHandling\TableManager.cs" />
+    <Compile Include="ViewModel\ProfileModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -234,6 +237,10 @@
     <Content Include="Scripts\dataTables.jqueryui.min.js" />
     <Content Include="Scripts\dataTables.semanticui.js" />
     <Content Include="Scripts\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="wwwroot\coreui\css\alert.css" />
@@ -417,6 +424,8 @@
     <Content Include="Models\Docu3C.edmx.diagram">
       <DependentUpon>Docu3C.edmx</DependentUpon>
     </Content>
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -808,9 +817,13 @@
     <Content Include="wwwroot\coreui\scss\_widgets.scss" />
     <Content Include="wwwroot\package-lock.json" />
     <Content Include="Views\Home\DocumentsUpload.cshtml" />
+    <Content Include="Views\Home\DocumentDetails.cshtml" />
+    <Content Include="Views\Home\CustomerDetails.cshtml" />
+    <Content Include="Views\Home\InstitutionDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\docu3cAPIClient\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
