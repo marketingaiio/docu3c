@@ -235,7 +235,7 @@ namespace docu3c.Controllers
                                     }
                                 }
 
-                               return RedirectToAction("DocumentsDetails");
+                               return RedirectToAction("DocumentDetails");
                             }
                         }
                         }
