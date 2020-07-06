@@ -156,16 +156,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.CustomerDetails)
+                @foreach (var item in Model.DocumentDetails)
                 {
                     <tr>
-                        <td>@item.DocCustomerID  </td>
-                        <td>@item.CustomerFirstName</td>
+                        <td>@item.Institution.Distinct()</td>
+                        <td></td>
 
                         <td>
-                            @item.DOB
+                          
                         </td>
-                        <td>@item.MartialStatus </td>
+                        <td> </td>
 
                     </tr>
 

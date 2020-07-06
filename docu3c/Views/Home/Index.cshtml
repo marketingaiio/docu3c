@@ -267,26 +267,25 @@
                             <thead class="border-bottom">
                                 <tr>
                                     <th scope="col">Category</th>
-                                    <th scope="col">Asset</th>
-                                    <th scope="col">Documents</th>
-                                    <th scope="col">Customers</th>
-                                    <th scope="col">Institutions</th>
+                                    <th scope="col">Sub-Category</th>
+                                    <th scope="col">Identifier</th>
+                                    @*<th scope="col">Customers</th>*@
+                                 
 
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.DocumentDetails)
+                                @foreach (var item in Model.SubCategoryDetails)
                                 {
-                                    <tr>
-                                        <td>@item.Category    </td>
-                                        <td>@item.SubCategory     </td>
+                                <tr>
+                                    <td>@item.CategoryDetail.CategoryName  </td>
+                                    <td>@item.SubCategoryName </td>
+                                    <td>@item.CategoryDetail.JSONIdentifier      </td>
+                                   
+                                    @*<td> </td>
+                                    <td> </td>*@
 
-                                        <td> 
-                                        </td>
-                                        <td> </td>
-                                        <td> </td>
-
-                                    </tr>
+                                </tr>
 
                                 }
                             </tbody>

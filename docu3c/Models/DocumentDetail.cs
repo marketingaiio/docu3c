@@ -15,7 +15,8 @@ namespace docu3c.Models
     public partial class DocumentDetail
     {
         public int DocumentID { get; set; }
-        public int DocCustomerID { get; set; }
+        public string DocCustomerID { get; set; }
+        public int CustomerID { get; set; }
         public int PortfolioID { get; set; }
         public int UserID { get; set; }
         public string DocumentName { get; set; }
@@ -23,7 +24,8 @@ namespace docu3c.Models
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string Institution { get; set; }
-        public string JSONFileName { get; set; }
+        public string JSONFileIdentifier { get; set; }
+        public string Reason { get; set; }
         public string FileStatus { get; set; }
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
@@ -31,8 +33,8 @@ namespace docu3c.Models
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
     
+        public virtual CustomerDetail CustomerDetail { get; set; }
         public virtual PortfolioDetail PortfolioDetail { get; set; }
         public virtual UserDetail UserDetail { get; set; }
-        public virtual CustomerDetail CustomerDetail { get; set; }
     }
 }

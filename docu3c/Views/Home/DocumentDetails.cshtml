@@ -126,11 +126,13 @@
         <table class="table table-borderless" id="ddTable">
             <thead class="text-dark">
                 <tr>
-                    <th scope="col">Category</th>
-                    <th scope="col">Asset</th>
+                    @*<th scope="col">Category</th>*@
+
                     <th scope="col">Customer Name</th>
+                    <th scope="col">Asset</th>
                     <th scope="col">Institute</th>
                     <th scope="col">Document</th>
+                    <th scope="col">Status</th>
 
                 </tr>
 
@@ -138,17 +140,18 @@
             <tbody>
                 @foreach (var item in Model.DocumentDetails)
                 {
-                    <tr>
-                        <td>@item.Category  </td>
-                        <td>@item.SubCategory </td>
+                <tr>
+                    <td>
+                        @item.CustomerDetail.CustomerFirstName
+                    </td>
+                    @*<td>@item.Category  </td>*@
+                    <td>@item.JSONFileIdentifier  </td>
 
-                        <td>
-                            @item.CustomerDetail.CustomerFirstName
-                        </td>
-                        <td>@item.Institution </td>
-                        <td><a href="http://@item.DocumentURL" alt="@item.DocumentName" target="_blank">@item.DocumentName </a> </td>
 
-                    </tr>
+                    <td>@item.Institution </td>
+                    <td><a href="http://@item.DocumentURL" alt="@item.DocumentName" target="_blank">@item.DocumentName </a> </td>
+                    <td>@item.FileStatus </td>
+                </tr>
 
                 }
             </tbody>

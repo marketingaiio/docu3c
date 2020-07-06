@@ -16,10 +16,18 @@ namespace docu3c.ViewModel
 
         public IEnumerable<SubCategoryDetail> SubCategoryDetails { set; get; }
         public IEnumerable<ViewSubCategoryDetail> ViewSubCategoryDetail { set; get; }
+        public IEnumerable<CompareDocument> CompareDocument { set; get; }
 
         public IEnumerable<UserDetail> UserDetails { set; get; }
 
 
+    }
+    public class CompareDocument
+    {
+        public string CustomerAddress { set; get; }
+        public DateTime CustomerDOB { set; get; }
+        public string Institution { set; get; }
+        public string CustomerName { set; get; }
     }
 
     public class ViewSubCategoryDetail
@@ -28,4 +36,6 @@ namespace docu3c.ViewModel
         public string Asset { set; get; }
         public int CustomerCount { set; get; }
     }
+
+  
 }

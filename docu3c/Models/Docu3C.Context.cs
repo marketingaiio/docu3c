@@ -26,10 +26,10 @@ namespace docu3c.Models
         }
     
         public virtual DbSet<CategoryDetail> CategoryDetails { get; set; }
-        public virtual DbSet<CustomerDetail> CustomerDetails { get; set; }
-        public virtual DbSet<DocumentDetail> DocumentDetails { get; set; }
         public virtual DbSet<PortfolioDetail> PortfolioDetails { get; set; }
         public virtual DbSet<SubCategoryDetail> SubCategoryDetails { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
+        public virtual DbSet<CustomerDetail> CustomerDetails { get; set; }
+        public virtual DbSet<DocumentDetail> DocumentDetails { get; set; }
     }
 }

@@ -188,41 +188,74 @@ namespace docu3c.Controllers
                                             //var url = HttpContext.Request.UserHostName.ToString();
                                             // string classifytxtresult = ClassifyText(filecontent);
                                             var docinfo = d3.ClassifyDocument("comp", FileAbsoluteUri);
-                                            int docCusID = Convert.ToInt32(docinfo[0].docProps["cust.ssn"].Value);
-                                            string docURL = docinfo[0].docURL.ToString();
-                                            var isDocCustomerIDAlreadyExists = db.CustomerDetails.Any(x => x.DocCustomerID == docCusID);
+                                            string strCustomerName = string.Empty;
+                                            string docURL = string.Empty;
+                                           // ViewBag.Message = "";
+                                        
+                                            if (!string.IsNullOrEmpty(docinfo[0].docURL.ToString()))
+                                                docURL = docinfo[0].docURL.ToString();
+                                            if (docinfo[0].docProps.ContainsKey("cust.name"))
+                                                strCustomerName =  docinfo[0].docProps["cust.name"].Value.ToString();
+                                            var isDocCustomerIDAlreadyExists = db.CustomerDetails.Any(x => x.CustomerFirstName == strCustomerName);
                                             var isDocumentAlreadyExists = db.DocumentDetails.Any(x => x.DocumentURL == docURL);
                                             if (!isDocumentAlreadyExists)
                                             {
                                                 if (!isDocCustomerIDAlreadyExists)
                                                 {
                                                     CustomerDetail nCustomerDetails = new CustomerDetail();
-                                                    nCustomerDetails.DocCustomerID = docCusID;
-                                                    nCustomerDetails.CustomerFirstName = docinfo[0].docProps["cust.name"].Value.ToString();
+                                                    
+                                                    nCustomerDetails.CustomerFirstName = strCustomerName;
                                                     nCustomerDetails.PortfolioID = 1;
                                                     nCustomerDetails.AdvisorID = userId;
                                                     nCustomerDetails.IsActive = true;
                                                     nCustomerDetails.CreatedBy = userId.ToString();
                                                     nCustomerDetails.CreatedOn = DateTime.Now;
-                                                    //     nCustomerDetails.DOB =Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value.ToString());
-                                                    //  string cdAddress = docinfo[0].docProps["cust.addr"].Value.ToString();
-                                                    //if (!string.IsNullOrEmpty(cdAddress))
-                                                    //{
-                                                    //    nCustomerDetails.Address = cdAddress;
-                                                    //}
-                                                   db.CustomerDetails.Add(nCustomerDetails);
+                                                    if (docinfo[0].docProps.ContainsKey("cust.ssn"))
+                                                        nCustomerDetails.DocCustomerID = docinfo[0].docProps["cust.ssn"].Value.ToString();
+                                                  //  if (docinfo[0].docProps.ContainsKey("cust.dob"))
+                                                    //    nCustomerDetails.DOB = Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value.ToString());
+                                                    //nCustomerDetails.DOB = Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value);
+                                                    if (docinfo[0].docProps.ContainsKey("cust.addr"))
+                                                        nCustomerDetails.Address = docinfo[0].docProps["cust.addr"].Value.ToString();
+                                                    db.CustomerDetails.Add(nCustomerDetails);
                                                     db.SaveChanges();
-
                                                 }
+                                               
                                                 DocumentDetail nDocumentDetails = new DocumentDetail();
-                                                nDocumentDetails.DocCustomerID = docCusID;
+                                                if (docinfo[0].docProps.ContainsKey("cust.ssn"))
+                                                    nDocumentDetails.DocCustomerID = docinfo[0].docProps["cust.ssn"].Value.ToString();
                                                 nDocumentDetails.PortfolioID = 1;
                                                 nDocumentDetails.UserID = userId;
+                                                string strJSONIdentifier = string.Empty;
+
+                                              
+                                                nDocumentDetails.CustomerID = db.CustomerDetails.FirstOrDefault(m => m.CustomerFirstName.Equals(strCustomerName)).CustomerID;
                                                 nDocumentDetails.DocumentName = System.IO.Path.GetFileName(docinfo[0].docURL.ToString());
-                                                nDocumentDetails.DocumentURL = docURL;
-                                                nDocumentDetails.Category = docinfo[0].docProps["doc.type"].Value.ToString();
+                                                nDocumentDetails.DocumentURL = docinfo[0].docURL.ToString();
+                                                if (docinfo[0].docProps.ContainsKey("doc.type"))
+                                                {
+                                                    strJSONIdentifier = docinfo[0].docProps["doc.type"].Value.ToString();
+                                                    strJSONIdentifier = strJSONIdentifier.Replace("_", " ");
+                                                    nDocumentDetails.JSONFileIdentifier = strJSONIdentifier;
+                                                    if (db.CategoryDetails.Any(x => x.JSONIdentifier == strJSONIdentifier))
+                                                    {
+                                                        nDocumentDetails.Category = db.CategoryDetails.FirstOrDefault(m => m.JSONIdentifier.Equals(strJSONIdentifier)).CategoryName;
+                                                    }
+                                                     if (db.SubCategoryDetails.Any(x => x.JSONIdentifier == strJSONIdentifier))
+                                                    {
+                                                        int iCategoryID = 0;
+                                                        string strSubCategoryName= db.SubCategoryDetails.FirstOrDefault(m => m.JSONIdentifier.Equals(strJSONIdentifier)).SubCategoryName;
+                                                        nDocumentDetails.SubCategory = strSubCategoryName;
+                                                        iCategoryID = db.SubCategoryDetails.FirstOrDefault(m => m.SubCategoryName.Equals(strSubCategoryName)).CategoryID;
+                                                        nDocumentDetails.Category = db.CategoryDetails.FirstOrDefault(m => m.CategoryID.Equals(iCategoryID)).CategoryName;
+                                                    }
+                                                   
+
+                                                }
+                                                if (docinfo[0].docProps.ContainsKey("org.name"))
+                                                    nDocumentDetails.Institution = docinfo[0].docProps["org.name"].Value.ToString();
+                                               
                                                 nDocumentDetails.FileStatus = "Green";
-                                                nDocumentDetails.Institution = docinfo[0].docProps["org.name"].Value.ToString();
                                                 nDocumentDetails.IsActive = true;
                                                 nDocumentDetails.CreatedBy = userId.ToString();
                                                 nDocumentDetails.CreatedOn = DateTime.Now;
@@ -234,7 +267,7 @@ namespace docu3c.Controllers
                                         
                                     }
                                 }
-
+                                
                                return RedirectToAction("DocumentDetails");
                             }
                         }

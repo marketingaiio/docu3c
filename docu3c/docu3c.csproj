@@ -185,6 +185,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableHandling\TableManager.cs" />
+    <Compile Include="ViewModel\CompareDocument.cs" />
     <Compile Include="ViewModel\ProfileModel.cs" />
   </ItemGroup>
   <ItemGroup>

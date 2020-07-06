@@ -20,10 +20,10 @@
         </EntityType>
         <EntityType Name="CustomerDetails">
           <Key>
-            <PropertyRef Name="DocCustomerID" />
+            <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DocCustomerID" Type="int" Nullable="false" />
+          <Property Name="DocCustomerID" Type="nvarchar" MaxLength="50" />
           <Property Name="AdvisorID" Type="int" Nullable="false" />
           <Property Name="PortfolioID" Type="int" Nullable="false" />
           <Property Name="CustomerFirstName" Type="nvarchar(max)" Nullable="false" />
@@ -34,7 +34,7 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="DOB" Type="datetime" />
+          <Property Name="DOB" Type="date" />
           <Property Name="MartialStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
           <Property Name="CustomerRelationShipID" Type="int" />
@@ -49,7 +49,8 @@
             <PropertyRef Name="DocumentID" />
           </Key>
           <Property Name="DocumentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DocCustomerID" Type="int" Nullable="false" />
+          <Property Name="DocCustomerID" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="PortfolioID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="DocumentName" Type="nvarchar(max)" Nullable="false" />
@@ -57,7 +58,8 @@
           <Property Name="Category" Type="nvarchar(max)" />
           <Property Name="SubCategory" Type="nvarchar(max)" />
           <Property Name="Institution" Type="nvarchar(max)" />
-          <Property Name="JSONFileName" Type="nvarchar(max)" />
+          <Property Name="JSONFileIdentifier" Type="nvarchar(max)" />
+          <Property Name="Reason" Type="nvarchar(max)" />
           <Property Name="FileStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
@@ -142,10 +144,10 @@
           <End Role="DocumentDetails" Type="Self.DocumentDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CustomerDetails">
-              <PropertyRef Name="DocCustomerID" />
+              <PropertyRef Name="CustomerID" />
             </Principal>
             <Dependent Role="DocumentDetails">
-              <PropertyRef Name="DocCustomerID" />
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -251,59 +253,6 @@
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="SubCategoryDetails" Relationship="Self.FK_SubCategoryDetails_CategoryDetails" FromRole="CategoryDetails" ToRole="SubCategoryDetails" />
         </EntityType>
-        <EntityType Name="CustomerDetail">
-          <Key>
-            <PropertyRef Name="DocCustomerID" />
-          </Key>
-          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DocCustomerID" Type="Int32" Nullable="false" />
-          <Property Name="AdvisorID" Type="Int32" Nullable="false" />
-          <Property Name="PortfolioID" Type="Int32" Nullable="false" />
-          <Property Name="CustomerFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerEmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNo" Type="Int32" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DOB" Type="DateTime" Precision="3" />
-          <Property Name="MartialStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerRelationShipID" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PortfolioDetail" Relationship="Self.FK_CustomerDetails_PortfolioDetails" FromRole="CustomerDetails" ToRole="PortfolioDetails" />
-          <NavigationProperty Name="UserDetail" Relationship="Self.FK_CustomerDetails_UserDetails" FromRole="CustomerDetails" ToRole="UserDetails" />
-          <NavigationProperty Name="DocumentDetails" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="CustomerDetail" ToRole="DocumentDetail" />
-        </EntityType>
-        <EntityType Name="DocumentDetail">
-          <Key>
-            <PropertyRef Name="DocumentID" />
-          </Key>
-          <Property Name="DocumentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DocCustomerID" Type="Int32" Nullable="false" />
-          <Property Name="PortfolioID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="DocumentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DocumentURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SubCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Institution" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="JSONFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FileStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PortfolioDetail" Relationship="Self.FK_DocumentDetails_PortfolioDetails" FromRole="DocumentDetails" ToRole="PortfolioDetails" />
-          <NavigationProperty Name="UserDetail" Relationship="Self.FK_DocumentDetails_UserDetails" FromRole="DocumentDetails" ToRole="UserDetails" />
-          <NavigationProperty Name="CustomerDetail" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="DocumentDetail" ToRole="CustomerDetail" />
-        </EntityType>
         <EntityType Name="PortfolioDetail">
           <Key>
             <PropertyRef Name="PortfolioID" />
@@ -317,9 +266,9 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CustomerDetails" Relationship="Self.FK_CustomerDetails_PortfolioDetails" FromRole="PortfolioDetails" ToRole="CustomerDetails" />
-          <NavigationProperty Name="DocumentDetails" Relationship="Self.FK_DocumentDetails_PortfolioDetails" FromRole="PortfolioDetails" ToRole="DocumentDetails" />
           <NavigationProperty Name="UserDetail" Relationship="Self.FK_PortfolioDetails_UserDetails" FromRole="PortfolioDetails" ToRole="UserDetails" />
+          <NavigationProperty Name="CustomerDetails" Relationship="docu3cModel.FK_CustomerDetails_PortfolioDetails" FromRole="PortfolioDetail" ToRole="CustomerDetail" />
+          <NavigationProperty Name="DocumentDetails" Relationship="docu3cModel.FK_DocumentDetails_PortfolioDetails" FromRole="PortfolioDetail" ToRole="DocumentDetail" />
         </EntityType>
         <EntityType Name="SubCategoryDetail">
           <Key>
@@ -355,9 +304,9 @@
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CustomerDetails" Relationship="Self.FK_CustomerDetails_UserDetails" FromRole="UserDetails" ToRole="CustomerDetails" />
-          <NavigationProperty Name="DocumentDetails" Relationship="Self.FK_DocumentDetails_UserDetails" FromRole="UserDetails" ToRole="DocumentDetails" />
           <NavigationProperty Name="PortfolioDetails" Relationship="Self.FK_PortfolioDetails_UserDetails" FromRole="UserDetails" ToRole="PortfolioDetails" />
+          <NavigationProperty Name="CustomerDetails" Relationship="docu3cModel.FK_CustomerDetails_UserDetails" FromRole="UserDetail" ToRole="CustomerDetail" />
+          <NavigationProperty Name="DocumentDetails" Relationship="docu3cModel.FK_DocumentDetails_UserDetails" FromRole="UserDetail" ToRole="DocumentDetail" />
         </EntityType>
         <Association Name="FK_SubCategoryDetails_CategoryDetails">
           <End Role="CategoryDetails" Type="Self.CategoryDetail" Multiplicity="1" />
@@ -368,54 +317,6 @@
             </Principal>
             <Dependent Role="SubCategoryDetails">
               <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerDetails_PortfolioDetails">
-          <End Role="PortfolioDetails" Type="Self.PortfolioDetail" Multiplicity="1" />
-          <End Role="CustomerDetails" Type="Self.CustomerDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PortfolioDetails">
-              <PropertyRef Name="PortfolioID" />
-            </Principal>
-            <Dependent Role="CustomerDetails">
-              <PropertyRef Name="PortfolioID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerDetails_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
-          <End Role="CustomerDetails" Type="Self.CustomerDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserDetails">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="CustomerDetails">
-              <PropertyRef Name="AdvisorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DocumentDetails_PortfolioDetails">
-          <End Role="PortfolioDetails" Type="Self.PortfolioDetail" Multiplicity="1" />
-          <End Role="DocumentDetails" Type="Self.DocumentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PortfolioDetails">
-              <PropertyRef Name="PortfolioID" />
-            </Principal>
-            <Dependent Role="DocumentDetails">
-              <PropertyRef Name="PortfolioID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DocumentDetails_UserDetails">
-          <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
-          <End Role="DocumentDetails" Type="Self.DocumentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserDetails">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="DocumentDetails">
-              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -433,8 +334,6 @@
         </Association>
         <EntityContainer Name="docu3cEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CategoryDetails" EntityType="Self.CategoryDetail" />
-          <EntitySet Name="CustomerDetails" EntityType="Self.CustomerDetail" />
-          <EntitySet Name="DocumentDetails" EntityType="Self.DocumentDetail" />
           <EntitySet Name="PortfolioDetails" EntityType="Self.PortfolioDetail" />
           <EntitySet Name="SubCategoryDetails" EntityType="Self.SubCategoryDetail" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
@@ -442,44 +341,149 @@
             <End Role="CategoryDetails" EntitySet="CategoryDetails" />
             <End Role="SubCategoryDetails" EntitySet="SubCategoryDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_CustomerDetails_PortfolioDetails" Association="Self.FK_CustomerDetails_PortfolioDetails">
-            <End Role="PortfolioDetails" EntitySet="PortfolioDetails" />
-            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerDetails_UserDetails" Association="Self.FK_CustomerDetails_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DocumentDetails_PortfolioDetails" Association="Self.FK_DocumentDetails_PortfolioDetails">
-            <End Role="PortfolioDetails" EntitySet="PortfolioDetails" />
-            <End Role="DocumentDetails" EntitySet="DocumentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DocumentDetails_UserDetails" Association="Self.FK_DocumentDetails_UserDetails">
-            <End Role="UserDetails" EntitySet="UserDetails" />
-            <End Role="DocumentDetails" EntitySet="DocumentDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_PortfolioDetails_UserDetails" Association="Self.FK_PortfolioDetails_UserDetails">
             <End Role="UserDetails" EntitySet="UserDetails" />
             <End Role="PortfolioDetails" EntitySet="PortfolioDetails" />
+          </AssociationSet>
+          <EntitySet Name="CustomerDetails" EntityType="docu3cModel.CustomerDetail" />
+          <EntitySet Name="DocumentDetails" EntityType="docu3cModel.DocumentDetail" />
+          <AssociationSet Name="FK_CustomerDetails_PortfolioDetails" Association="docu3cModel.FK_CustomerDetails_PortfolioDetails">
+            <End Role="PortfolioDetail" EntitySet="PortfolioDetails" />
+            <End Role="CustomerDetail" EntitySet="CustomerDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerDetails_UserDetails" Association="docu3cModel.FK_CustomerDetails_UserDetails">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="CustomerDetail" EntitySet="CustomerDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_DocumentDetails_CustomerDetails" Association="docu3cModel.FK_DocumentDetails_CustomerDetails">
             <End Role="CustomerDetail" EntitySet="CustomerDetails" />
             <End Role="DocumentDetail" EntitySet="DocumentDetails" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK_DocumentDetails_PortfolioDetails" Association="docu3cModel.FK_DocumentDetails_PortfolioDetails">
+            <End Role="PortfolioDetail" EntitySet="PortfolioDetails" />
+            <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentDetails_UserDetails" Association="docu3cModel.FK_DocumentDetails_UserDetails">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="CustomerDetail">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocCustomerID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdvisorID" Type="Int32" Nullable="false" />
+          <Property Name="PortfolioID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerFirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerEmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="MartialStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerRelationShipID" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PortfolioDetail" Relationship="docu3cModel.FK_CustomerDetails_PortfolioDetails" FromRole="CustomerDetail" ToRole="PortfolioDetail" />
+          <NavigationProperty Name="UserDetail" Relationship="docu3cModel.FK_CustomerDetails_UserDetails" FromRole="CustomerDetail" ToRole="UserDetail" />
+          <NavigationProperty Name="DocumentDetails" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="CustomerDetail" ToRole="DocumentDetail" />
+        </EntityType>
+        <EntityType Name="DocumentDetail">
+          <Key>
+            <PropertyRef Name="DocumentID" />
+          </Key>
+          <Property Name="DocumentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocCustomerID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="PortfolioID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Institution" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JSONFileIdentifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FileStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CustomerDetail" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="DocumentDetail" ToRole="CustomerDetail" />
+          <NavigationProperty Name="PortfolioDetail" Relationship="docu3cModel.FK_DocumentDetails_PortfolioDetails" FromRole="DocumentDetail" ToRole="PortfolioDetail" />
+          <NavigationProperty Name="UserDetail" Relationship="docu3cModel.FK_DocumentDetails_UserDetails" FromRole="DocumentDetail" ToRole="UserDetail" />
+        </EntityType>
+        <Association Name="FK_CustomerDetails_PortfolioDetails">
+          <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />
+          <End Type="docu3cModel.CustomerDetail" Role="CustomerDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PortfolioDetail">
+              <PropertyRef Name="PortfolioID" />
+            </Principal>
+            <Dependent Role="CustomerDetail">
+              <PropertyRef Name="PortfolioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerDetails_UserDetails">
+          <End Type="docu3cModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+          <End Type="docu3cModel.CustomerDetail" Role="CustomerDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="CustomerDetail">
+              <PropertyRef Name="AdvisorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DocumentDetails_CustomerDetails">
           <End Type="docu3cModel.CustomerDetail" Role="CustomerDetail" Multiplicity="1" />
           <End Type="docu3cModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CustomerDetail">
-              <PropertyRef Name="DocCustomerID" />
+              <PropertyRef Name="CustomerID" />
             </Principal>
             <Dependent Role="DocumentDetail">
-              <PropertyRef Name="DocCustomerID" />
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_DocumentDetails_PortfolioDetails">
+          <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />
+          <End Type="docu3cModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PortfolioDetail">
+              <PropertyRef Name="PortfolioID" />
+            </Principal>
+            <Dependent Role="DocumentDetail">
+              <PropertyRef Name="PortfolioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentDetails_UserDetails">
+          <End Type="docu3cModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+          <End Type="docu3cModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DocumentDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -491,55 +495,6 @@
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="JSONIdentifier" ColumnName="JSONIdentifier" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CustomerDetails">
-            <EntityTypeMapping TypeName="docu3cModel.CustomerDetail">
-              <MappingFragment StoreEntitySet="CustomerDetails">
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="DocCustomerID" ColumnName="DocCustomerID" />
-                <ScalarProperty Name="AdvisorID" ColumnName="AdvisorID" />
-                <ScalarProperty Name="PortfolioID" ColumnName="PortfolioID" />
-                <ScalarProperty Name="CustomerFirstName" ColumnName="CustomerFirstName" />
-                <ScalarProperty Name="CustomerLastName" ColumnName="CustomerLastName" />
-                <ScalarProperty Name="CustomerEmailID" ColumnName="CustomerEmailID" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="MartialStatus" ColumnName="MartialStatus" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="CustomerRelationShipID" ColumnName="CustomerRelationShipID" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DocumentDetails">
-            <EntityTypeMapping TypeName="docu3cModel.DocumentDetail">
-              <MappingFragment StoreEntitySet="DocumentDetails">
-                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
-                <ScalarProperty Name="DocCustomerID" ColumnName="DocCustomerID" />
-                <ScalarProperty Name="PortfolioID" ColumnName="PortfolioID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
-                <ScalarProperty Name="DocumentURL" ColumnName="DocumentURL" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="SubCategory" ColumnName="SubCategory" />
-                <ScalarProperty Name="Institution" ColumnName="Institution" />
-                <ScalarProperty Name="JSONFileName" ColumnName="JSONFileName" />
-                <ScalarProperty Name="FileStatus" ColumnName="FileStatus" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -596,6 +551,57 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerDetails">
+            <EntityTypeMapping TypeName="docu3cModel.CustomerDetail">
+              <MappingFragment StoreEntitySet="CustomerDetails">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CustomerRelationShipID" ColumnName="CustomerRelationShipID" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="MartialStatus" ColumnName="MartialStatus" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="CustomerEmailID" ColumnName="CustomerEmailID" />
+                <ScalarProperty Name="CustomerLastName" ColumnName="CustomerLastName" />
+                <ScalarProperty Name="CustomerFirstName" ColumnName="CustomerFirstName" />
+                <ScalarProperty Name="PortfolioID" ColumnName="PortfolioID" />
+                <ScalarProperty Name="AdvisorID" ColumnName="AdvisorID" />
+                <ScalarProperty Name="DocCustomerID" ColumnName="DocCustomerID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentDetails">
+            <EntityTypeMapping TypeName="docu3cModel.DocumentDetail">
+              <MappingFragment StoreEntitySet="DocumentDetails">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FileStatus" ColumnName="FileStatus" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="JSONFileIdentifier" ColumnName="JSONFileIdentifier" />
+                <ScalarProperty Name="Institution" ColumnName="Institution" />
+                <ScalarProperty Name="SubCategory" ColumnName="SubCategory" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="DocumentURL" ColumnName="DocumentURL" />
+                <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PortfolioID" ColumnName="PortfolioID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="DocCustomerID" ColumnName="DocCustomerID" />
+                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

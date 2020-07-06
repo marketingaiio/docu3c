@@ -15,10 +15,10 @@
   </EntityType>
   <EntityType Name="CustomerDetails">
     <Key>
-      <PropertyRef Name="DocCustomerID" />
+      <PropertyRef Name="CustomerID" />
     </Key>
     <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DocCustomerID" Type="int" Nullable="false" />
+    <Property Name="DocCustomerID" Type="nvarchar" MaxLength="50" />
     <Property Name="AdvisorID" Type="int" Nullable="false" />
     <Property Name="PortfolioID" Type="int" Nullable="false" />
     <Property Name="CustomerFirstName" Type="nvarchar(max)" Nullable="false" />
@@ -29,7 +29,7 @@
     <Property Name="City" Type="nvarchar" MaxLength="50" />
     <Property Name="State" Type="nvarchar" MaxLength="50" />
     <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="DOB" Type="datetime" />
+    <Property Name="DOB" Type="date" />
     <Property Name="MartialStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="Gender" Type="nvarchar" MaxLength="50" />
     <Property Name="CustomerRelationShipID" Type="int" />
@@ -44,7 +44,8 @@
       <PropertyRef Name="DocumentID" />
     </Key>
     <Property Name="DocumentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DocCustomerID" Type="int" Nullable="false" />
+    <Property Name="DocCustomerID" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomerID" Type="int" Nullable="false" />
     <Property Name="PortfolioID" Type="int" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="DocumentName" Type="nvarchar(max)" Nullable="false" />
@@ -52,7 +53,8 @@
     <Property Name="Category" Type="nvarchar(max)" />
     <Property Name="SubCategory" Type="nvarchar(max)" />
     <Property Name="Institution" Type="nvarchar(max)" />
-    <Property Name="JSONFileName" Type="nvarchar(max)" />
+    <Property Name="JSONFileIdentifier" Type="nvarchar(max)" />
+    <Property Name="Reason" Type="nvarchar(max)" />
     <Property Name="FileStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
@@ -137,10 +139,10 @@
     <End Role="DocumentDetails" Type="Self.DocumentDetails" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CustomerDetails">
-        <PropertyRef Name="DocCustomerID" />
+        <PropertyRef Name="CustomerID" />
       </Principal>
       <Dependent Role="DocumentDetails">
-        <PropertyRef Name="DocCustomerID" />
+        <PropertyRef Name="CustomerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

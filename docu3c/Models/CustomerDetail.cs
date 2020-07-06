@@ -21,7 +21,7 @@ namespace docu3c.Models
         }
     
         public int CustomerID { get; set; }
-        public int DocCustomerID { get; set; }
+        public string DocCustomerID { get; set; }
         public int AdvisorID { get; set; }
         public int PortfolioID { get; set; }
         public string CustomerFirstName { get; set; }
