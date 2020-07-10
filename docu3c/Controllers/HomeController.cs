@@ -24,9 +24,9 @@ namespace docu3c.Controllers
             if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
             {
                 string strUserEmailID = Session["UserEmailID"].ToString();
-              //  string portfolioName = string.Empty;
+                int iPortfolioID = 0;
                 string CustomerName = string.Empty;
-               
+                string portfolioName = string.Empty;
                 string Documents = string.Empty;
               
                
@@ -40,18 +40,24 @@ namespace docu3c.Controllers
                     {
 
 
-                        ViewData["PortfolioName"] = db.PortfolioDetails.FirstOrDefault(m => m.UserID.Equals(userId)).PortfolioName;
+                        portfolioName = db.PortfolioDetails.FirstOrDefault(m => m.UserID.Equals(userId)).PortfolioName;
+                        ViewData["PortfolioName"] = portfolioName;
+                        iPortfolioID = db.PortfolioDetails.FirstOrDefault(m => m.PortfolioName.Equals(portfolioName)).PortfolioID;
+                        Session["PortfolioID"] = iPortfolioID;
                         ViewData["NoofCustomers"] = db.CustomerDetails.Count();
                         ViewData["NoofDocumets"] = db.DocumentDetails.Count();
                         ViewData["NoofCategory"] = db.CategoryDetails.Count();
-                        ViewData["NoOfInstitution"] = db.DocumentDetails.Distinct().Count();
-                        ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("New Account Agreements")).Count();
-                        ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("Investment Management Agreements")).Count();
-                        ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("Automated Funds Transfer Agreement")).Count();
+                        ViewData["NoOfInstitution"] = db.DocumentDetails.Distinct().GroupBy(o => new
+                        {
+                            o.Institution
+                        }).Count();
+                        ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("Client Agreements")).Count();
+                        ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("Investment Agreements")).Count();
+                        ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("Funds Transfer Agreement")).Count();
                         ViewData["AssetTransferAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("Asset Transfer Agreements")).Count();
-                        ViewData["InsuranceContractAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("Insurance Contract Agreements")).Count();
+                        ViewData["InsuranceContractAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("Insurance Agreements")).Count();
                         ViewData["MiscellaneousInvestments"] = db.DocumentDetails.Where(m => m.Category.Equals("Miscellaneous Investments")).Count();
-                        ViewData["ClientProfiles"] = db.DocumentDetails.Where(m => m.Category.Equals("Client Profiles")).Count();
+                        ViewData["ClientProfiles"] = db.DocumentDetails.Where(m => m.Category.Equals("Client Profile")).Count();
                         ProfileModel = new ProfileModel
                         {
 
@@ -84,6 +90,9 @@ namespace docu3c.Controllers
                
         }
 
+       // [HttpPost]
+      
+
         public ActionResult LogOff()
         {
             Session.Clear();
@@ -94,11 +103,12 @@ namespace docu3c.Controllers
         public ActionResult DocumentsUpload()
         {
             DocumentUpload docUpload = new DocumentUpload();
-            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null && Session["PortfolioID"] !=null)
             {
                 string strUserEmailID = Session["UserEmailID"].ToString();
                 string portfolioName = string.Empty;
                 int userId = 0;
+                //int iPortfolioID = 0;
                 //PortfolioDetail pd = new PortfolioDetail();
                 using (docu3cEntities db = new docu3cEntities())
                 {
@@ -108,6 +118,7 @@ namespace docu3c.Controllers
                     if (User != null)
                     {
                         portfolioName = db.PortfolioDetails.FirstOrDefault(m => m.UserID.Equals(userId)).PortfolioName;
+                       
                     }
                 }
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
@@ -136,6 +147,7 @@ namespace docu3c.Controllers
         public ActionResult DocumentsUpload(HttpPostedFileBase[] files)
         {
             ViewBag.UploadClicked = 1;
+            int iPortFolioID =Convert.ToInt32(Session["PortfolioID"]);
             BlobManager blobManagerObj = new BlobManager("uploadfiles");
             string FileAbsoluteUri;
             DocumentUpload docUpload = new DocumentUpload();
@@ -185,63 +197,110 @@ namespace docu3c.Controllers
                                         {
                                             docu3cAPIClient d3 = new docu3cAPIClient();
                                             string fileurl = "https://docu3capp.blob.core.windows.net/uploadfiles/";
+                                         //   ViewBag.Message = "Uploading to the storage";
                                             //var url = HttpContext.Request.UserHostName.ToString();
                                             // string classifytxtresult = ClassifyText(filecontent);
                                             var docinfo = d3.ClassifyDocument("comp", FileAbsoluteUri);
                                             string strCustomerName = string.Empty;
                                             string docURL = string.Empty;
+                                            int iCustomerID = 0;
                                            // ViewBag.Message = "";
                                         
                                             if (!string.IsNullOrEmpty(docinfo[0].docURL.ToString()))
                                                 docURL = docinfo[0].docURL.ToString();
                                             if (docinfo[0].docProps.ContainsKey("cust.name"))
                                                 strCustomerName =  docinfo[0].docProps["cust.name"].Value.ToString();
-                                            var isDocCustomerIDAlreadyExists = db.CustomerDetails.Any(x => x.CustomerFirstName == strCustomerName);
+                                            var isDocCustomerAlreadyExists = db.CustomerDetails.Any(x => x.CustomerFirstName == strCustomerName);
                                             var isDocumentAlreadyExists = db.DocumentDetails.Any(x => x.DocumentURL == docURL);
+                                            DocumentDetail nDocumentDetails = new DocumentDetail();
+                                         //   CustomerDetail exCustomerDetails = new CustomerDetail();
+                                         
+
+
+                                            string strReason = string.Empty;
+                                            string exSSN = string.Empty;
+                                            string exAddress = string.Empty;
+                                            string CustomerAddress = string.Empty;
+                                            string CustomerSSN = string.Empty;
+                                            string ExDocumentName = string.Empty;
+                                            DateTime dtDOB =DateTime.Now;
+                                            List<CustomerDetail> exCustomerDetails = new List<CustomerDetail>();
                                             if (!isDocumentAlreadyExists)
                                             {
-                                                if (!isDocCustomerIDAlreadyExists)
+                                               
+                                               
+                                                if (docinfo[0].docProps.ContainsKey("cust.addr"))
+                                                    CustomerAddress = docinfo[0].docProps["cust.addr"].Value.ToString();
+                                                if (docinfo[0].docProps.ContainsKey("cust.ssn"))
+                                                    CustomerSSN = docinfo[0].docProps["cust.ssn"].Value.ToString();
+                                                //if (docinfo[0].docProps.ContainsKey("cust.dob"))
+                                                //{
+                                                //    dtDOB =Convert.ToDateTime(docinfo[0].docProps.ContainsKey("cust.dob").ToString());
+                                                  
+                                                //}
+                                                 //   dtDOB = Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value.ToString());
+
+
+                                               
+                                                //if(exCustomerDetails.FirstOrDefault().DOB != dtDOB)
+                                                //{ strReason += string.Format("DOB is mismatch: {0}", docinfo[0].docProps.ContainsKey("cust.dob")); }
+
+                                                if (!isDocCustomerAlreadyExists)
                                                 {
+
                                                     CustomerDetail nCustomerDetails = new CustomerDetail();
-                                                    
+
                                                     nCustomerDetails.CustomerFirstName = strCustomerName;
-                                                    nCustomerDetails.PortfolioID = 1;
+                                                    nCustomerDetails.PortfolioID = iPortFolioID;
                                                     nCustomerDetails.AdvisorID = userId;
                                                     nCustomerDetails.IsActive = true;
                                                     nCustomerDetails.CreatedBy = userId.ToString();
                                                     nCustomerDetails.CreatedOn = DateTime.Now;
-                                                    if (docinfo[0].docProps.ContainsKey("cust.ssn"))
-                                                        nCustomerDetails.DocCustomerID = docinfo[0].docProps["cust.ssn"].Value.ToString();
-                                                  //  if (docinfo[0].docProps.ContainsKey("cust.dob"))
-                                                    //    nCustomerDetails.DOB = Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value.ToString());
+                                                   // if (docinfo[0].docProps.ContainsKey("cust.dob"))
+                                                   //     nCustomerDetails.DOB = Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value.ToString());
+                                                nCustomerDetails.DocCustomerID = CustomerSSN;
+                                                   
                                                     //nCustomerDetails.DOB = Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value);
-                                                    if (docinfo[0].docProps.ContainsKey("cust.addr"))
-                                                        nCustomerDetails.Address = docinfo[0].docProps["cust.addr"].Value.ToString();
+                                                    nCustomerDetails.Address = CustomerAddress;
                                                     db.CustomerDetails.Add(nCustomerDetails);
                                                     db.SaveChanges();
                                                 }
-                                               
-                                                DocumentDetail nDocumentDetails = new DocumentDetail();
+
+                                                iCustomerID = db.CustomerDetails.FirstOrDefault(m => m.CustomerFirstName.Equals(strCustomerName)).CustomerID;
+
+                                                exCustomerDetails = db.CustomerDetails.Where(x => x.CustomerID.Equals(iCustomerID)).ToList();
+                                                ExDocumentName = db.DocumentDetails.FirstOrDefault(m => m.CustomerID.Equals(iCustomerID)).DocumentName;
+                                                if (exCustomerDetails.FirstOrDefault().Address != CustomerAddress && !string.IsNullOrEmpty(CustomerAddress))
+                                                {
+                                                    strReason += string.Format("Comparing With : {0}", ExDocumentName);
+
+                                                    strReason += string.Format("Address is mismatch: {0} ", CustomerAddress);
+                                                }
+                                                if (exCustomerDetails.FirstOrDefault().DocCustomerID != CustomerSSN && !string.IsNullOrEmpty(CustomerSSN))
+                                                { strReason += string.Format("SSN is mismatch: {0} ", CustomerSSN); }
                                                 if (docinfo[0].docProps.ContainsKey("cust.ssn"))
                                                     nDocumentDetails.DocCustomerID = docinfo[0].docProps["cust.ssn"].Value.ToString();
                                                 nDocumentDetails.PortfolioID = 1;
                                                 nDocumentDetails.UserID = userId;
                                                 string strJSONIdentifier = string.Empty;
-
-                                              
-                                                nDocumentDetails.CustomerID = db.CustomerDetails.FirstOrDefault(m => m.CustomerFirstName.Equals(strCustomerName)).CustomerID;
+                                            //    ViewBag.Message = "Comparing the Properties";
+                                                //  CompareDocument CompareDocuments = db.CustomerDetails.FirstOrDefault().DocumentDetails.(m => m.PortfolioID == iPortFolioID);
+                                                nDocumentDetails.CustomerID = iCustomerID;
                                                 nDocumentDetails.DocumentName = System.IO.Path.GetFileName(docinfo[0].docURL.ToString());
                                                 nDocumentDetails.DocumentURL = docinfo[0].docURL.ToString();
+                                                nDocumentDetails.Reason = strReason;
                                                 if (docinfo[0].docProps.ContainsKey("doc.type"))
                                                 {
-                                                    strJSONIdentifier = docinfo[0].docProps["doc.type"].Value.ToString();
+                                                    strJSONIdentifier =  docinfo[0].docProps["doc.type"].Value.ToString();
                                                     strJSONIdentifier = strJSONIdentifier.Replace("_", " ");
+                                                   // strJSONIdentifier = string()
                                                     nDocumentDetails.JSONFileIdentifier = strJSONIdentifier;
-                                                    if (db.CategoryDetails.Any(x => x.JSONIdentifier == strJSONIdentifier))
+                                                    strJSONIdentifier = strJSONIdentifier.ToLowerInvariant();
+                                                    if (db.CategoryDetails.Any(x => x.JSONIdentifier.Equals(strJSONIdentifier)))
                                                     {
                                                         nDocumentDetails.Category = db.CategoryDetails.FirstOrDefault(m => m.JSONIdentifier.Equals(strJSONIdentifier)).CategoryName;
                                                     }
-                                                     if (db.SubCategoryDetails.Any(x => x.JSONIdentifier == strJSONIdentifier))
+                                                     if (db.SubCategoryDetails.Any(x => x.JSONIdentifier.Equals(strJSONIdentifier)))
                                                     {
                                                         int iCategoryID = 0;
                                                         string strSubCategoryName= db.SubCategoryDetails.FirstOrDefault(m => m.JSONIdentifier.Equals(strJSONIdentifier)).SubCategoryName;
@@ -313,7 +372,10 @@ namespace docu3c.Controllers
                         ViewData["NoofCustomers"] = db.CustomerDetails.Count();
                         ViewData["NoofDocumets"] = db.DocumentDetails.Count();
                         ViewData["NoofCategory"] = db.CategoryDetails.Count();
-                        ViewData["NoOfInstitution"] = db.DocumentDetails.Distinct().Count();
+                        ViewData["NoOfInstitution"] = db.DocumentDetails.Distinct().GroupBy(o=>new
+                        {
+                            o.Institution
+                        }).Count();
                         ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("1")).Count();
                         ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("2")).Count();
                         ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("3")).Count();
@@ -356,7 +418,10 @@ namespace docu3c.Controllers
                         ViewData["NoofCustomers"] = db.CustomerDetails.Count();
                         ViewData["NoofDocumets"] = db.DocumentDetails.Count();
                         ViewData["NoofCategory"] = db.CategoryDetails.Count();
-                        ViewData["NoOfInstitution"] = db.DocumentDetails.Distinct().Count();
+                        ViewData["NoOfInstitution"] = db.DocumentDetails.Distinct().GroupBy(o => new
+                        {
+                            o.Institution
+                        }).Count();
                         ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("1")).Count();
                         ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("2")).Count();
                         ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("3")).Count();
@@ -400,7 +465,10 @@ namespace docu3c.Controllers
                         ViewData["NoofCustomers"] = db.CustomerDetails.Count();
                         ViewData["NoofDocumets"] = db.DocumentDetails.Count();
                         ViewData["NoofCategory"] = db.CategoryDetails.Count();
-                        ViewData["NoOfInstitution"] = db.DocumentDetails.Distinct().Count();
+                        ViewData["NoOfInstitution"] = db.DocumentDetails.Distinct().GroupBy(o => new
+                        {
+                            o.Institution
+                        }).Count();
                         ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("1")).Count();
                         ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("2")).Count();
                         ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("3")).Count();
@@ -414,7 +482,8 @@ namespace docu3c.Controllers
 
                             CustomerDetails = db.CustomerDetails.ToList(),
                             PortfolioDetails = db.PortfolioDetails.ToList(),
-                            DocumentDetails = db.DocumentDetails.Include("CustomerDetail").ToList(),
+                            DocumentDetails = db.DocumentDetails.ToList(),
+                          
                             CategoryDetails = db.CategoryDetails.ToList(),
                             SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
                         };

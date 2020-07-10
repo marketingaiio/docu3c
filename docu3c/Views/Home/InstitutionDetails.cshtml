@@ -1,4 +1,5 @@
 ﻿@model docu3c.ViewModel.ProfileModel
+    @using docu3c.Models;
 @{
     ViewBag.Title = "InstitutionDetails";
 }
@@ -149,26 +150,31 @@
                 <tr>
                     <th scope="col">Institution</th>
                     <th scope="col">Documents</th>
-                    <th scope="col">Classifications</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Assets</th>
                     <th scope="col">Customers</th>
 
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.DocumentDetails)
+                @using (docu3cEntities db = new docu3cEntities())
+                {
+                foreach (var item in Model.DocumentDetails.GroupBy(o => o.Institution).ToList())
                 {
                     <tr>
-                        <td>@item.Institution.Distinct()</td>
-                        <td></td>
+                        <td>@item.Key</td>
+                        <td>@item.Count()</td>
 
-                        <td>
-                          
-                        </td>
-                        <td> </td>
+                        <td>@db.DocumentDetails.Where(x=>x.Institution == item.Key).Select(v=>v.CustomerID).Distinct().Count()</td>
+                        <td> @item.Select(x => x.JSONFileIdentifier).Distinct().Count()</td>
+                        <td>@item.Select(x => x.CustomerID).Distinct().Count()</td>
+
+
+
 
                     </tr>
 
+                }
                 }
             </tbody>
         </table>
