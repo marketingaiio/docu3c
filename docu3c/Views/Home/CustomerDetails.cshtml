@@ -21,8 +21,8 @@
     <div class="row">
 
 
-        <div class="col col-lg-1 ">
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+        <div class="col">
+            <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
                 <a href="@Url.Action("Index", "Home")">
                     <div class="btn  btn-default text-dark">
                         <div class="">
@@ -38,16 +38,9 @@
                 </a>
 
             </div>
-        </div>
-
-
-
-
-
-
-        <div class="col col-lg-1 ">
-            <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center">
-                <a href="@Url.Action("CustomerDetails", "Home")">
+       
+            <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center float-left m-3">
+               
                     <div class="btn  btn-outline-warning text-dark" type="button">
                         <div class="">
                             <div class="float-left">
@@ -57,18 +50,11 @@
                             </div> <div class="text-white text-value-lg pl-1  float-left">&nbsp; @ViewData["NoofCustomers"] </div>
                         </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Customers</div>
                     </div>
-                </a>
-
-            </div>
-        </div>
-
-
-
-
                
 
-        <div class="col col-lg-1 ">
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+            </div>
+      
+            <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
                 <a href="@Url.Action("InstitutionDetails", "Home")">
                     <div class="btn btn-default text-dark">
                         <div class="">
@@ -82,11 +68,8 @@
                     </div>
                 </a>
             </div>
-        </div>
-
-
-        <div class="col col-lg-1 ">
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+       
+            <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
                 <a href="@Url.Action("DocumentDetails", "Home")">
                     <div class="btn btn-default text-dark">
                         <div class="">
@@ -134,39 +117,39 @@
     </div>
 
 
-<div class="row m-1 p-5 curve-border bg-white">
-    <h5 class="text-primary">Customer Details</h5>
-    <div class="table-responsive m-6" style="width:95%;margin:2% 0">
-        <table class="table table-borderless" id="CdTable">
-            <thead class="border-bottom">
-                <tr>
-                    <th scope="col">Customer ID</th>
-                    <th scope="col">Customer Name</th>
+    <div class="row m-2 p-5 gridcurve-border bg-white">
+        <h5 class="text-primary">Customer Details</h5>
+        <div class="table-responsive m-6" style="width:95%;margin:2% 0">
+            <table class="table table-borderless" id="CdTable">
+                <thead class="border-bottom">
+                    <tr>
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Customer Name</th>
 
-                    <th scope="col">DOB</th>
-                    <th scope="col">Martial Status</th>
-                    <th scope="col">Address</th>
+                        <th scope="col">DOB</th>
+                        <th scope="col">Martial Status</th>
+                        <th scope="col">Address</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.CustomerDetails)
-                {
-                <tr>
-                    <td>@item.CustomerID   </td>
-                    <td>@item.CustomerFirstName</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CustomerDetails)
+                    {
+                        <tr>
+                            <td>@item.CustomerID   </td>
+                            <td>@item.CustomerFirstName</td>
 
-                    <td>
-                        @item.DOB
+                            <td>
+                                @item.DOB
 
-                    </td>
-                    <td>@item.MartialStatus </td>
-                    <td>@item.Address</td>
-                </tr>
+                            </td>
+                            <td>@item.MartialStatus </td>
+                            <td>@item.Address</td>
+                        </tr>
 
-                }
-            </tbody>
-        </table>
+                    }
+                </tbody>
+            </table>
 
+        </div>
     </div>
-</div>

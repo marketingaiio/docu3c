@@ -171,7 +171,7 @@ namespace docu3c.Controllers
                             //Save file to server folder  
                             //    file.SaveAs(ServerSavePath);
                             //assigning file uploaded status to ViewBag for showing message to user.  
-                            //    ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
+                            // 
 
 
                             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("azureConnectionString"));
@@ -190,6 +190,7 @@ namespace docu3c.Controllers
                                     azureBlockBlob.Properties.ContentType = file.ContentType;
                                     azureBlockBlob.UploadFromStream(Request.Files[fileNum].InputStream);
                                     FileAbsoluteUri = azureBlockBlob.Uri.AbsoluteUri;
+                                    //ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
                                     if (!string.IsNullOrEmpty(FileAbsoluteUri))
                                     {
                                         string filecontent = blobManagerObj.ReadBlob(FileAbsoluteUri);
@@ -197,16 +198,19 @@ namespace docu3c.Controllers
                                         {
                                             docu3cAPIClient d3 = new docu3cAPIClient();
                                             string fileurl = "https://docu3capp.blob.core.windows.net/uploadfiles/";
-                                            //   ViewBag.Message = "Uploading to the storage";
-                                            //var url = HttpContext.Request.UserHostName.ToString();
-                                            // string classifytxtresult = ClassifyText(filecontent);
+                                         
                                             var docinfo = d3.ClassifyDocument("comp", FileAbsoluteUri);
+                                            //if (docinfo[0].docParseErrorMsg != null)
+                                            //{
+                                            //    ViewBag.ErrorMsg = "The Uploaded document is not a valid form";
+                                            //}
+                                          
                                             if (docinfo.Count > 0 && docinfo[0].docParseErrorMsg == null)
                                             { 
                                                 string strCustomerName = string.Empty;
                                             string docURL = string.Empty;
                                             int iCustomerID = 0;
-                                            // ViewBag.Message = "";
+                                           
 
                                             if (!string.IsNullOrEmpty(docinfo[0].docURL.ToString()))
                                                 docURL = docinfo[0].docURL.ToString();
@@ -327,7 +331,12 @@ namespace docu3c.Controllers
 
                                                 db.SaveChanges();
                                             }
-                                        }
+                                                else
+                                                {
+                                                    ModelState.AddModelError("Document Already Exists", "Uploaded documents are not able to extract the values ");
+
+                                                }
+                                            }
                                             else {
                                                 ModelState.AddModelError("Uploaded Document Error", "Uploaded documents are not able to extract the values ");
                                               

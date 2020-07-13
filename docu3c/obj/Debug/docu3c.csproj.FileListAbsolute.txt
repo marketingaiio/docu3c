@@ -1,4 +1,3 @@
-D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.csprojAssemblyReference.cache
 D:\WebSites\docu3c\docu3c\bin\docu3c.dll.config
 D:\WebSites\docu3c\docu3c\bin\docu3c.dll
 D:\WebSites\docu3c\docu3c\bin\docu3c.pdb
@@ -89,3 +88,4 @@ D:\WebSites\docu3c\docu3c\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform
 D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.csproj.CopyComplete
 D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.dll
 D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.pdb
+D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.csprojAssemblyReference.cache

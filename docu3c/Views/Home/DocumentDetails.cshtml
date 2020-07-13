@@ -3,25 +3,6 @@
     ViewBag.Title = "DocumentDetails";
 }
 
-<style>
-
-    .curve-border {
-        border-radius: 30px;
-        width: 95%;
-        height: 80%;
-        padding-bottom: 10px;
-        align-items: center
-    }
-
-    .badge-curve {
-        border-radius: 10px;
-    }
-
-    .badge-icon {
-        width: 40%;
-        align-items: center;
-    }
-</style>
 
 <script>
     //$(document).ready(function () {
@@ -44,8 +25,8 @@
 
 
 
-    <div class="col col-lg-1 ">
-        <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+    <div class="col">
+        <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
             <a href="@Url.Action("Index", "Home")">
                 <div class="btn  btn-default text-dark">
                     <div class="">
@@ -61,15 +42,15 @@
             </a>
 
         </div>
-    </div>
+   
 
 
 
 
 
 
-    <div class="col col-lg-1 ">
-        <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+   
+        <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
             <a href="@Url.Action("CustomerDetails", "Home")">
                 <div class="btn  btn-default text-dark">
                     <div class="">
@@ -85,14 +66,14 @@
             </a>
 
         </div>
-    </div>
+  
 
 
 
 
 
-    <div class="col col-lg-1 ">
-        <div class="card overflow-hidden shadow-lg badge-curve align-items-center">
+    
+        <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
             <a href="@Url.Action("InstitutionDetails", "Home")">
             <div class="btn btn-default text-dark">
                 <div class="">
@@ -106,12 +87,9 @@
             </div>
             </a>
         </div>
-    </div>
-
-
-    <div class="col col-lg-1 ">
-        <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center">
-            <a href="@Url.Action("DocumentDetails", "Home")">
+   
+        <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center float-left m-3">
+           
                 <div class="btn  btn-outline-warning text-dark" type="button">
                     <div class="">
                         <div class="float-left">
@@ -121,7 +99,7 @@
                         </div> <div class="text-white text-value-lg pl-1  float-left">&nbsp; @ViewData["NoofDocumets"] </div>
                     </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Documents</div>
                 </div>
-            </a>
+           
 
         </div>
     </div>
@@ -136,7 +114,7 @@
 
 
 
-<div class="row m-1 p-5 curve-border bg-white">
+<div class="row m-2 p-5 gridcurve-border bg-white">
     <h5 class="text-primary">Document Details</h5>
     <div class="table-responsive m-6" style="width:95%;margin:2% 0">
         <table class="table table-borderless" id="hdataTable">
@@ -149,6 +127,7 @@
                     <th scope="col">Institute</th>
                     <th scope="col">Document</th>
                     <th scope="col">Reason</th>
+                    <th scope="col">Status</th>
 
                 </tr>
 
@@ -167,6 +146,7 @@
                         <td>@item.Institution </td>
                         <td><a href="http://@item.DocumentURL" alt="@item.DocumentName" target="_blank">@item.DocumentName </a> </td>
                         <td>@item.Reason  </td>
+                        <td>@item.FileStatus </td>
                        
                     </tr>
 
