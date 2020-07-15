@@ -333,21 +333,23 @@ namespace docu3c.Controllers
                                             }
                                                 else
                                                 {
-                                                    ModelState.AddModelError("Document Already Exists", "Uploaded documents are not able to extract the values ");
+                                                    ModelState.AddModelError("UploadedDocuments", "Uploaded documents are not able to extract the values ");
 
                                                 }
                                             }
                                             else {
-                                                ModelState.AddModelError("Uploaded Document Error", "Uploaded documents are not able to extract the values ");
+                                                ModelState.AddModelError("UploadedDocuments", "Uploaded documents are not able to extract the values ");
                                               
                                             }
-                                        } 
-                                        
+                                        }
+
                                     }
+                                 //   else { ModelState.AddModelError("UploadedDocuments", "Uploaded documents are not able to extract the values "); }
                                 }
                                 
-                               return RedirectToAction("DocumentDetails");
+                              
                             }
+                            return RedirectToAction("DocumentDetails");
                         }
                         }
 
