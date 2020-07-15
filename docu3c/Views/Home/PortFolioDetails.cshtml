@@ -1,0 +1,71 @@
+﻿@model docu3c.ViewModel.ProfileModel
+@using docu3c.Models;
+@{
+    ViewBag.Title = "PortFolioDetails";
+}
+
+<h2>PortFolio Details</h2>
+
+<div class="row float-right mb-4 w-25">
+
+
+    <a class="btn btn-primary float-right" role="button" href="@Url.Action("AddPortFolio", "Home")">Add New</a>
+</div>
+
+
+
+<div class="row m-2 p-5 gridcurve-border bg-white">
+
+    @*<h5 class="text-primary mb-3">Document Details</h5>*@
+    <div class="table-responsive m-6">
+        <table class="table table-bordered mdl-data-table " id="ddTable">
+            <thead class="text-dark bg-secondary ">
+                <tr>
+                    <th>Portfolio Name</th>
+                    <th>No.of Customers</th>
+                    <th>No.Documents</th>
+                    <th>Created On</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @using (docu3cEntities db = new docu3cEntities())
+                {
+                    foreach (var item in Model.PortfolioDetails)
+                    {
+                        <tr>
+                            <td>@item.PortfolioName </td>
+                            <td>@db.CustomerDetails.Where(x => x.AdvisorID.Equals(item.UserID)).Count()</td>
+                            <td>
+                                @db.DocumentDetails.Where(x => x.PortfolioID.Equals(item.PortfolioID)).Count()
+                            </td>
+                            <td>@item.CreatedOn </td>
+                            @*<td>
+
+                                    <span>@Html.ActionLink("Change Status", "ChangeStatus", "Home", new { id = StudentObj.RowKey, Status = StudentObj.IsActive }, new { })</span>
+                                    ||
+                                    <span>@Html.ActionLink("Delete", "Delete", "Home", new { id = StudentObj.RowKey }, new { })</span>
+                                </td>*@
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+
+
+
+    $(document).ready(function () {
+
+        $('#pdTable').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false, "searching": true
+        });
+    });
+</script>
+
+

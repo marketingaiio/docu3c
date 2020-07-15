@@ -3,23 +3,6 @@
     ViewBag.Title = "DocumentDetails";
 }
 
-
-<script>
-    //$(document).ready(function () {
-    //       $('#aitables').DataTable();
-    //});
-
-
-    $(document).ready(function () {
-
-        $('#hdataTable').DataTable({
-            "paging": false,
-            "ordering": true,
-            "info": false, "searching": false
-        });
-    });
-</script>
-
 <div class="row">
 
 
@@ -42,14 +25,14 @@
             </a>
 
         </div>
-   
 
 
 
 
 
 
-   
+
+
         <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
             <a href="@Url.Action("CustomerDetails", "Home")">
                 <div class="btn  btn-default text-dark">
@@ -66,40 +49,40 @@
             </a>
 
         </div>
-  
 
 
 
 
 
-    
+
+
         <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
             <a href="@Url.Action("InstitutionDetails", "Home")">
-            <div class="btn btn-default text-dark">
-                <div class="">
-                    <div class="float-left">
-                        <svg class="c-icon text-primary c-icon-lg ">
-                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
-                        </svg>
-                    </div>
-                    <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoOfInstitution"] </div>
-                </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">INSTITUTION</div>
-            </div>
-            </a>
-        </div>
-   
-        <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center float-left m-3">
-           
-                <div class="btn  btn-outline-warning text-dark" type="button">
+                <div class="btn btn-default text-dark">
                     <div class="">
                         <div class="float-left">
-                            <svg class="c-icon text-white c-icon-lg">
-                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-description"></use>
+                            <svg class="c-icon text-primary c-icon-lg ">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
                             </svg>
-                        </div> <div class="text-white text-value-lg pl-1  float-left">&nbsp; @ViewData["NoofDocumets"] </div>
-                    </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Documents</div>
+                        </div>
+                        <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoOfInstitution"] </div>
+                    </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">INSTITUTION</div>
                 </div>
-           
+            </a>
+        </div>
+
+        <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center float-left m-3">
+
+            <div class="btn  btn-outline-warning text-dark" type="button">
+                <div class="">
+                    <div class="float-left">
+                        <svg class="c-icon text-white c-icon-lg">
+                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-description"></use>
+                        </svg>
+                    </div> <div class="text-white text-value-lg pl-1  float-left">&nbsp; @ViewData["NoofDocumets"] </div>
+                </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Documents</div>
+            </div>
+
 
         </div>
     </div>
@@ -115,9 +98,9 @@
 
 
 <div class="row m-2 p-5 gridcurve-border bg-white">
-    <h5 class="text-primary">Document Details</h5>
-    <div class="table-responsive m-6" style="width:95%;margin:2% 0">
-        <table class="table table-borderless" id="hdataTable">
+    <h5 class="text-primary mb-3">Document Details</h5>
+    <div class="table-responsive m-6">
+        <table class="table table-borderless" id="ddTable">
             <thead class="text-dark">
                 <tr>
                     @*<th scope="col">Category</th>*@
@@ -127,7 +110,9 @@
                     <th scope="col">Institute</th>
                     <th scope="col">Document</th>
                     <th scope="col">Reason</th>
-                    <th scope="col">Status</th>
+                    @*<th scope="col">Status</th>*@
+                    <th scope="col">Uploaded On</th>
+                    <th scope="col">Action</th>
 
                 </tr>
 
@@ -146,8 +131,9 @@
                         <td>@item.Institution </td>
                         <td><a href="@item.DocumentURL" alt="@item.DocumentName" target="_blank">@item.DocumentName </a> </td>
                         <td>@item.Reason  </td>
-                        <td>@item.FileStatus </td>
-                       
+                        @*<td>@item.FileStatus </td>*@
+                        <td>@item.CreatedOn </td>
+                        <td> @Html.ActionLink("Delete", "Delete", "Home", new { documentid = item.DocumentID }, new { })</td>
                     </tr>
 
                 }
@@ -161,3 +147,18 @@
 
 
 </div>
+<script>
+    //$(document).ready(function () {
+    //       $('#aitables').DataTable();
+    //});
+
+
+    $(document).ready(function () {
+
+        $('#ddTable').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false, "searching": true
+        });
+    });
+</script>

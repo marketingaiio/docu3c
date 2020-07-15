@@ -1,0 +1,37 @@
+﻿@model docu3c.ViewModel.ProfileModel
+@{
+    ViewBag.Title = "Add PortFolio";
+}
+
+
+
+
+
+
+<div class="row">
+    <div class="col-lg-8 col-md-12 portfolio-item">
+        <div class="card border-secondary">
+            <form role="form" action="/Port/Save" method="post">
+                <div class="card-header text-white bg-gradient-dark">Portfolio Info</div>
+                <div class="p-3">
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Portfolio Name</label>
+                            <input type="text" class="form-control" id="txtpName" name="portfolioname" placeholder="Enter the Portfolio name">
+                        </div>
+                      
+                    </div>
+
+                </div>
+                <div class="card-footer bg-light pb-5 ">
+                    <button class="btn btn-primary float-right" type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

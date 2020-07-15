@@ -17,15 +17,16 @@
     <script src="~/wwwroot/coreui/js/dist/popover.js"></script>
     <script src="~/wwwroot/coreui/js/dist/tooltip.js"></script><!-- HTML to write -->
 
-
+    <script src="~/Scripts/jquery-3.4.1.slim.js"></script>
     <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="~/wwwroot/coreui/dist/css/coreui.min.css">
     <link rel="stylesheet" href="~/wwwroot/coreui/dist/css/sidebar.min.css">
     <link href="~/Content/Site.css" rel="stylesheet" />
-  
-    
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
 </head>
 <body class="c-app">
 
@@ -71,18 +72,27 @@ a:link {
         </div>
         <ul class="c-sidebar-nav pt-3">
             @*<li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="@Url.Action("UploadForms", "Home")">
-                        <svg class="c-sidebar-nav-icon">
-                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-cloud-upload"></use>
-                        </svg> Sample <span class="badge badge-info">Preloaded Files</span>
-                    </a>
-                </li>*@
+            <a class="c-sidebar-nav-link" href="@Url.Action("UploadForms", "Home")">
+                <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-cloud-upload"></use>
+                </svg> Sample <span class="badge badge-info">Preloaded Files</span>
+            </a>
+        </li>*@
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="@Url.Action("Index", "Home")">
                     <svg class="c-sidebar-nav-icon">
                         <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
                     </svg>
                     Classification
+                </a>
+            </li>
+
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="@Url.Action("PortFolioDetails", "Home")">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                    </svg>
+                    Portfolio
                 </a>
             </li>
             @*<li class="c-sidebar-nav-title">Theme</li>*@

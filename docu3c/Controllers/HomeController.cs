@@ -362,11 +362,34 @@ namespace docu3c.Controllers
 
        
 
-        public ActionResult About()
+        public ActionResult About(string strPortFolioName)
         {
-            ViewBag.Message = "Your application description page.";
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
 
-            return View();
+                if (!string.IsNullOrEmpty(strPortFolioName))
+                {
+                    string strUserEmailID = Session["UserEmailID"].ToString();
+                    int userId = 0;
+                    using (docu3cEntities db = new docu3cEntities())
+                    {
+                        userId = db.UserDetails.FirstOrDefault(m => m.LoginID.Equals(strUserEmailID)).UserID;
+
+
+                        PortfolioDetail portfolioDetails = new PortfolioDetail();
+                        portfolioDetails.PortfolioName = strPortFolioName;
+                        portfolioDetails.IsActive = true;
+                        portfolioDetails.CreatedOn = DateTime.Now;
+                        portfolioDetails.CreatedBy = userId.ToString();
+
+
+                    }
+                }
+                return View(ProfileModel);
+            }
+
+            else { return RedirectToAction("Login", "Login"); }
         }
 
         public ActionResult Contact()
@@ -397,13 +420,7 @@ namespace docu3c.Controllers
                         {
                             o.Institution
                         }).Count();
-                        ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("1")).Count();
-                        ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("2")).Count();
-                        ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("3")).Count();
-                        ViewData["AssetTransferAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("4")).Count();
-                        ViewData["InsuranceContractAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("5")).Count();
-                        ViewData["MiscellaneousInvestments"] = db.DocumentDetails.Where(m => m.Category.Equals("6")).Count();
-                        ViewData["ClientProfiles"] = db.DocumentDetails.Where(m => m.Category.Equals("7")).Count();
+                      
 
                         ProfileModel = new ProfileModel
                         {
@@ -411,6 +428,7 @@ namespace docu3c.Controllers
                             CustomerDetails = db.CustomerDetails.ToList(),
                             PortfolioDetails = db.PortfolioDetails.ToList(),
                             DocumentDetails = db.DocumentDetails.Include("CustomerDetail").ToList(),
+                            
                             CategoryDetails = db.CategoryDetails.ToList(),
                             SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
                         };
@@ -443,14 +461,7 @@ namespace docu3c.Controllers
                         {
                             o.Institution
                         }).Count();
-                        ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("1")).Count();
-                        ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("2")).Count();
-                        ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("3")).Count();
-                        ViewData["AssetTransferAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("4")).Count();
-                        ViewData["InsuranceContractAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("5")).Count();
-                        ViewData["MiscellaneousInvestments"] = db.DocumentDetails.Where(m => m.Category.Equals("6")).Count();
-                        ViewData["ClientProfiles"] = db.DocumentDetails.Where(m => m.Category.Equals("7")).Count();
-
+                      
                         ProfileModel = new ProfileModel
                         {
 
@@ -490,14 +501,7 @@ namespace docu3c.Controllers
                         {
                             o.Institution
                         }).Count();
-                        ViewData["NewAccountAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("1")).Count();
-                        ViewData["InvestmentManagementAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("2")).Count();
-                        ViewData["AutomatedFundsTransferAgreement"] = db.DocumentDetails.Where(m => m.Category.Equals("3")).Count();
-                        ViewData["AssetTransferAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("4")).Count();
-                        ViewData["InsuranceContractAgreements"] = db.DocumentDetails.Where(m => m.Category.Equals("5")).Count();
-                        ViewData["MiscellaneousInvestments"] = db.DocumentDetails.Where(m => m.Category.Equals("6")).Count();
-                        ViewData["ClientProfiles"] = db.DocumentDetails.Where(m => m.Category.Equals("7")).Count();
-
+                      
                         ProfileModel = new ProfileModel
                         {
 
@@ -515,5 +519,87 @@ namespace docu3c.Controllers
             else { return RedirectToAction("Login", "Login"); }
 
         }
+
+        public ActionResult AddPortFolio()
+        { return View(); }
+        [HttpPost]
+        public ActionResult AddPortFolio(string portfolioname)
+        {
+          
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                ProfileModel ProfileModel = new ProfileModel();
+                if (!string.IsNullOrEmpty(portfolioname))
+                {
+                    string strUserEmailID = Session["UserEmailID"].ToString();
+                    int userId = 0;
+                    using (docu3cEntities db = new docu3cEntities())
+                    {
+                        userId = db.UserDetails.FirstOrDefault(m => m.LoginID.Equals(strUserEmailID)).UserID;
+                       
+
+                        PortfolioDetail portfolioDetails = new PortfolioDetail();
+                        portfolioDetails.PortfolioName = portfolioname;
+                        portfolioDetails.IsActive = true;
+                        portfolioDetails.CreatedOn = DateTime.Now;
+                        portfolioDetails.CreatedBy = userId.ToString();
+                        portfolioDetails.UserID = Convert.ToInt32(userId.ToString());
+                        db.PortfolioDetails.Add(portfolioDetails);
+                        db.SaveChanges();
+                        RedirectToAction("PortFolioDetails","Home");
+                    }
+                }
+                return View(ProfileModel);
+            }
+
+            else { return RedirectToAction("Login", "Login"); }
+        }
+
+        public ActionResult PortFolioDetails()
+        {
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                    ProfileModel = new ProfileModel
+                    {
+
+                        CustomerDetails = db.CustomerDetails.ToList(),
+                        PortfolioDetails = db.PortfolioDetails.ToList(),
+                        DocumentDetails = db.DocumentDetails.ToList(),
+
+                        CategoryDetails = db.CategoryDetails.ToList(),
+                        SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                    };
+                }
+                return View(ProfileModel);
+            }
+            else { return RedirectToAction("Login", "Login"); }
+        }
+
+        public ActionResult Delete(string DocumentID)
+        {
+           
+            using (docu3cEntities db = new docu3cEntities())
+            {
+                string strFileAbsoluteUri = string.Empty;
+                int iDocumentID = Convert.ToInt32(DocumentID);
+                strFileAbsoluteUri = db.DocumentDetails.FirstOrDefault(m => m.DocumentID.Equals(iDocumentID)).DocumentURL;
+                DocumentDetail documentDetail = db.DocumentDetails.Find(iDocumentID);
+               
+              //  db.UserDetails.FirstOrDefault(m => m.LoginID.Equals(strUserEmailID)).UserID
+              
+                db.DocumentDetails.Remove(documentDetail);
+                db.SaveChanges();
+            
+             //   strFileAbsoluteUri = db.DocumentDetails.Where(x => x.DocumentID.Equals("iDocumentID")).FirstOrDefault().DocumentURL;
+                docu3c.BlobHandling.BlobManager blobManager = new BlobManager("uploadfiles");
+                blobManager.DeleteBlob(strFileAbsoluteUri);
+            }
+
+                return RedirectToAction("DocumentDetails");
+        }
     }
+
 }

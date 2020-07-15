@@ -239,10 +239,6 @@
     <Content Include="Scripts\dataTables.jqueryui.min.js" />
     <Content Include="Scripts\dataTables.semanticui.js" />
     <Content Include="Scripts\dataTables.semanticui.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="wwwroot\coreui\css\alert.css" />
@@ -426,8 +422,6 @@
     <Content Include="Models\Docu3C.edmx.diagram">
       <DependentUpon>Docu3C.edmx</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -822,6 +816,8 @@
     <Content Include="Views\Home\DocumentDetails.cshtml" />
     <Content Include="Views\Home\CustomerDetails.cshtml" />
     <Content Include="Views\Home\InstitutionDetails.cshtml" />
+    <Content Include="Views\Home\AddPortFolio.cshtml" />
+    <Content Include="Views\Home\PortFolioDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
