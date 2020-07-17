@@ -7,6 +7,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -66,18 +67,14 @@ namespace docu3c.Controllers
                             DocumentDetails = db.DocumentDetails.Include("CustomerDetail").ToList(),
                             CategoryDetails = db.CategoryDetails.ToList(),
                             SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
-                            //ViewSubCategoryDetail = db.SubCategoryDetails.Include("CategoryDetail").GroupBy(o=>o new ).Select(c => new ViewSubCategoryDetail
-                            //{
+                          
+                           
+                    };
 
-                            //    CategoryName = c.CategoryDetail.CategoryName,
-                            //    Asset = c.SubCategoryName,
-                            //    CustomerCount = db.DocumentDetails.FirstOrDefault(v => v.SubCategory == c.SubCategoryName).ToString().Count()
+                 
 
-                            //})
+                        //Assign the value to ViewBag
 
-                        };
-
-                      
 
                     }
                 }
@@ -90,10 +87,10 @@ namespace docu3c.Controllers
                
         }
 
-       // [HttpPost]
       
 
-        public ActionResult LogOff()
+
+            public ActionResult LogOff()
         {
             Session.Clear();
             return RedirectToAction("Login", "Login");
@@ -229,7 +226,7 @@ namespace docu3c.Controllers
                                             string CustomerAddress = string.Empty;
                                             string CustomerSSN = string.Empty;
                                             string ExDocumentName = string.Empty;
-                                            //  DateTime dtDOB =DateTime.Now;
+                                             DateTime dtDOB;
                                             List<CustomerDetail> exCustomerDetails = new List<CustomerDetail>();
                                             if (!isDocumentAlreadyExists)
                                             {
@@ -262,8 +259,10 @@ namespace docu3c.Controllers
                                                     nCustomerDetails.IsActive = true;
                                                     nCustomerDetails.CreatedBy = userId.ToString();
                                                     nCustomerDetails.CreatedOn = DateTime.Now;
-                                                    // if (docinfo[0].docProps.ContainsKey("cust.dob"))
-                                                    //     nCustomerDetails.DOB = Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value.ToString());
+                                                        CultureInfo invariantCulture = CultureInfo.CreateSpecificCulture("en-US");  
+                                                        if (docinfo[0].docProps.ContainsKey("cust.dob"))
+                                                            
+                                                        nCustomerDetails.DOB =DateTime.Parse(docinfo[0].docProps["cust.dob"].Value.ToString(),invariantCulture);
                                                     nCustomerDetails.DocCustomerID = CustomerSSN;
 
                                                     //nCustomerDetails.DOB = Convert.ToDateTime(docinfo[0].docProps["cust.dob"].Value);
@@ -299,12 +298,31 @@ namespace docu3c.Controllers
                                                 {
                                                     strJSONIdentifier = docinfo[0].docProps["doc.type"].Value.ToString();
                                                     strJSONIdentifier = strJSONIdentifier.Replace("_", " ");
+                                                        strJSONIdentifier = strJSONIdentifier.Replace("®", " ");
                                                     // strJSONIdentifier = string()
                                                     nDocumentDetails.JSONFileIdentifier = strJSONIdentifier;
                                                     strJSONIdentifier = strJSONIdentifier.ToLowerInvariant();
-                                                    if (db.CategoryDetails.Any(x => x.JSONIdentifier.Equals(strJSONIdentifier)))
+
+                                                    if (db.CategoryDetails.Any(x => x.JSONIdentifier.Contains(strJSONIdentifier)))
                                                     {
-                                                        nDocumentDetails.Category = db.CategoryDetails.FirstOrDefault(m => m.JSONIdentifier.Equals(strJSONIdentifier)).CategoryName;
+                                                            string strCategoryName = string.Empty;
+                                                            List<CategoryDetail> strJSON = new List<CategoryDetail>();
+                                                            strJSON = db.CategoryDetails.Where(m => m.JSONIdentifier.Contains(strJSONIdentifier)).ToList();
+                                                            foreach (var item in strJSON)
+
+                                                            {
+                                                                Dictionary<string, List<string>> dstrJson = new Dictionary<string, List<string>>();
+                                                                dstrJson.Add(item.CategoryName, item.JSONIdentifier.Split(',').ToList());
+                                                                if (dstrJson.FirstOrDefault().Value.Any(m => m.Equals(strJSONIdentifier , StringComparison.OrdinalIgnoreCase)))
+                                                                {
+                                                                    strCategoryName = dstrJson.FirstOrDefault().Key;
+                                                                    break;
+                                                                }
+
+
+                                                            }
+
+                                                        nDocumentDetails.Category = strCategoryName;
                                                     }
                                                     if (db.SubCategoryDetails.Any(x => x.JSONIdentifier.Equals(strJSONIdentifier)))
                                                     {

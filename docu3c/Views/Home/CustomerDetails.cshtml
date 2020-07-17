@@ -88,32 +88,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
 
 
@@ -140,9 +114,15 @@
                             <td>@item.CustomerFirstName</td>
 
                             <td>
-                                @item.DOB
 
-                            </td>
+                                @if (item.DOB != null)
+
+                                {
+                                    string dt = String.Format("{0}/{1}/{2}", @item.DOB.Value.Day, @item.DOB.Value.Month, @item.DOB.Value.Year);
+                                    @Html.DisplayFor(m => dt);
+                               }
+
+                                </td>
                             <td>@item.MartialStatus </td>
                             <td>@item.Address</td>
                         </tr>

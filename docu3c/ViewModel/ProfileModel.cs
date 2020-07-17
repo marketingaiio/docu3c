@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace docu3c.ViewModel
 {
@@ -18,7 +19,7 @@ namespace docu3c.ViewModel
 
         public IEnumerable<UserDetail> UserDetails { set; get; }
 
-
+        public IEnumerable<SelectListItem> PortFolioDropDown { set; get; }
     }
 
   

@@ -31,7 +31,7 @@
 
                 <div class="row d-flex justify-content-center flex-wrap" style="margin-top:10%;">
 
-                    <div class="col-md-8" style="background-color:#2F3082" >
+                    <div class="col-md-8" style="background-color:#2F3082">
                         <div class="card-group">
                             <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%;background-color:#68BCE8">
                                 <div class="card-body text-center">
@@ -51,7 +51,7 @@
                                 <div class="card-body">
                                     <img src="~/Content/Images/TranspBG.png" width="95%" height="35%" />
 
-                                  
+
                                     <h2 class="text-center text-muted mb-3 ">  Sign In to get started</h2>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -85,63 +85,92 @@
                                     <small id="passwordHelpBlock" class="form-text text-muted">
                                         Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces or emoji.
                                     </small><br />
-                                            <div class="row">
-                                                <div class="col-md-12 content-center ">
-                                                    <button class="btn btn-primary font-weight-bold " style="background-color:#2F3082;width:80%;font-size:20px;" type="submit">Sign In</button>
-                                                </div>
-                                                <label id="ErrorMsg">@ViewBag.ErrorMsg</label>
-                                                <div class="col-md-12 content-center m-1 text-primary font-weight-bold  ">
-                                                    Forgot password ?</div>
-
-
-                                                </div>
-                                            </div>
-                            </div>
-
-
-                        </div>
+                                    <div class="row">
+                                        <div class="col-md-12 content-center ">
+                                            <button class="btn btn-primary font-weight-bold " style="background-color:#2F3082;width:80%;font-size:20px;" type="submit">Sign In</button>
                                         </div>
-
-
-
-
-
+                                      
+                                        <div class="col-md-offset-2 col-md-10 alert alert-danger collapse" id="myAlert">
+                                            <a id="linkclose" href="#" class="close"> &times;</a>
+                                            <strong>Error!</strong><label id="ErrorMsg">
+                                                <label id="ErrorMsg">@ViewBag.ErrorMsg</label>
+                                        </div>
+                                       
+                                        <div class="col-md-12 content-center m-1 text-primary font-weight-bold  ">
+                                            Forgot password ?
+                                        </div>
 
 
                                     </div>
                                 </div>
-                          
-                        <!-- CoreUI and necessary plugins-->
-                        <script src="~/lib/coreui/dist/js/coreui.bundle.min.js"></script>
-                        <!--[if IE]><!-->
-                        <script src="~/lib/coreui/icons/js/svgxuse.min.js"></script>
-                        <!--<![endif]-->
+                            </div>
 
 
-                        <script>
-                            // Example starter JavaScript for disabling form submissions if there are invalid fields
-                            (function () {
-                                'use strict';
-                                window.addEventListener('load', function () {
-                                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                                    var forms = document.getElementsByClassName('needs-validation');
-                                    // Loop over them and prevent submission
-                                    var validation = Array.prototype.filter.call(forms, function (form) {
-                                        form.addEventListener('submit', function (event) {
-                                            if (form.checkValidity() === false) {
-                                                event.preventDefault();
-                                                event.stopPropagation();
-                                            }
-                                            form.classList.add('was-validated');
-                                        }, false);
-                                    });
-                                }, false);
-                            })();
-                        </script>
-                    }
-                </form>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+            </div>
+
+            <!-- CoreUI and necessary plugins-->
+            <script src="~/lib/coreui/dist/js/coreui.bundle.min.js"></script>
+            <!--[if IE]><!-->
+            <script src="~/lib/coreui/icons/js/svgxuse.min.js"></script>
+            <!--<![endif]-->
+
+
+            <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (function () {
+                    'use strict';
+                    window.addEventListener('load', function () {
+                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                        var forms = document.getElementsByClassName('needs-validation');
+                        // Loop over them and prevent submission
+                        var validation = Array.prototype.filter.call(forms, function (form) {
+                            form.addEventListener('submit', function (event) {
+                                if (form.checkValidity() === false) {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                                form.classList.add('was-validated');
+                            }, false);
+                        });
+                    }, false);
+                })();
+            </script>
+
+            <script type="text/javascript">
+    $(document).ready(function () {
+
+        $('btnUpdate').click(function () {
+
+            if (@ViewBag.ErrorMsg != null) {
+                $('#myAlert').show('fade');
+                setTimeout(function () {
+                    $('#myAlert').hide('fade');
+                }, 2000);
+            }
+        });
+        $('#linkclose').click(function () {
+
+            $('myAlert').hide('fade');
+        });
+    });
+
+
+
+            </script>
+
+        }
+    </form>
             </body>
-
             @*@Scripts.Render("~/bundles/jquery")
                                         @Scripts.Render("~/bundles/bootstrap")*@
 

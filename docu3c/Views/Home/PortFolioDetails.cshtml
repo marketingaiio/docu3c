@@ -19,9 +19,9 @@
     @*<h5 class="text-primary mb-3">Document Details</h5>*@
     <div class="table-responsive m-6">
         <table class="table table-bordered mdl-data-table " id="ddTable">
-            <thead class="text-dark bg-secondary ">
+            <thead class="bg-primary text-white ">
                 <tr>
-                    <th>Portfolio Name</th>
+                    <th scope="col">Portfolio Name</th>
                     <th>No.of Customers</th>
                     <th>No.Documents</th>
                     <th>Created On</th>
@@ -36,7 +36,7 @@
                     {
                         <tr>
                             <td>@item.PortfolioName </td>
-                            <td>@db.CustomerDetails.Where(x => x.AdvisorID.Equals(item.UserID)).Count()</td>
+                            <td>@db.CustomerDetails.Where(x => x.PortfolioID.Equals(item.PortfolioID)).Distinct().Count()</td>
                             <td>
                                 @db.DocumentDetails.Where(x => x.PortfolioID.Equals(item.PortfolioID)).Count()
                             </td>

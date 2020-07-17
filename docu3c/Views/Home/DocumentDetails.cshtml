@@ -132,7 +132,9 @@
                         <td><a href="@item.DocumentURL" alt="@item.DocumentName" target="_blank">@item.DocumentName </a> </td>
                         <td>@item.Reason  </td>
                         @*<td>@item.FileStatus </td>*@
-                        <td>@item.CreatedOn </td>
+                    <td>
+                      @item.CreatedOn
+                    </td>
                         <td> @Html.ActionLink("Delete", "Delete", "Home", new { documentid = item.DocumentID }, new { })</td>
                     </tr>
 
