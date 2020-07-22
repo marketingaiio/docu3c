@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -11,9 +12,9 @@
     <link rel="shortcut icon" href="https://static.wixstatic.com/media/8ba3de_bb65a36e9b9a45e5b726692532ec60fb%7Emv2.png/v1/fill/w_32%2Ch_32%2Clg_1%2Cusm_0.66_1.00_0.01/8ba3de_bb65a36e9b9a45e5b726692532ec60fb%7Emv2.png" />
 
     @*<script src="~/Scripts/bootstrap.min.js"></script>*@
-
-
-    <script src="~/wwwroot/coreui/dist/js/coreui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    
+        <script src="~/wwwroot/coreui/dist/js/coreui.js"></script>
     <script src="~/wwwroot/coreui/js/dist/popover.js"></script>
     <script src="~/wwwroot/coreui/js/dist/tooltip.js"></script><!-- HTML to write -->
 
@@ -27,6 +28,8 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
+   
+
 </head>
 <body class="c-app">
 
@@ -37,32 +40,32 @@
             width: 160px;
             height: 180px;
             padding-bottom: 10px;
-            align-items: center; 
+            align-items: center;
         }
-        .gridcurve-border{
+
+        .gridcurve-border {
             border-radius: 30px;
             width: 95%;
             height: 90%;
             padding-bottom: 10px;
-            align-items: center; 
+            align-items: center;
         }
 
         .badge-curve {
             border-radius: 15px;
-            width:120px;
-            height:80px;
+            width: 120px;
+            height: 80px;
         }
 
         .badge-icon {
-            padding-left:30%;
+            padding-left: 30%;
             align-items: center;
-            justify-content:center;
+            justify-content: center;
         }
-        
-a:link {
-    color: #115293;
-}
 
+        a:link {
+            color: #115293;
+        }
     </style>
 
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar" style="background-color:#2F3082">
@@ -72,12 +75,12 @@ a:link {
         </div>
         <ul class="c-sidebar-nav pt-3">
             @*<li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="@Url.Action("UploadForms", "Home")">
-                <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-cloud-upload"></use>
-                </svg> Sample <span class="badge badge-info">Preloaded Files</span>
-            </a>
-        </li>*@
+                    <a class="c-sidebar-nav-link" href="@Url.Action("UploadForms", "Home")">
+                        <svg class="c-sidebar-nav-icon">
+                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-cloud-upload"></use>
+                        </svg> Sample <span class="badge badge-info">Preloaded Files</span>
+                    </a>
+                </li>*@
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="@Url.Action("Index", "Home")">
                     <svg class="c-sidebar-nav-icon">
@@ -142,17 +145,7 @@ a:link {
                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-menu"></use>
                 </svg>
             </button>
-            @*<ul class="c-header-nav d-md-down-none">
-                    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Dashboard", "Document")">Dashboard</a></li>
-                    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("FormRecognizer", "Home")">Documents</a></li>
-                    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Compliance", "Home")">Compliance</a></li>
 
-                    @if (Session["Role"].ToString() == "Admin")
-                    {
-                        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="@Url.Action("Get", "Home")">Users</a></li>
-                    }
-
-                </ul>*@
             <ul class="c-header-nav ml-auto mr-4">
                 <li>
                     @if (Session["UserName"] != null)
@@ -185,7 +178,28 @@ a:link {
         <div class="c-body" style="background:#F9FAFC">
             <main class="c-main">
                 <div class="container-fluid">
-                    <!-- Main content here --> @RenderBody()
+
+
+                    @*<form role="form" action="/Home/RedirectIndex" method="post">
+                        <div class="row ml-2">
+                            <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
+                                <option value="0">All Portfolio</option>
+
+                                @{
+                                    foreach (var item in Model.PortfolioDetails)
+                                    {
+                                        <option value="@item.PortfolioID">@item.PortfolioName </option>
+                                    }
+                                }
+
+                            </select>
+
+
+
+                        </div>*@
+                        <!-- Main content here --> @RenderBody()
+                    @*</form>*@
+
                 </div>
             </main>
             <div class="c-footer">
@@ -204,7 +218,39 @@ a:link {
 
 
     @*</div>*@
+    <script>
+        //$(document).ready(function () {
+        //       $('#aitables').DataTable();
+        //});
 
+
+        $(document).ready(function () {
+
+
+
+            $('#iPortFolioID').change(function () {
+                //  alert($(this).val());
+
+                $.ajax({
+
+                    type: 'get',
+                    url: '/Home/LoadPortfolio',
+                    data: { dPortFolioID: parseInt($(this).val()) },
+                    contentType: "application/json; charset=utf-8",
+                    success: function (Data) {
+                        window.location.reload();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    }
+                });
+
+
+              
+
+            });
+        });
+    </script>
 
 </body>
 </html>

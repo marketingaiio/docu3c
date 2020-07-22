@@ -2,22 +2,25 @@
 @{
     ViewBag.Title = "CustomerDetails";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script>
-    //$(document).ready(function () {
-    //       $('#aitables').DataTable();
-    //});
-     
+<form role="form" action="/Home/LoadPortfolio" method="post">
+    <div class="row">
+        <select id="icPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
+            <option value="0">All Portfolio</option>
 
-        $(document).ready(function () {
-           
-        $('#CdTable').DataTable({
-            "paging": true,
-            "ordering": true,
-            "info": false, "searching": true
-        });
-    });
-    </script>
+            @{
+                foreach (var item in Model.PortfolioDetails)
+                {
+                    <option value="@item.PortfolioID">@item.PortfolioName </option>
+                }
+            }
+
+        </select>
+
+
+
+    </div>
     <div class="row">
 
 
@@ -33,27 +36,27 @@
                             </div>
                             <div class="text-primary text-value-lg float-left ">&nbsp; @ViewData["NoofCategory"] </div>
                         </div><br />
-                              <div class="row text-muted text-uppercase font-weight-bold small  ">Category</div>
+                        <div class="row text-muted text-uppercase font-weight-bold small  ">Category</div>
                     </div>
                 </a>
 
             </div>
-       
+
             <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center float-left m-3">
-               
-                    <div class="btn  btn-outline-warning text-dark" type="button">
-                        <div class="">
-                            <div class="float-left">
-                                <svg class="c-icon text-white c-icon-lg">
-                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-user"></use>
-                                </svg>
-                            </div> <div class="text-white text-value-lg pl-1  float-left">&nbsp; @ViewData["NoofCustomers"] </div>
-                        </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Customers</div>
-                    </div>
-               
+
+                <div class="btn  btn-outline-warning text-dark" type="button">
+                    <div class="">
+                        <div class="float-left">
+                            <svg class="c-icon text-white c-icon-lg">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-user"></use>
+                            </svg>
+                        </div> <div class="text-white text-value-lg pl-1  float-left">&nbsp; @ViewData["NoofCustomers"] </div>
+                    </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Customers</div>
+                </div>
+
 
             </div>
-      
+
             <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
                 <a href="@Url.Action("InstitutionDetails", "Home")">
                     <div class="btn btn-default text-dark">
@@ -68,7 +71,7 @@
                     </div>
                 </a>
             </div>
-       
+
             <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
                 <a href="@Url.Action("DocumentDetails", "Home")">
                     <div class="btn btn-default text-dark">
@@ -120,9 +123,9 @@
                                 {
                                     string dt = String.Format("{0}/{1}/{2}", @item.DOB.Value.Day, @item.DOB.Value.Month, @item.DOB.Value.Year);
                                     @Html.DisplayFor(m => dt);
-                               }
+                                }
 
-                                </td>
+                            </td>
                             <td>@item.MartialStatus </td>
                             <td>@item.Address</td>
                         </tr>
@@ -133,3 +136,52 @@
 
         </div>
     </div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+
+         setTimeout(function () {
+                var drpVal = @Session["dPortFolioID"];
+                if (drpVal != "") {
+                    $('#icPortFolioID').val(drpVal);
+                }
+            }, 1000);
+        $('#icPortFolioID').change(function () {
+            //  alert($(this).val());
+
+            $.ajax({
+
+                type: 'get',
+                url: '/Home/LoadPortfolio',
+                data: { dPortFolioID: parseInt($(this).val()) },
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        });
+
+
+
+    });
+</script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#CdTable').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false, "searching": true
+        });
+    });
+</script>
+

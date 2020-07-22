@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -104,6 +105,11 @@ namespace docu3c.BlobHandling
                 }
             }
             return _blobList;
+        }
+
+        public async Task<bool> FileExists(string fileName)
+        {
+            return await blobContainer.GetBlockBlobReference(fileName).ExistsAsync();
         }
 
         public string ReadBlob(string AbsoluteUri)

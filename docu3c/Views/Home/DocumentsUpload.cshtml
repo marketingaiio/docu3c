@@ -1,79 +1,106 @@
 ﻿@model  docu3c.DocumentUpload
+@using docu3c.Models;
 @{
     ViewBag.Title = "Upload Documents";
 }
 
 
-@if (ViewBag.Message != null)
-{
-    <script type="text/javascript">alert(@ViewBag.Message);</script>
-}
 
-<div class="w-75">
-    <h5>
+    <div class="w-75">
+        <h5>
 
-        @if (Session["UserName"] != null)
-        {
-            <text>
-                Hi <b>@Session["UserName"].ToString() </b>,<br />
+            @if (Session["UserName"] != null)
+            {
+                <text>
+                    Hi <b>@Session["UserName"].ToString() </b>,<br />
 
-            </text>
+                </text>
 
-        }
+            }
 
-    </h5>
-    Let's create a portfolio to store all your customer's documents. <br /><br />
-    <div class="pagesubtitle">
-        <b>  Portfolio Name: </b> @Model.PortfolioName
-    </div>
-    <div class="row m-4">
-        <div class="col-md-3">
+        </h5>
+        Let's create a portfolio to store all your customer's documents. <br /><br />
+        <div class="pagesubtitle">
+           
 
-            Choose Documents
+        </div>
+        <div class="text-center hidden " id="divProcessing">
+            Processing, please wait . . . <img src="~/Content/Images/ajax-loader.gif" class="rounded" alt="...">
+        </div>
 
-            <div class="card-body p-0 d-flex align-items-center pt-4 ">
-                <div class="mfe-3">
-                    <svg class="c-icon c-icon-xl text-warning">
-                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-folder-open"></use>
-                    </svg>
+        @*<div class="col-md-offset-2 col-md-10 alert alert-danger collapse" id="myAlert">
+        <a id="linkclose" href="#" class="close"> &times;</a>*@
+        <div class="col-md-offset-2 col-md-10 text-danger" id="myAlert">
+            @*<strong>Error!</strong>*@<label id="ErrorMsg">@ViewData["ErrorMessage"]</label>
+
+        </div>
+
+
+        <div class="row m-4">
+
+
+            <div class="col-md-3">
+                <div class="row">
+                    <select id="iPortFolioID" class="border-primary mb-3 form-control w-75" asp-for="PortFolioID">
+                        <option value="0">All Portfolio</option>
+
+                        @{
+                            using (docu3cEntities db = new docu3cEntities())
+                            {
+                                foreach (var item in db.PortfolioDetails)
+                                {
+                                    <option value="@item.PortfolioID">@item.PortfolioName </option>
+                                }
+                            }
+                        }
+
+                    </select>
                 </div>
-                <div>
+                <b>   Choose Documents</b>
+
+                <div class="card-body p-0 d-flex align-items-center pt-4 ">
+                    <div class="mfe-3">
+                        <svg class="c-icon c-icon-xl text-warning">
+                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-folder-open"></use>
+                        </svg>
+                    </div>
+                    <div>
 
 
 
-                    <div class="text-warning text-uppercase font-weight-bold small">Local Folders</div>
+                        <div class="text-warning text-uppercase font-weight-bold small">Local Folders</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-7">
-            <div class="card">
+            <div class="col-md-7">
+                <div class="card">
 
-                @using (Html.BeginForm("DocumentsUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
+                    @using (Html.BeginForm("DocumentsUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
 
-                    <div class="form-horizontal" id="upload">
+                        <div class="form-horizontal" id="upload">
 
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
-                                @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
+                                    @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Upload" class="btn btn-primary" id="btnUpdate" />
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Upload" class="btn btn-primary" id="btnUpdate" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10 text-success">
-                                @ViewBag.UploadStatus
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10 text-success">
+                                    @ViewBag.UploadStatus
+                                </div>
                             </div>
-                        </div>
 
-                        @*<ul style="list-style-type: none; padding:0">
+                            @*<ul style="list-style-type: none; padding:0">
                                 @foreach (var item in Model)
                                 {
                                     <li>
@@ -81,15 +108,102 @@
                                     </li>
                                 }
                             </ul>*@
-                    </div>
+                        </div>
 
-                }
+                    }
+                </div>
+
             </div>
-
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    @*$(document).ready(function () {
+      
+        alert("hiu");
+         $("#divProcessing").hide();
+        $('#btnUpdate').click(function () {
+            $('#divProcessing').show();
+            
+            if (@ViewData["ErrorMessage"] != null) {
+                $('#myAlert').removeClass('collapse');
+                $('#myAlert').show('fade');
+                setTimeout(function () {
+                    $('#myAlert').hide('fade');
+                }, 2000);
+            }
+        });
+        $('#linkclose').click(function () {
+
+            $('myAlert').hide('fade');
+        });
+    });*@
+ 
+
+    $(document).ready(function () {
+        $("#divProcessing").hide();
+     
+    
 
 
-</div><script type="text/javascript" language=javascript>
-    $.validator.unobtrusive.parse(document);
+        $('#btnUpdate').click(function () {
+            $("#divProcessing").show();
+
+              $('#myAlert').show();
+            //setTimeout(function () {
+            //    //var drpVal = ;
+            //    //if (drpVal != "") {
+                  
+            //  //  }
+     
+            //}, 7000);
+          
+        });
+
+
+          setTimeout(function () {
+                    $('#myAlert').hide();
+                }, 4000);
+            
+    });
+
+
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+      
+            setTimeout(function () {
+                var drpVal = @Session["dPortFolioID"];
+                if (drpVal != "") {
+                    $('#iPortFolioID').val(drpVal);
+                }
+     
+            }, 1000);
+
+        $('#iPortFolioID').change(function () {
+            //  alert($(this).val());
+
+            $.ajax({
+
+                type: 'get',
+                url: '/Home/LoadPortfolio',
+                data: { dPortFolioID: parseInt($(this).val()) },
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        });
+
+
+
+
+    });
+
 </script>
