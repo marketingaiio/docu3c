@@ -57,6 +57,9 @@
     <Property Name="Reason" Type="nvarchar(max)" />
     <Property Name="FileStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="CustomerName" Type="nvarchar(max)" />
     <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
     <Property Name="ModifiedBy" Type="nvarchar(max)" />

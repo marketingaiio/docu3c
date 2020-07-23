@@ -32,6 +32,9 @@ namespace docu3c.Models
         public System.DateTime CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public string Address { get; set; }
+        public string CustomerName { get; set; }
     
         public virtual CustomerDetail CustomerDetail { get; set; }
         public virtual PortfolioDetail PortfolioDetail { get; set; }

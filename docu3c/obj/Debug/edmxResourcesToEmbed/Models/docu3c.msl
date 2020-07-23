@@ -96,6 +96,9 @@
     <EntitySetMapping Name="DocumentDetails">
       <EntityTypeMapping TypeName="docu3cModel.DocumentDetail">
         <MappingFragment StoreEntitySet="DocumentDetails">
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />

@@ -5,9 +5,9 @@
 
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    
-<form role="form" action="/Home/LoadPortfolio" method="post">
+<form role="form" method="post">
     <div class="row">
         <select id="idPortFolioID" class="border-primary w-25 form-control" name="idPortFolioID">
             <option value="0">All Portfolio</option>
@@ -159,17 +159,11 @@
                             <td>
                                 @*@Html.ActionLink("Delete", "Delete", "Home", new { documentid = item.DocumentID }, new { @class = "material-icons" })*@
 
-                                <span class="float-left ">
-                                    <a href="@Url.Action("Delete", "Home", new { documentid = item.DocumentID })" class="btn btn  btn-link btn-sm">
-                                        <span class="material-icons">
-                                            delete_outline
-                                        </span>
-                                    </a>
-                                </span>
+
                                 <span class="float-left ">
                                     @if (item.DocumentURL != null)
                                     {
-                                        <a class="btn btn  btn-link btn-sm" href="@item.DocumentURL" target="_blank" rel="tooltip" title="Download" alt="@item.DocumentName">
+                                        <a class="btn btn  btn-link btn-sm" href="@item.DocumentURL" target="_blank" rel="tooltip" title="@item.DocumentName" alt="">
                                             <i class="material-icons">vertical_align_bottom</i>
 
                                         </a>
@@ -182,6 +176,13 @@
 
                                     }
                                 </span>
+                                <span class="float-left ">
+                                    <a href="@Url.Action("Delete", "Home", new { documentid = item.DocumentID })" class="btn btn  btn-link btn-sm">
+                                        <span class="material-icons">
+                                            delete_outline
+                                        </span>
+                                    </a>
+                                </span>
 
                             </td>
                         </tr>
@@ -191,19 +192,25 @@
             </table>
 
         </div>
-
+        @if (Convert.ToInt32(Session["dPortFolioID"]) > 0)
+        {
         <div class="row m-2 w-100 justify-content-end">
 
-
-            <a class="c-header-nav-link" href="@Url.Action("CheckCompliance", "Home")" > <div class="btn btn-pill btn-block btn-primary active">Check Compliance</div> </>
+            <input type="submit" value="Check Compliance" class="btn btn-primary" id="btnCompliance" />
+            @*<a class="c-header-nav-link" href="@Url.Action("CheckCompliance", "Home")" > <div class="btn btn-pill btn-block btn-primary active">Check Compliance</div> </>*@
 
 
         </div>
-
+        <div class="row m-2 w-100 justify-content-center text-center hidden text-success" id="divProcessing">
+            Checking for Compliance Data, please wait . . . <img src="~/Content/Images/ajax-loader.gif" class="rounded" alt="...">
+        </div>
+        }
 
     </div>
 </form>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
 <script>
 
 
@@ -235,7 +242,7 @@
         });
 
 
-         
+
         });
 </script>
 <script src="~/Scripts/jquery.dataTables.min.js"></script>
@@ -246,6 +253,30 @@
             "paging": true,
             "ordering": true,
             "info": false, "searching": true
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#divProcessing").hide();
+        $('#btnCompliance').click(function () {
+            // alert($(this).val());
+            $("#divProcessing").show();
+            $.ajax({
+
+                type: 'get',
+                url: '/Home/CheckCompliance',
+                data: null,
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
         });
     });
 </script>

@@ -183,6 +183,9 @@
     <NavigationProperty Name="CustomerDetail" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="DocumentDetail" ToRole="CustomerDetail" />
     <NavigationProperty Name="PortfolioDetail" Relationship="docu3cModel.FK_DocumentDetails_PortfolioDetails" FromRole="DocumentDetail" ToRole="PortfolioDetail" />
     <NavigationProperty Name="UserDetail" Relationship="docu3cModel.FK_DocumentDetails_UserDetails" FromRole="DocumentDetail" ToRole="UserDetail" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_CustomerDetails_PortfolioDetails">
     <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />

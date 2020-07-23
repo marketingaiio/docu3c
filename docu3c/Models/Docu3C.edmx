@@ -62,6 +62,9 @@
           <Property Name="Reason" Type="nvarchar(max)" />
           <Property Name="FileStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="CustomerName" Type="nvarchar(max)" />
           <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar(max)" />
@@ -422,6 +425,9 @@
           <NavigationProperty Name="CustomerDetail" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="DocumentDetail" ToRole="CustomerDetail" />
           <NavigationProperty Name="PortfolioDetail" Relationship="docu3cModel.FK_DocumentDetails_PortfolioDetails" FromRole="DocumentDetail" ToRole="PortfolioDetail" />
           <NavigationProperty Name="UserDetail" Relationship="docu3cModel.FK_DocumentDetails_UserDetails" FromRole="DocumentDetail" ToRole="UserDetail" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_CustomerDetails_PortfolioDetails">
           <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />
@@ -584,6 +590,9 @@
           <EntitySetMapping Name="DocumentDetails">
             <EntityTypeMapping TypeName="docu3cModel.DocumentDetail">
               <MappingFragment StoreEntitySet="DocumentDetails">
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />

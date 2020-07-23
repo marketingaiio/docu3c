@@ -20,22 +20,18 @@
 
         </h5>
         Let's create a portfolio to store all your customer's documents. <br /><br />
-        <div class="pagesubtitle">
-           
 
-        </div>
-        <div class="text-center hidden " id="divProcessing">
+
+
+        <div class="text-center hidden text-success" id="divProcessing">
             Processing, please wait . . . <img src="~/Content/Images/ajax-loader.gif" class="rounded" alt="...">
         </div>
-
         @*<div class="col-md-offset-2 col-md-10 alert alert-danger collapse" id="myAlert">
         <a id="linkclose" href="#" class="close"> &times;</a>*@
-        <div class="col-md-offset-2 col-md-10 text-danger" id="myAlert">
-            @*<strong>Error!</strong>*@<label id="ErrorMsg">@ViewData["ErrorMessage"]</label>
+        <div class="text-danger text-center pl-10" id="myAlert" >
+            <label id="ErrorMsg" class="text-center">@ViewData["ErrorMessage"]</label>
 
         </div>
-
-
         <div class="row m-4">
 
 
@@ -73,6 +69,7 @@
                 </div>
             </div>
             <div class="col-md-7">
+
                 <div class="card">
 
                     @using (Html.BeginForm("DocumentsUpload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -100,63 +97,33 @@
                                 </div>
                             </div>
 
-                            @*<ul style="list-style-type: none; padding:0">
-                                @foreach (var item in Model)
-                                {
-                                    <li>
 
-                                    </li>
-                                }
-                            </ul>*@
                         </div>
 
                     }
                 </div>
+
+
+
+
 
             </div>
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    @*$(document).ready(function () {
-      
-        alert("hiu");
-         $("#divProcessing").hide();
-        $('#btnUpdate').click(function () {
-            $('#divProcessing').show();
-            
-            if (@ViewData["ErrorMessage"] != null) {
-                $('#myAlert').removeClass('collapse');
-                $('#myAlert').show('fade');
-                setTimeout(function () {
-                    $('#myAlert').hide('fade');
-                }, 2000);
-            }
-        });
-        $('#linkclose').click(function () {
-
-            $('myAlert').hide('fade');
-        });
-    });*@
- 
-
+  
     $(document).ready(function () {
         $("#divProcessing").hide();
      
     
-
+     
 
         $('#btnUpdate').click(function () {
             $("#divProcessing").show();
 
               $('#myAlert').show();
-            //setTimeout(function () {
-            //    //var drpVal = ;
-            //    //if (drpVal != "") {
-                  
-            //  //  }
-     
-            //}, 7000);
+           
           
         });
 
