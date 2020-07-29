@@ -1,0 +1,189 @@
+﻿@model docu3c.ViewModel.ProfileModel
+@{
+    ViewBag.Title = "Verification";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<form role="form" action="/Home/LoadPortfolio" method="get">
+    <div class="row">
+        <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
+            <option value="0">All Portfolio</option>
+
+            @{
+                foreach (var item in Model.PortfolioDetails)
+                {
+                    <option value="@item.PortfolioID">@item.PortfolioName </option>
+                }
+            }
+
+        </select>
+    </div>
+
+
+    <div class="row">
+
+
+        <div class="col">
+            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+
+                <div class="btn  btn-default text-dark" type="button">
+                    <div class="" style="height:30px">
+                        <div class="float-left">
+                            <svg class="c-icon text-success c-icon-lg">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-thumb-up"></use>
+                            </svg>
+                        </div> <div class="text-success text-value-lg pl-1  float-left">&nbsp;% </div>
+                    </div><br /> <div class=" row  text-muted text-uppercase font-weight-bold small">Compliance Score</div>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+                <a href="@Url.Action("Attention", "Home")">
+                    <div class="btn  btn-default text-dark">
+                        <div class=""  style="height:30px">
+                            <div class="float-left">
+                                <svg class="c-icon text-danger c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-warning"></use>
+                                </svg>
+                            </div>
+                            <div class="text-danger text-value-lg float-left ">&nbsp; @ViewData["NeedAttention"] </div>
+                        </div><br />
+                        <div class="row text-muted text-uppercase font-weight-bold small  ">Needs Attention</div>
+                    </div>
+                </a>
+
+            </div>
+
+
+            <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve1 align-items-center float-left m-3">
+               
+                    <div class="btn btn-outline-warning text-dark">
+                        <div class=""  style="height:30px">
+                            <div class="float-left">
+                                <svg class="c-icon text-white c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
+                                </svg>
+                            </div>
+                            <div class="text-white text-value-lg float-left">&nbsp; @ViewData["NeedVerification"] </div>
+                        </div><br /> <div class="row text-white text-uppercase font-weight-bold small">Needs Verification</div>
+                    </div>
+              
+            </div>
+
+
+            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+                <a href="@Url.Action("Compliance", "Home")">
+                    <div class="btn btn-default text-dark">
+                        <div class=""  style="height:30px">
+                            <div class="float-left">
+                                <svg class="c-icon text-success c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-badge"></use>
+                                </svg>
+                            </div>
+                            <div class="text-success text-value-lg float-left">&nbsp; @ViewData["MeetCompliance"] </div>
+                        </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">Meets Compliance</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row m-2 p-5 gridcurve-border bg-white">
+        <h5 class="text-primary">Needs Attention</h5>
+        <div class="table-responsive m-6" style="width:95%;margin:2% 0">
+            <table class="table table-borderless" id="vTable">
+                <thead class="border-bottom">
+                    <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">Asset</th>
+
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Institution</th>
+                        <th scope="col">Reason</th>
+                        <th scope="col">Document</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.DocumentDetails)
+                    {
+                    <tr>
+                        <td>@item.Category    </td>
+                        <td>@item.JSONFileIdentifier </td>
+
+                        <td>
+                            @item.CustomerDetail.CustomerFirstName
+
+                        </td>
+                        <td>@item.Institution </td>
+                        <td>
+                            @item.Reason
+                        </td>
+                        <td><a href="@item.DocumentURL">@item.DocumentName </a></td>
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                var drpVal = @Session["dPortFolioID"];
+                if (drpVal != "") {
+                    $('#iPortFolioID').val(drpVal);
+                }
+            }, 1000);
+
+        $('#iPortFolioID').change(function () {
+            //  alert($(this).val());
+
+            $.ajax({
+
+                type: 'get',
+                url: '/Home/LoadPortfolio',
+                data: { dPortFolioID: parseInt($(this).val()) },
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        });
+
+
+
+
+    });
+
+</script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#vTable').DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": false, "searching": true
+        });
+    });
+</script>
+

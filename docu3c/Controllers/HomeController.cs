@@ -495,17 +495,7 @@ namespace docu3c.Controllers
 
                                     if (CRACustomerName != docCustomerName && !string.IsNullOrEmpty(docCustomerName))
                                     { strComplianceData += "Customer Name is mismatch;"; }
-                                    if (!string.IsNullOrEmpty(CRAAddress))
-                                    {
-                                        if (!string.IsNullOrEmpty(docAddress))
-                                        {
-                                            if (CRAAddress != docAddress)
-                                            { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); }
-                                        }
-                                        else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); }
-                                    }
-                                    else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); }
-
+                                  
                                     if (!string.IsNullOrEmpty(CRASSN))
                                     {
                                         if (!string.IsNullOrEmpty(docSSN))
@@ -527,9 +517,36 @@ namespace docu3c.Controllers
                                         else { strComplianceData += string.Format("DOB is missing; {0}", Environment.NewLine); }
                                     }
                                     else { strComplianceData += string.Format("CRA DOB is missing; {0}", Environment.NewLine); }
+                                    if(!string.IsNullOrEmpty(strComplianceData))
+                                    {
+                                        if (!string.IsNullOrEmpty(CRAAddress))
+                                        {
+                                            if (!string.IsNullOrEmpty(docAddress))
+                                            {
+                                                if (CRAAddress != docAddress)
+                                                { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); }
+                                            }
+                                            else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); }
+                                        }
+                                        else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); }
+                                        docitem.FileStatus = "Red";
 
+                                    }
+                                    else {
+                                        if (!string.IsNullOrEmpty(CRAAddress))
+                                        {
+                                            if (!string.IsNullOrEmpty(docAddress))
+                                            {
+                                                if (CRAAddress != docAddress)
+                                                { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); }
+                                            }
+                                            else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); }
+                                        }
+                                        else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); }
+                                        docitem.FileStatus = "Yellow";
+                                    }
                                     docitem.Reason = strComplianceData;
-                                    docitem.FileStatus = "Red";
+                                   
                                     docitem.ModifiedOn = DateTime.Now;
                                     docitem.ModifiedBy = docitem.UserID.ToString();
                                     //db.DocumentDetails.Append(docitem.Reason);
@@ -859,6 +876,181 @@ namespace docu3c.Controllers
             }
 
                 return RedirectToAction("DocumentDetails");
+        }
+
+        public ActionResult Compliance()
+        {
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                string strUserEmailID = Session["UserEmailID"].ToString();
+               
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                  if (User != null)
+                    {
+                        int SessionPortFolioID;
+                        if (Session["dPortFolioID"] != null)
+                        {
+                            SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
+                        }
+                        else { SessionPortFolioID = 0; }
+                        if (SessionPortFolioID == 0)
+                        {
+                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
+                            ViewData["NeedVerification"] = db.DocumentDetails.Where(x=>x.FileStatus.Equals("Yellow")).Count();
+                            ViewData["MeetCompliance"] = db.DocumentDetails.Count();
+                          
+
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                        }
+                        else
+                        {
+                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["NeedVerification"] = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["MeetCompliance"] = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+
+
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                        }
+                    }
+                }
+                return View(ProfileModel);
+            }
+            else { return RedirectToAction("Login", "Login"); }
+          
+        }
+
+        public ActionResult Attention()
+        {
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                string strUserEmailID = Session["UserEmailID"].ToString();
+
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                    if (User != null)
+                    {
+                        int SessionPortFolioID;
+                        if (Session["dPortFolioID"] != null)
+                        {
+                            SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
+                        }
+                        else { SessionPortFolioID = 0; }
+                        if (SessionPortFolioID == 0)
+                        {
+                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
+                            ViewData["NeedVerification"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
+                            ViewData["MeetCompliance"] = db.DocumentDetails.Count();
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x=>x.FileStatus.Equals("Red")).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                        }
+                        else {
+
+                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["NeedVerification"] = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["MeetCompliance"] = db.DocumentDetails.Where(m=>m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.FileStatus.Equals("Red")).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                        }
+                    }
+                }
+                return View(ProfileModel);
+            }
+            else { return RedirectToAction("Login", "Login"); }
+            
+        }
+
+        public ActionResult Verification()
+        {
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                string strUserEmailID = Session["UserEmailID"].ToString();
+
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                    if (User != null)
+                    {
+                        int SessionPortFolioID;
+                        if (Session["dPortFolioID"] != null)
+                        {
+                            SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
+                        }
+                        else { SessionPortFolioID = 0; }
+                        if (SessionPortFolioID == 0)
+                        {
+                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
+                            ViewData["NeedVerification"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
+                            ViewData["MeetCompliance"] = db.DocumentDetails.Count();
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                        }
+                        else
+                        {
+                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["NeedVerification"] = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["MeetCompliance"] = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.FileStatus.Equals("Yellow")).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                        }
+                    }
+                }
+                return View(ProfileModel);
+            }
+            else { return RedirectToAction("Login", "Login"); }
+        
         }
     }
 

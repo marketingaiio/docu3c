@@ -51,6 +51,11 @@
             align-items: center;
         }
 
+         .badge-curve1 {
+            border-radius: 15px;
+            width: 150px;
+            height: 90px;
+        }
         .badge-curve {
             border-radius: 15px;
             width: 120px;
@@ -100,7 +105,7 @@
             </li>
             @*<li class="c-sidebar-nav-title">Theme</li>*@
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="#">
+                <a class="c-sidebar-nav-link" href="@Url.Action("Attention", "Home")">
                     <svg class="c-sidebar-nav-icon">
                         <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-compass"></use>
                     </svg> Compliance
