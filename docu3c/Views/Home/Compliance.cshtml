@@ -25,29 +25,27 @@
 
 
         <div class="col">
-            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+            <a href="@Url.Action("ComplianceScore", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
-                <div class="btn  btn-default text-dark" type="button">
-                    <div class="" style="height:30px">
-                        <div class="float-left">
-                            <svg class="c-icon text-success c-icon-lg">
-                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-cil-thumb-up"></use>
-                            </svg>
-                        </div> <div class="text-success text-value-lg pl-1  float-left">&nbsp; % </div>
-                    </div><br /> <div class=" row  text-muted text-uppercase font-weight-bold small">Compliance Score</div>
+                    <div class="btn  btn-default text-dark" type="button">
+                        <div class="" style="height:30px">
+                            <div class="float-left">
+                                <svg class="c-icon text-success c-icon-lg">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-cil-thumb-up"></use>
+                                </svg>
+                            </div> <div class="text-success text-value-lg pl-1  float-left">&nbsp; @ViewData["ComplianceScore"]% </div>
+                        </div><br /> <div class=" row  text-muted text-uppercase font-weight-bold small">Compliance Score</div>
+                    </div>
+
+
                 </div>
+            </a>
 
 
-            </div>
+            <a href="@Url.Action("Attention", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
-
-
-
-
-
-
-            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
-                <a href="@Url.Action("Attention", "Home")">
                     <div class="btn  btn-default text-dark">
                         <div class="" style="height:30px">
                             <div class="float-left">
@@ -59,13 +57,14 @@
                         </div><br />
                         <div class="row text-muted text-uppercase font-weight-bold small  ">Needs Attention</div>
                     </div>
-                </a>
-
-            </div>
 
 
-            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
-                <a href="@Url.Action("Verification", "Home")">
+                </div>
+            </a>
+
+            <a href="@Url.Action("Verification", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+
                     <div class="btn btn-default text-dark">
                         <div class="" style="height:30px">
                             <div class="float-left">
@@ -76,12 +75,13 @@
                             <div class="text-warning text-value-lg float-left">&nbsp; @ViewData["NeedVerification"] </div>
                         </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">Needs Verification</div>
                     </div>
-                </a>
-            </div>
 
+                </div>
+            </a>
 
-            <div class="card overflow-hidden shadow-lg bg-gradient-success badge-curve1 align-items-center float-left m-3">
-                <a href="@Url.Action("Compliance", "Home")">
+          
+                <div class="card overflow-hidden shadow-lg bg-gradient-success badge-curve1 align-items-center float-left m-3">
+
                     <div class="btn btn-default text-dark">
                         <div class="" style="height:30px">
                             <div class="float-left">
@@ -92,8 +92,9 @@
                             <div class="text-white text-value-lg float-left">&nbsp; @ViewData["MeetCompliance"]</div>
                         </div><br /> <div class="row text-white text-uppercase font-weight-bold small">Meets Compliance</div>
                     </div>
-                </a>
-            </div>
+
+                </div>
+          
         </div>
 
 

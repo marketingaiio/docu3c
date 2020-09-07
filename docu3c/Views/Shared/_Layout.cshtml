@@ -79,13 +79,14 @@
 
         </div>
         <ul class="c-sidebar-nav pt-3">
-            @*<li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="@Url.Action("UploadForms", "Home")">
-                        <svg class="c-sidebar-nav-icon">
-                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-cloud-upload"></use>
-                        </svg> Sample <span class="badge badge-info">Preloaded Files</span>
-                    </a>
-                </li>*@
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="@Url.Action("PortFolioDetails", "Home")">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                    </svg>
+                    Portfolio
+                </a>
+            </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link" href="@Url.Action("Index", "Home")">
                     <svg class="c-sidebar-nav-icon">
@@ -95,17 +96,10 @@
                 </a>
             </li>
 
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="@Url.Action("PortFolioDetails", "Home")">
-                    <svg class="c-sidebar-nav-icon">
-                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
-                    </svg>
-                    Portfolio
-                </a>
-            </li>
+
             @*<li class="c-sidebar-nav-title">Theme</li>*@
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link" href="@Url.Action("Attention", "Home")">
+                <a class="c-sidebar-nav-link" href="@Url.Action("ComplianceScore", "Home")">
                     <svg class="c-sidebar-nav-icon">
                         <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-compass"></use>
                     </svg> Compliance

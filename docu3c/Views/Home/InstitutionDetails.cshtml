@@ -12,7 +12,7 @@
 <form role="form" action="/Home/LoadPortfolio" method="post">
     <div class="row">
         <select id="iiPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
-            <option value="0">All Portfolio</option>
+            <option value="0">Portfolio</option>
 
             @{
                 foreach (var item in Model.PortfolioDetails)
@@ -31,8 +31,9 @@
 
 
         <div class="col">
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center badge-curve float-left m-3 ">
-                <a href="@Url.Action("Index", "Home")">
+            <a href="@Url.Action("Index", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center badge-curve float-left m-3 ">
+
                     <div class="btn  btn-default text-dark">
                         <div class="">
                             <div class="float-left">
@@ -44,13 +45,14 @@
                         </div><br />
                         <div class="row text-muted text-uppercase font-weight-bold small  ">Category</div>
                     </div>
-                </a>
-
-            </div>
 
 
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center badge-curve float-left m-3">
-                <a href="@Url.Action("CustomerDetails", "Home")">
+                </div>
+            </a>
+            <a href="@Url.Action("CustomerDetails", "Home")">
+
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center badge-curve float-left m-3">
+
                     <div class="btn  btn-default text-dark">
                         <div class="">
                             <div class="float-left">
@@ -62,9 +64,10 @@
                         </div><br />
                         <div class="row text-muted text-uppercase font-weight-bold small  ">Customers</div>
                     </div>
-                </a>
 
-            </div>
+
+                </div>
+            </a>
 
 
             <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center float-left m-3">
@@ -82,9 +85,9 @@
 
             </div>
 
+            <a href="@Url.Action("DocumentDetails", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
 
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
-                <a href="@Url.Action("DocumentDetails", "Home")">
                     <div class="btn btn-default text-dark">
                         <div class="">
                             <div class="float-left">
@@ -95,8 +98,9 @@
                             <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoofDocumets"] </div>
                         </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">Documents</div>
                     </div>
-                </a>
-            </div>
+
+                </div>
+            </a>
         </div>
 
 

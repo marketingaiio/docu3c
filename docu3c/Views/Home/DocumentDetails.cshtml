@@ -10,7 +10,7 @@
 <form role="form" method="post">
     <div class="row">
         <select id="idPortFolioID" class="border-primary w-25 form-control" name="idPortFolioID">
-            <option value="0">All Portfolio</option>
+            <option value="0">Portfolio</option>
 
             @{
                 foreach (var item in Model.PortfolioDetails)
@@ -30,8 +30,9 @@
 
 
         <div class="col">
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
-                <a href="@Url.Action("Index", "Home")">
+            <a href="@Url.Action("Index", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
+
                     <div class="btn  btn-default text-dark">
                         <div class="">
                             <div class="float-left">
@@ -43,19 +44,15 @@
                         </div><br />
                         <div class="row text-muted text-uppercase font-weight-bold small  ">Category</div>
                     </div>
-                </a>
-
-            </div>
 
 
+                </div>
+            </a>
 
+            <a href="@Url.Action("CustomerDetails", "Home")">
 
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
 
-
-
-
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
-                <a href="@Url.Action("CustomerDetails", "Home")">
                     <div class="btn  btn-default text-dark">
                         <div class="">
                             <div class="float-left">
@@ -67,18 +64,18 @@
                         </div><br />
                         <div class="row text-muted text-uppercase font-weight-bold small  ">Customers</div>
                     </div>
-                </a>
-
-            </div>
 
 
-
+                </div>
+            </a>
 
 
 
 
-            <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
-                <a href="@Url.Action("InstitutionDetails", "Home")">
+
+            <a href="@Url.Action("InstitutionDetails", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
+
                     <div class="btn btn-default text-dark">
                         <div class="">
                             <div class="float-left">
@@ -89,8 +86,9 @@
                             <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoOfInstitution"] </div>
                         </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">INSTITUTION</div>
                     </div>
-                </a>
-            </div>
+
+                </div>
+            </a>
 
             <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve align-items-center float-left m-3">
 
@@ -217,7 +215,7 @@
     $(document).ready(function () {
 
      setTimeout(function () {
-                var drpVal = @Session["dPortFolioID"];
+                var drpVal = '@Session["dPortFolioID"]';
                 if (drpVal != "") {
                     $('#idPortFolioID').val(drpVal);
                 }

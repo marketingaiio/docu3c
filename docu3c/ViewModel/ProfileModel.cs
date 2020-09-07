@@ -19,7 +19,8 @@ namespace docu3c.ViewModel
 
         public IEnumerable<UserDetail> UserDetails { set; get; }
 
-        public IEnumerable<SelectListItem> PortFolioDropDown { set; get; }
+        public IEnumerable<DocumentDetail> ddCategoryCompliance { set; get; }
+        public IEnumerable<DocumentDetail> ddInstitutionCompliance { set; get; }
     }
 
   

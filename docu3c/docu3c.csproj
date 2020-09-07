@@ -821,6 +821,7 @@
     <Content Include="Views\Home\Compliance.cshtml" />
     <Content Include="Views\Home\Attention.cshtml" />
     <Content Include="Views\Home\Verification.cshtml" />
+    <Content Include="Views\Home\ComplianceScore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
