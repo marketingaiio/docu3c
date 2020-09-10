@@ -5,7 +5,14 @@
 
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+
+@*<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />*@
+<script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+<link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
 <form role="form" method="post">
     <div class="row">
@@ -117,10 +124,12 @@
 
 
     <div class="row m-2 p-5 gridcurve-border bg-white">
-        <h5 class="text-primary mb-3">Document Details</h5>
-        <div class="table-responsive m-6">
-            <table class="table table-borderless" id="ddTable">
-                <thead class="text-dark">
+        <div class="row">
+            <h5 class="text-primary mb-3">Document Details</h5>
+        </div>
+        <div class="row table-responsive">
+            <table class="table table-striped table-bordered table-hover display" id="ddTable">
+                <thead>
                     <tr>
                         @*<th scope="col">Category</th>*@
 
@@ -192,16 +201,16 @@
         </div>
         @if (Convert.ToInt32(Session["dPortFolioID"]) > 0)
         {
-        <div class="row m-2 w-100 justify-content-end">
+            <div class="row m-2 w-100 justify-content-end">
 
-            <input type="submit" value="Check Compliance" class="btn btn-primary" id="btnCompliance" />
-            @*<a class="c-header-nav-link" href="@Url.Action("CheckCompliance", "Home")" > <div class="btn btn-pill btn-block btn-primary active">Check Compliance</div> </>*@
+                <input type="submit" value="Check Compliance" class="btn btn-primary" id="btnCompliance" />
+                @*<a class="c-header-nav-link" href="@Url.Action("CheckCompliance", "Home")" > <div class="btn btn-pill btn-block btn-primary active">Check Compliance</div> </>*@
 
 
-        </div>
-        <div class="row m-2 w-100 justify-content-center text-center hidden text-success" id="divProcessing">
-            Checking for Compliance Data, please wait . . . <img src="~/Content/Images/ajax-loader.gif" class="rounded" alt="...">
-        </div>
+            </div>
+            <div class="row m-2 w-100 justify-content-center text-center hidden text-success" id="divProcessing">
+                Checking for Compliance Data, please wait . . . <img src="~/Content/Images/ajax-loader.gif" class="rounded" alt="...">
+            </div>
         }
 
     </div>
@@ -243,15 +252,18 @@
 
         });
 </script>
-<script src="~/Scripts/jquery.dataTables.min.js"></script>
+
 <script>
 
     $(document).ready(function () {
         $('#ddTable').DataTable({
-            "paging": true,
-            "ordering": true,
-            "info": false, "searching": true
+            "bLengthChange": false,
+
         });
+        $('.dataTables_length').addClass('bs-select');
+
+
+
     });
 </script>
 

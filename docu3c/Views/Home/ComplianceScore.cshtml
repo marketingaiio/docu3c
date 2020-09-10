@@ -404,7 +404,7 @@
                                             }
                                             else
                                             {
-                                                <tr>
+                                                <tr class="border-top">
                                                     <th> Total:</th>
                                                     <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red").Count()</td>
                                                     <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow").Count()</td>
@@ -637,7 +637,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <tr>
+                                                        <tr class="border-top">
                                                             <th> Total:</th>
                                                             <td>@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red").Count()</td>
                                                             <td>@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow").Count()</td>

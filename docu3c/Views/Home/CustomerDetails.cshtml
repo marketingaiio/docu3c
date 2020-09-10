@@ -2,8 +2,18 @@
 @{
     ViewBag.Title = "CustomerDetails";
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+
+@*<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />*@
+<script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+<link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <form role="form" action="/Home/LoadPortfolio" method="post">
     <div class="row">
         <select id="icPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
@@ -99,9 +109,11 @@
 
 
     <div class="row m-2 p-5 gridcurve-border bg-white">
-        <h5 class="text-primary">Customer Details</h5>
-        <div class="table-responsive m-6" style="width:95%;margin:2% 0">
-            <table class="table table-borderless" id="CdTable">
+        <div class="row">
+            <h5 class="text-primary">Customer Details</h5>
+        </div>
+        <div class="row table-responsive">
+            <table class="table table-striped table-bordered table-hover display" id="CdTable">
                 <thead class="border-bottom">
                     <tr>
                         <th scope="col">Customer ID</th>
@@ -142,7 +154,7 @@
     </div>
 </form>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script>
 
 
@@ -177,15 +189,14 @@
 
     });
 </script>
-<script src="~/Scripts/jquery.dataTables.min.js"></script>
+
 <script>
 
     $(document).ready(function () {
         $('#CdTable').DataTable({
-            "paging": true,
-            "ordering": true,
-            "info": false, "searching": true
+            "bLengthChange": false,
         });
+        $('.dataTables_length').addClass('bs-select');
     });
 </script>
 

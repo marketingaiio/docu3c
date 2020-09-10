@@ -204,6 +204,7 @@
     <Content Include="Content\dataTables.semanticui.css" />
     <Content Include="Content\dataTables.semanticui.min.css" />
     <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\Images\docu3c login logo.PNG" />
     <Content Include="Content\Images\Icons\briefcase.svg" />
     <Content Include="Content\Images\Icons\compass.svg" />
     <Content Include="Content\Images\Icons\graph.svg" />

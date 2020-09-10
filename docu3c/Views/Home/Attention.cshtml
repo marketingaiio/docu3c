@@ -3,7 +3,16 @@
     ViewBag.Title = "Needs Attention";
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+
+@*<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />*@
+<script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+<link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <form role="form" action="/Home/LoadPortfolio" method="get">
     <div class="row">
         <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
@@ -58,7 +67,7 @@
 
 
             </div>
-           
+
             <a href="@Url.Action("Verification", "Home")">
                 <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
@@ -101,9 +110,9 @@
 
     <div class="row m-2 p-5 gridcurve-border bg-white">
         <h5 class="text-primary">Needs Attention</h5>
-        <div class="table-responsive m-6" style="width:95%;margin:2% 0">
-            <table class="table table-borderless" id="aTable">
-                <thead class="border-bottom">
+         <div class="row table-responsive">
+            <table class="table table-striped table-bordered table-hover display" id="aTable">
+                <thead>
                     <tr>
                         <th scope="col">Category</th>
                         <th scope="col">Asset</th>
@@ -130,7 +139,22 @@
                             <td>
                                 @item.Reason
                             </td>
-                            <td><a href="@item.DocumentURL">@item.DocumentName </a></td>
+                            <td>
+                                @if (item.DocumentURL != null)
+                                {
+                                    <a class="btn btn  btn-link btn-sm" href="@item.DocumentURL" target="_blank" rel="tooltip" title="@item.DocumentName" alt="">
+                                        <i class="material-icons">vertical_align_bottom</i>
+
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn btn-primary btn-link btn-sm" rel="tooltip" title="File not available">
+                                        <i class="material-icons">block</i>
+                                    </a>
+
+                                }
+                            </td>
                         </tr>
 
                     }
@@ -176,14 +200,15 @@
     });
 
 </script>
-<script src="~/Scripts/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
 
         $('#aTable').DataTable({
             "paging": true,
             "ordering": true,
-            "info": false, "searching": true
+            "info": false, "searching": true,
+          "bLengthChange": false,
         });
+        $('.dataTables_length').addClass('bs-select');
     });
 </script>
