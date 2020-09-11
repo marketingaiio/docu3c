@@ -352,17 +352,17 @@
                                         <tr>
                                             <th scope="col">Asset</th>
                                             <th scope="col">
-                                                <svg class="c-icon  bg-danger  c-icon-lg ">
+                                                <svg class="c-icon  bg-danger  c-icon-lg rounded-circle ">
                                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
                                                 </svg>
                                             </th>
                                             <th scope="col">
-                                                <svg class="c-icon bg-warning c-icon-lg ">
+                                                <svg class="c-icon bg-warning c-icon-lg rounded-circle ">
                                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
                                                 </svg>
                                             </th>
                                             <th scope="col">
-                                                <svg class="c-icon bg-success  c-icon-lg ">
+                                                <svg class="c-icon bg-success  c-icon-lg rounded-circle ">
                                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
                                                 </svg>
                                             </th>
@@ -380,9 +380,9 @@
                                                     <td>@item.Key</td>
 
 
-                                                    <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.JSONFileIdentifier == item.Key).Count()</td>
-                                                    <td> @Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.JSONFileIdentifier == item.Key).Count()</td>
-                                                    <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.JSONFileIdentifier == item.Key).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.JSONFileIdentifier == item.Key).Count()</td>
+                                                    <td class="pl-3"> @Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.JSONFileIdentifier == item.Key).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.JSONFileIdentifier == item.Key).Count()</td>
 
 
 
@@ -396,9 +396,9 @@
                                                 var strCategory = Session["strCategory"].ToString();
                                                 <tr>
                                                     <th> Total:</th>
-                                                    <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.Category == strCategory).Count()</td>
-                                                    <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.Category == strCategory).Count()</td>
-                                                    <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.Category == strCategory).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.Category == strCategory).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.Category == strCategory).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.Category == strCategory).Count()</td>
                                                 </tr>
 
                                             }
@@ -406,9 +406,9 @@
                                             {
                                                 <tr class="border-top">
                                                     <th> Total:</th>
-                                                    <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red").Count()</td>
-                                                    <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow").Count()</td>
-                                                    <td>@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green").Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red").Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow").Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green").Count()</td>
                                                 </tr>
 
                                             }
@@ -585,17 +585,17 @@
                                                 <tr>
                                                     <th scope="col">Institution</th>
                                                     <th scope="col">
-                                                        <svg class="c-icon  bg-danger  c-icon-lg ">
+                                                        <svg class="c-icon  bg-danger  c-icon-lg rounded-circle">
+                                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                                        </svg>
+                                                    </th>
+                                                    <th scope="col" >
+                                                        <svg class="c-icon bg-warning c-icon-lg rounded-circle ">
                                                             <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
                                                         </svg>
                                                     </th>
                                                     <th scope="col">
-                                                        <svg class="c-icon bg-warning c-icon-lg ">
-                                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
-                                                        </svg>
-                                                    </th>
-                                                    <th scope="col">
-                                                        <svg class="c-icon bg-success  c-icon-lg ">
+                                                        <svg class="c-icon bg-success  c-icon-lg rounded-circle">
                                                             <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
                                                         </svg>
                                                     </th>
@@ -613,9 +613,9 @@
                                                             <td>@item.Key</td>
 
 
-                                                            <td>@db.DocumentDetails.Where(x => x.FileStatus == "Red" && x.Institution == item.Key).Count()</td>
-                                                            <td> @db.DocumentDetails.Where(x => x.FileStatus == "Yellow" && x.Institution == item.Key).Count()</td>
-                                                            <td>@db.DocumentDetails.Where(x => x.FileStatus == "Green" && x.Institution == item.Key).Count()</td>
+                                                            <td class="pl-3" >@db.DocumentDetails.Where(x => x.FileStatus == "Red" && x.Institution == item.Key).Count()</td>
+                                                            <td class="pl-3" > @db.DocumentDetails.Where(x => x.FileStatus == "Yellow" && x.Institution == item.Key).Count()</td>
+                                                            <td class="pl-3" >@db.DocumentDetails.Where(x => x.FileStatus == "Green" && x.Institution == item.Key).Count()</td>
 
 
 
@@ -629,9 +629,9 @@
                                                         var strInstitution = Session["strInstitution"].ToString();
                                                         <tr>
                                                             <th> Total:</th>
-                                                            <td>@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == strInstitution).Count()</td>
-                                                            <td>@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == strInstitution).Count()</td>
-                                                            <td>@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == strInstitution).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == strInstitution).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == strInstitution).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == strInstitution).Count()</td>
                                                         </tr>
 
                                                     }
@@ -639,9 +639,9 @@
                                                     {
                                                         <tr class="border-top">
                                                             <th> Total:</th>
-                                                            <td>@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red").Count()</td>
-                                                            <td>@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow").Count()</td>
-                                                            <td>@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green").Count()</td>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red").Count()</td>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow").Count()</td>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green").Count()</td>
                                                         </tr>
                                                     }
                                                 }
