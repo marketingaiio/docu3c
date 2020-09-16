@@ -489,25 +489,26 @@ namespace docu3c.Controllers
                         string CRAAddress = string.Empty;
                         DateTime? CRADOB = null;
                         int CRACustomerID = 0;
-                        string strComplianceData = string.Empty;
+                       
                         string strStatus = string.Empty;
                         customerDetails = db.CustomerDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).ToList();
                         foreach (var item in customerDetails)
                         {
                             // if(item.CustomerFirstName!=null)
                             CRACustomerName = item.CustomerFirstName;
-                            if (item.Address != null)
+                           // if (item.Address != null)
                                 CRAAddress = item.Address;
-                            if (item.DocCustomerID != null)
+                           // if (item.DocCustomerID != null)
                                 CRASSN = item.DocCustomerID;
-                            if (item.DOB != null)
+                          //  if (item.DOB != null)
                                 CRADOB = Convert.ToDateTime(item.DOB);
                             CRACustomerID = item.CustomerID;
                             string strReason = string.Empty;
                             documentDetails = db.DocumentDetails.Where(m => m.CustomerID.Equals(CRACustomerID)).ToList();
                             foreach (var docitem in documentDetails)
                             {
-                                if (string.IsNullOrEmpty(docitem.Reason))
+                                string strComplianceData = string.Empty;
+                                if (string.IsNullOrEmpty(docitem.Reason) && docitem.JSONFileIdentifier != "Client Relationship Agreement")
                                 {
                                     string docSSN = docitem.DocCustomerID;
                                     string docCustomerName = docitem.CustomerName;
@@ -547,12 +548,12 @@ namespace docu3c.Controllers
                                             if (!string.IsNullOrEmpty(docAddress))
                                             {
                                                 if (CRAAddress != docAddress)
-                                                { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); }
+                                                { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); docitem.FileStatus = "Red"; }
                                             }
-                                            else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); }
+                                            else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Red"; }
                                         }
-                                        else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); }
-                                        docitem.FileStatus = "Red";
+                                        else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Red"; }
+                                       
 
                                     }
                                     else
@@ -562,12 +563,12 @@ namespace docu3c.Controllers
                                             if (!string.IsNullOrEmpty(docAddress))
                                             {
                                                 if (CRAAddress != docAddress)
-                                                { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); }
+                                                { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); docitem.FileStatus = "Yellow"; }
                                             }
-                                            else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); }
+                                            else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Yellow"; }
                                         }
-                                        else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); }
-                                        docitem.FileStatus = "Yellow";
+                                        else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Yellow"; }
+                                        
                                     }
                                     docitem.Reason = strComplianceData;
 
