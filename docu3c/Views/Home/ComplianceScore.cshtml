@@ -41,40 +41,33 @@
 
 
         <div class="col">
-            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3 bg-gradient-success">
 
-                <div class="btn  btn-default text-dark">
-                    <div class="" style="height:20px">
-                        <div class="float-left">
-                            <svg class="c-icon text-success c-icon-lg">
+                <div class="btn  btn-default text-white">
+                    <div class="" >
+                        <div class="float-left pt-1" >
+                            <svg class="c-icon text-white c-icon-lg">
                                 <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-thumb-up"></use>
                             </svg>
-                        </div> <div class="text-success text-value-lg  float-left">&nbsp; @ViewData["ComplianceScore"]% </div>
-                    </div><br />
-                    <div class=" row  text-muted text-uppercase font-weight-bold small">Compliance Score</div>
+                        </div> <div class="text-white text-value-lg float-left">&nbsp; @ViewData["ComplianceScore"]% </div>
+                    </div><br/>
+                    <div class=" row  text-white text-uppercase font-weight-bold small">Compliance Score</div>
                 </div>
-
-
             </div>
 
-
-
-
-
-
             <a href="@Url.Action("Attention", "Home")">
-                <div class="card overflow-hidden shadow-lg bg-gradient-danger badge-curve1 align-items-center float-left m-3">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
-                    <div class="btn btn-outline-danger text-dark">
-                        <div class="" style="height:20px">
+                    <div class="btn btn-default text-danger">
+                        <div class="" >
                             <div class="float-left">
-                                <svg class="c-icon text-white c-icon-lg ">
+                                <svg class="c-icon text-danger c-icon-lg ">
                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-warning"></use>
                                 </svg>
                             </div>
-                            <div class="text-white text-value-lg float-left">&nbsp; @ViewData["NeedAttention"] </div>
+                            <div class="text-danger text-value-lg float-left">&nbsp; @ViewData["NeedAttention"] </div>
                         </div><br />
-                        <div class="row  text-white text-uppercase font-weight-bold small ">Needs Attention</div>
+                        <div class="row  text-danger text-uppercase font-weight-bold small ">Needs Attention</div>
                     </div>
 
 
@@ -87,14 +80,14 @@
                 <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
                     <div class="btn btn-default text-dark">
-                        <div class="" style="height:20px">
-                            <div class="float-left">
-                                <svg class="c-icon text-warning c-icon-lg ">
+                        <div class="row" style="height:30px;clear:both;">
+                            <div class="float-left pl-4">
+                                <svg class="c-icon text-warning c-icon-lg">
                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
                                 </svg>
                             </div>
-                            <div class="text-warning text-value-lg float-left">&nbsp; @ViewData["NeedVerification"] </div>
-                        </div><br />
+                            <div class="text-warning text-value-lg float-left" >&nbsp; @ViewData["NeedVerification"] </div>
+                        </div>
                         <div class="row text-muted text-uppercase font-weight-bold small">Needs Verification</div>
                     </div>
 
@@ -104,15 +97,15 @@
                 <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
                     <div class="btn btn-default text-dark">
-                        <div class="" style="height:20px">
-                            <div class="float-left">
+                        <div class="row" style="clear:both;height:30px;">
+                            <div class="float-left pl-4 " >
                                 <svg class="c-icon text-success c-icon-lg ">
 
                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-badge"></use>
                                 </svg>
                             </div>
-                            <div class="text-success text-value-lg float-left">&nbsp; @ViewData["MeetCompliance"] </div>
-                        </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">Meets Compliance</div>
+                            <div class="text-success text-value-lg float-left  " >&nbsp; @ViewData["MeetCompliance"] </div>
+                        </div> <div class="row text-muted text-uppercase font-weight-bold small">Meets Compliance</div>
                     </div>
 
                 </div>
@@ -158,7 +151,7 @@
             type: 'horizontalBar',
 
             data: {
-                labels: ['Clients Agmnts', 'Inv Agmnts', 'Asst. Trans Agmnts', 'Client Profiles'],
+                labels: ['Clients Agmnts', 'Invst Agmnts', 'Asset Agmnts', 'Client Profiles'],
 
                 datasets: [{
 				label: 'Green',
@@ -225,7 +218,8 @@
 							borderWidth: 1,
 						}
 					},
-                    responsive: true,
+                  responsive: true,
+                    maintainAspectRatio: false,
                   legend: {
                         display: false,
 						position: 'right',
@@ -473,12 +467,23 @@
 				//}
 
               options:
-             {
+              {
+                 
              title:
                  {
                  display: false,
                                     text: "Category View"
-                                },
+                  },
+                   scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: false,
+                      
+                }
+                       }],
+                      
+        },
+
                                 responsive: true,
                                 maintainAspectRatio: true
                             }
@@ -579,7 +584,7 @@
 
 
 
-                                    <div class="table-responsive" style="width:95%;margin:2% 0" id="GridTable3">
+                                    <div class="table-responsive" style="width: 95%; margin: 2% 0 " id="GridTable3">
                                         <table class="table table-borderless" id="iTable">
                                             <thead class="border-bottom">
                                                 <tr>
