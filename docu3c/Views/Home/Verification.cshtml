@@ -5,14 +5,17 @@
 
 
 
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
 
 @*<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />*@
 <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
 <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+
 
 <form role="form" action="/Home/LoadPortfolio" method="get">
     <div class="row">
@@ -38,7 +41,7 @@
                 <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
                     <div class="btn  btn-default text-dark" type="button">
-                        <div class="" >
+                        <div class="">
                             <div class="float-left">
                                 <svg class="c-icon text-success c-icon-lg">
                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-thumb-up"></use>
@@ -55,7 +58,7 @@
                 <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
                     <div class="btn  btn-default text-dark">
-                        <div class="" >
+                        <div class="">
                             <div class="float-left">
                                 <svg class="c-icon text-danger c-icon-lg ">
                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-warning"></use>
@@ -106,8 +109,8 @@
     <div class="row m-2 p-5 gridcurve-border bg-white">
         <h5 class="text-primary">Needs Attention</h5>
         <div class="row table-responsive">
-            <table class="table table-striped table-bordered table-hover display"  id="vTable">
-                <thead >
+            <table class="table table-striped table-bordered table-hover display" id="vTable">
+                <thead>
                     <tr>
                         <th scope="col">Category</th>
                         <th scope="col">Asset</th>
@@ -195,14 +198,12 @@
     });
 
 </script>
-<script src="~/Scripts/jquery.dataTables.min.js"></script>
+
 <script>
     $(document).ready(function () {
 
         $('#vTable').DataTable({
-            "paging": true,
-            "ordering": true,
-            "info": false, "searching": true,"bLengthChange": false,
+           "bLengthChange": false,
         });
         $('.dataTables_length').addClass('bs-select');
     });

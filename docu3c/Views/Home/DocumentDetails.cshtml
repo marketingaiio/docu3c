@@ -6,48 +6,15 @@
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
 
 @*<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />*@
 <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
 <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
-<style>
-    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-        background: none;
-        color: #000 !important;
-        /*change the hover text color*/
-    }
+<link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
 
-
-    /*below block of css for change style when active*/
-
-    .dataTables_wrapper .dataTables_paginate .paginate_button:active {
-        background: none;
-        color: black !important;
-    }
-    .paginate_button .page-item:active{ color: black !important;}
-
-     .page-item.active .page-link {
-        color: #333 !important;
-       
-        background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
-        border: 1px solid #979797 !important; 
-    }
-
-    .page-link {
-        color: #000 !important;
-        background-color: #fff !important;
-        border: 1px solid #dee2e6 !important; 
-    }
-
-    .page-link:hover {
-        color: #fff !important;
-        background-color: #000 !important;
-        border-color: #000 !important; 
-    }
-</style>
 <form role="form" method="post">
     <div class="row">
         <select id="idPortFolioID" class="border-primary w-25 form-control" name="idPortFolioID">
@@ -162,7 +129,7 @@
             <h5 class="text-primary mb-3">Document Details</h5>
         </div>
         <div class="row table-responsive">
-            <table class="table table-striped table-bordered table-hover display" id="ddTable" style="font-family:Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif !important">
+            <table class="table table-striped table-bordered table-hover display" id="ddTable">
                 <thead>
                     <tr>
                         @*<th scope="col">Category</th>*@
@@ -292,6 +259,7 @@
     $(document).ready(function () {
         $('#ddTable').DataTable({
             "bLengthChange": false,
+             "orderClasses": true,
 
         });
         $('.dataTables_length').addClass('bs-select');
