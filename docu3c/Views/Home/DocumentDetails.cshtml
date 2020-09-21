@@ -13,7 +13,22 @@
 @*<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />*@
 <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
 <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<style>
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: none;
+        color: #000 !important;
+        /*change the hover text color*/
+    }
 
+
+    /*below block of css for change style when active*/
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+        background: none;
+        color: black !important;
+    }
+    .paginate_button .page-item:active{ color: black !important;}
+</style>
 <form role="form" method="post">
     <div class="row">
         <select id="idPortFolioID" class="border-primary w-25 form-control" name="idPortFolioID">
@@ -128,7 +143,7 @@
             <h5 class="text-primary mb-3">Document Details</h5>
         </div>
         <div class="row table-responsive">
-            <table class="table table-striped table-bordered table-hover display" id="ddTable">
+            <table class="table table-striped table-bordered table-hover display" id="ddTable" style="font-family:Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif !important">
                 <thead>
                     <tr>
                         @*<th scope="col">Category</th>*@

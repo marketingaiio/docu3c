@@ -428,7 +428,7 @@ namespace docu3c.Controllers
                                                 }
                                                 else
                                                 {
-                                                    strErrorMessage += string.Format("Parse error in the Uploaded document: {0}", System.IO.Path.GetFileName(FileAbsoluteUri));
+                                                    strErrorMessage += string.Format("Document not recognized: {0}", System.IO.Path.GetFileName(FileAbsoluteUri));
                                                     //ViewData["ErrorMessage"] =
                                                     //return View();
 
