@@ -30,11 +30,7 @@
 <body class="c-app">
 
     <style>
-        .dataTables_filter {
-   width: 50%;
-   float: right;
-   text-align: right;
-}
+       
         .fontcolor a,a:link,a:visited  {
             color: #0e1f9c
         }
@@ -70,19 +66,21 @@
             align-items: center;
             justify-content: center;
         }
-
+        table.dataTable .table-striped .odd{background-color:#F9F9F9}
         a:link {
             color: #115293;
         }
+       
+table.dataTable .page-link:active{ background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);}
           
-     .page-item.active .page-link {
+     .page-item.active .page-link,.page-link.active {
         color: #333 !important;
        
         background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
-        border: 1px solid #979797 !important; 
+        border: 1px solid #989898 !important; 
     }
 
-    .page-link {
+    .page-link,.page-item a:active,.page-link:focus {
         color: #000 !important;
         background-color: #fff !important;
         border: 1px solid #dee2e6 !important;
@@ -96,11 +94,19 @@
 
     table.dataTable {
         font-family:Helvetica Neue, HelveticaNeue, Helvetica, Arial, sans-serif !important;
+        color:#333;
     }
+    /*table.dataTable thead th.sorting_desc::before,table.dataTable thead th.sorting_asc:after{color:#0e1f9c;font-weight:bold;}*/
+
+    table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
+    border-top: 1px solid #ddd;
+}
+    
     </style>
 
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar" style="background-color:#2F3082">
-        <div class="c-sidebar-brand d-lg-down-none" style="background-color:#fff">
+        <div class="c-sidebar-brand d-lg-down-none" style="background-color: #fff
+">
             <img src="~/Content/Images/WhiteBG.JPG" width="75%" height="70%" />
 
         </div>

@@ -237,7 +237,7 @@
 
 
                         <div class="table-responsive m-6" style="width:95%;margin:2% 0">
-                            <table class="table table-borderless" id="hdataTable">
+                            <table class="table table-borderless table-striped  table-hover display" id="hdataTable">
                                 <thead class="border-bottom">
                                     <tr>
                                         <th scope="col">Category</th>
@@ -331,9 +331,7 @@
     $(document).ready(function () {
 
         $('#hdataTable').DataTable({
-            "paging": true,
-            "ordering": true,
-            "info": false, "searching": true
+           
         });
     });
 </script>

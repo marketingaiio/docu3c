@@ -570,6 +570,7 @@ namespace docu3c.Controllers
                                         else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Yellow"; }
                                         
                                     }
+                                    
                                     docitem.Reason = strComplianceData;
 
                                     docitem.ModifiedOn = DateTime.Now;
