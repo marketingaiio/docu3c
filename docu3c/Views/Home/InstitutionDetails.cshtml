@@ -124,7 +124,7 @@
                     <tr>
                         <th scope="col">Institution</th>
                         <th scope="col">Documents</th>
-                        <th scope="col">Category</th>
+                        @*<th scope="col">Category</th>*@
                         <th scope="col">Assets</th>
                         <th scope="col">Customers</th>
 
@@ -139,7 +139,7 @@
                                 <td>@item.Key</td>
                                 <td>@item.Count()</td>
 
-                                <td>@db.DocumentDetails.Where(x => x.Institution == item.Key).Select(v => v.CustomerID).Distinct().Count()</td>
+                                @*<td>@db.DocumentDetails.Where(x => x.Institution == item.Key).Select(v => v.CustomerID).Distinct().Count()</td>*@
                                 <td> @item.Select(x => x.JSONFileIdentifier).Distinct().Count()</td>
                                 <td>@item.Select(x => x.CustomerID).Distinct().Count()</td>
 
@@ -155,7 +155,7 @@
                     <tr>
                         <th scope="col">Institution</th>
                         <th scope="col">Documents</th>
-                        <th scope="col">Category</th>
+                        @*<th scope="col">Category</th>*@
                         <th scope="col">Assets</th>
                         <th scope="col">Customers</th>
 

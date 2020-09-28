@@ -256,10 +256,10 @@
                                         <tr>
                                             <td>@item.CategoryName  </td>
                                             @*<td>@item.JSONIdentifier   </td>*@
-                                            <td>@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).ToList().Count  </td>
-                                            <td>@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).GroupBy(o => o.Institution).ToList().Count  </td>
+                                            <td><a href="@Url.Action("DocumentDetails", "Home")?queryid=@item.CategoryID">@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).ToList().Count  </a></td>
+                                            <td><a href="@Url.Action("InstitutionDetails", "Home")?queryid=@item.CategoryID">@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).GroupBy(o => o.Institution).ToList().Count  </td>
 
-                                            <td>@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).GroupBy(o => o.CustomerID).ToList().Count</td>
+                                            <td><a href="@Url.Action("CustomerDetails", "Home")?queryid=@item.CategoryID">@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).GroupBy(o => o.CustomerID).ToList().Count</a> </td>
 
                                         </tr>
 

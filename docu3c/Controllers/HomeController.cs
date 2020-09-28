@@ -604,7 +604,39 @@ namespace docu3c.Controllers
             return View();
 
         }
-
+        public string CategoryQuery(int? queryid)
+        {
+            string strCategoryName = string.Empty;
+            if (queryid == 1)
+            {
+                strCategoryName = "Client Agreements";
+            }
+            if (queryid == 2)
+            {
+                strCategoryName = "Investment Agreements";
+            }
+            if (queryid == 3)
+            {
+                strCategoryName = "Funds Transfer Agreement";
+            }
+            if (queryid == 4)
+            {
+                strCategoryName = "Asset Transfer Agreements";
+            }
+            if (queryid == 5)
+            {
+                strCategoryName = "Insurance Agreements";
+            }
+            if (queryid == 6)
+            {
+                strCategoryName = "Miscellaneous Investments";
+            }
+            if (queryid == 7)
+            {
+                strCategoryName = "Client Profile";
+            }
+            return strCategoryName;
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -631,36 +663,9 @@ namespace docu3c.Controllers
                     //portfolioName = db.UserDetails.FirstOrDefault((m => m.LoginID.Equals(Session["UserEmailID"]))).PortfolioDetails.FirstOrDefault().PortfolioName;
                     if (User != null)
                     {
-                      string strCategoryName = string.Empty;
-                        if (queryid == 1)
-                        {
-                            strCategoryName = "Client Agreements";
-                        }
-                        if(queryid==2)
-                        {
-                            strCategoryName = "Investment Agreements";
-                        }
-                        if (queryid == 3)
-                        {
-                            strCategoryName = "Funds Transfer Agreement";
-                        }
-                        if (queryid == 4)
-                        {
-                            strCategoryName = "Asset Transfer Agreements";
-                        }
-                        if (queryid == 5)
-                        {
-                            strCategoryName = "Insurance Agreements";
-                        }
-                        if (queryid == 6)
-                        {
-                            strCategoryName = "Miscellaneous Investments";
-                        }
-                        if (queryid == 7)
-                        {
-                            strCategoryName = "Client Profile";
-                        }
-                        
+                        string strCategoryName = CategoryQuery(queryid);
+
+
                         if (SessionPortFolioID == 0)
                         {
                             // ViewData["PortfolioName"] = db.PortfolioDetails.FirstOrDefault(m => m.UserID.Equals(userId)).PortfolioName;
@@ -746,7 +751,7 @@ namespace docu3c.Controllers
             else { return RedirectToAction("Login", "Login"); }
 
         }
-        public ActionResult CustomerDetails()
+        public ActionResult CustomerDetails(int? queryid)
         {
             ProfileModel ProfileModel = new ProfileModel();
             if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
@@ -765,20 +770,33 @@ namespace docu3c.Controllers
 
                     if (User != null)
                     {
-
+                        string strCategoryName = CategoryQuery(queryid);
                         if (SessionPortFolioID == 0)
                         {
-                           
 
-                            ProfileModel = new ProfileModel
+                            if (!string.IsNullOrEmpty(strCategoryName))
                             {
+                                ProfileModel = new ProfileModel
+                                {
 
-                                CustomerDetails = db.CustomerDetails.ToList(),
-                                PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.Include("CustomerDetail").ToList(),
-                                CategoryDetails = db.CategoryDetails.ToList(),
-                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
-                            };
+                                    CustomerDetails = db.CustomerDetails.Where(m => m.DocumentDetails.FirstOrDefault().Category == strCategoryName).ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.Include("CustomerDetail").ToList(),
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                            }else
+                            {
+                                ProfileModel = new ProfileModel
+                                {
+
+                                    CustomerDetails = db.CustomerDetails.ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.Include("CustomerDetail").ToList(),
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                            }
                             ViewData["NoofCategory"] = ProfileModel.DocumentDetails.Select(o => o.Category).Distinct().Count();
                             ViewData["NoofCustomers"] = ProfileModel.CustomerDetails.Count();
                             ViewData["NoofDocumets"] = ProfileModel.DocumentDetails.Count();
@@ -790,17 +808,30 @@ namespace docu3c.Controllers
                         }
                         else
                         {
-                           
 
-                            ProfileModel = new ProfileModel
+                            if (!string.IsNullOrEmpty(strCategoryName))
                             {
+                                ProfileModel = new ProfileModel
+                                {
 
-                                CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
-                                PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.Include("CustomerDetail").Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
-                                CategoryDetails = db.CategoryDetails.ToList(),
-                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
-                            };
+                                    CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.Include("CustomerDetail").Where(x => x.PortfolioID == SessionPortFolioID && x.Category == strCategoryName).ToList(),
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                            }
+                            else {
+                                ProfileModel = new ProfileModel
+                                {
+
+                                    CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.Include("CustomerDetail").Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                            }
                             ViewData["NoofCategory"] = ProfileModel.DocumentDetails.Select(o => o.Category).Distinct().Count();
                             ViewData["NoofCustomers"] = ProfileModel.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).Count();
                             ViewData["NoofDocumets"] = ProfileModel.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).Count();
@@ -819,7 +850,7 @@ namespace docu3c.Controllers
 
         }
 
-        public ActionResult InstitutionDetails()
+        public ActionResult InstitutionDetails(int? queryid)
         {
             ProfileModel ProfileModel = new ProfileModel();
             if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
@@ -833,6 +864,7 @@ namespace docu3c.Controllers
                     //portfolioName = db.UserDetails.FirstOrDefault((m => m.LoginID.Equals(Session["UserEmailID"]))).PortfolioDetails.FirstOrDefault().PortfolioName;
                     if (User != null)
                     {
+                        string strCategoryName = CategoryQuery(queryid);
                         int SessionPortFolioID;
                         if (Session["dPortFolioID"] != null)
                         {
@@ -842,18 +874,33 @@ namespace docu3c.Controllers
                         if (SessionPortFolioID == 0)
                         {
                             //ViewData["PortfolioName"] = db.PortfolioDetails.FirstOrDefault(m => m.UserID.Equals(userId)).PortfolioName;
-                          
 
-                            ProfileModel = new ProfileModel
+                            if (!string.IsNullOrEmpty(strCategoryName))
                             {
+                                ProfileModel = new ProfileModel
+                                {
 
-                                CustomerDetails = db.CustomerDetails.ToList(),
-                                PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.ToList(),
+                                    CustomerDetails = db.CustomerDetails.ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.Where(m => m.Category == strCategoryName).ToList(),
 
-                                CategoryDetails = db.CategoryDetails.ToList(),
-                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
-                            };
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                            }
+                            else
+                            {
+                                ProfileModel = new ProfileModel
+                                {
+
+                                    CustomerDetails = db.CustomerDetails.ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.ToList(),
+
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                            }
                             ViewData["NoofCategory"] = ProfileModel.DocumentDetails.Select(o => o.Category).Distinct().Count();
                             ViewData["NoofCustomers"] = ProfileModel.CustomerDetails.Count();
                             ViewData["NoofDocumets"] = ProfileModel.DocumentDetails.Count();
@@ -865,18 +912,33 @@ namespace docu3c.Controllers
                         }
                         else
                         {
-                            
-
-                            ProfileModel = new ProfileModel
+                            if (!string.IsNullOrEmpty(strCategoryName))
                             {
 
-                                CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
-                                PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                ProfileModel = new ProfileModel
+                                {
 
-                                CategoryDetails = db.CategoryDetails.ToList(),
-                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
-                            };
+                                    CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.Category==strCategoryName).ToList(),
+
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                            }
+                            else
+                            {
+                                ProfileModel = new ProfileModel
+                                {
+
+                                    CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                            }
                             ViewData["NoofCategory"] = ProfileModel.DocumentDetails.Select(o => o.Category).Distinct().Count();
                             ViewData["NoofCustomers"] = ProfileModel.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).Count();
                             ViewData["NoofDocumets"] = ProfileModel.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).Count();

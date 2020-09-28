@@ -148,9 +148,18 @@
                         <canvas id="barmaincanvas"></canvas>
                         <script>
         var ctx = document.getElementById('barmaincanvas').getContext('2d');
-
-
-
+                            var input1='@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Green")).Count()';
+                            var input2='@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Green")).Count()';
+                            var input3='@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Green")).Count()';
+                            var input4='@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Green")).Count()';
+                            var input5='@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Yellow")).Count()';
+                            var input6='@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Yellow")).Count()';
+                            var input7='@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Yellow")).Count()';
+                            var input8 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Yellow")).Count()';
+                            var input9 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Red")).Count()';
+                            var input10 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Red")).Count()';
+                            var input11 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Red")).Count()';
+                            var input12 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Red")).Count()';
 
       var myChart = new Chart(ctx, {
             type: 'horizontalBar',
@@ -162,30 +171,15 @@
 				label: 'Green',
 				backgroundColor: 'rgba(0, 230, 64, 1)',
 
-				data: [
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Green")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Green")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Green")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Green")).Count()
-				]
+				data: [input1,input2,input3,input4]
 			}, {
 				label: 'Yellow',
 				backgroundColor: 'rgba(247, 202, 24, 1)',
-				data: [
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Yellow")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Yellow")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Yellow")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Yellow")).Count()
-				]
+				data: [input5,input6,input7,input8]
 			}, {
 				label: 'Red',
 				backgroundColor: 'rgba(207, 0, 15, 1)',
-				data: [
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Red")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Red")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Red")).Count(),
-					@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Red")).Count()
-				]
+				data: [input9,input10,input11,input12]
                     }]
 
 
