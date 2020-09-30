@@ -117,55 +117,56 @@
 
 
     <div class="row m-2 p-5 gridcurve-border bg-white">
-        <h5 class="text-primary">Institution Details</h5>
-        <div class="row table-responsive">
-            <table class="table table-borderless table-striped  table-hover display" id="idTable">
-                <thead>
-                    <tr>
-                        <th scope="col">Institution</th>
-                        <th scope="col">Documents</th>
-                        @*<th scope="col">Category</th>*@
-                        <th scope="col">Assets</th>
-                        <th scope="col">Customers</th>
+        <div class="row mb-2">
+            <h5 class="text-primary">Institution Details</h5></div>
+            <div class="row table-responsive">
+                <table class="table table-borderless table-striped  table-hover display" id="idTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Institution</th>
+                            <th scope="col">Documents</th>
+                            @*<th scope="col">Category</th>*@
+                            <th scope="col">Assets</th>
+                            <th scope="col">Customers</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    @using (docu3cEntities db = new docu3cEntities())
-                    {
-                        foreach (var item in Model.DocumentDetails.GroupBy(o => o.Institution).ToList())
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @using (docu3cEntities db = new docu3cEntities())
                         {
-                            <tr>
-                                <td>@item.Key</td>
-                                <td>@item.Count()</td>
+                            foreach (var item in Model.DocumentDetails.GroupBy(o => o.Institution).ToList())
+                            {
+                                <tr>
+                                    <td>@item.Key</td>
+                                    <td>@item.Count()</td>
 
-                                @*<td>@db.DocumentDetails.Where(x => x.Institution == item.Key).Select(v => v.CustomerID).Distinct().Count()</td>*@
-                                <td> @item.Select(x => x.JSONFileIdentifier).Distinct().Count()</td>
-                                <td>@item.Select(x => x.CustomerID).Distinct().Count()</td>
+                                    @*<td>@db.DocumentDetails.Where(x => x.Institution == item.Key).Select(v => v.CustomerID).Distinct().Count()</td>*@
+                                    <td> @item.Select(x => x.JSONFileIdentifier).Distinct().Count()</td>
+                                    <td>@item.Select(x => x.CustomerID).Distinct().Count()</td>
 
 
 
 
-                            </tr>
+                                </tr>
 
+                            }
                         }
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th scope="col">Institution</th>
-                        <th scope="col">Documents</th>
-                        @*<th scope="col">Category</th>*@
-                        <th scope="col">Assets</th>
-                        <th scope="col">Customers</th>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="col">Institution</th>
+                            <th scope="col">Documents</th>
+                            @*<th scope="col">Category</th>*@
+                            <th scope="col">Assets</th>
+                            <th scope="col">Customers</th>
 
-                    </tr>
-                </tfoot>
-            </table>
+                        </tr>
+                    </tfoot>
+                </table>
 
 
+            </div>
         </div>
-    </div>
 </form>
 
 
@@ -212,8 +213,9 @@
             "paging": true,
             "ordering": true,
             "info": false, "searching": true,
-            "bLengthChange": false,
+           
         });
+         $('#idTable_length select').removeClass('custom-select custom-select-sm form-control form-control-sm');
         $('.dataTables_length').addClass('bs-select');
     });
 </script>

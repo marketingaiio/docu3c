@@ -58,14 +58,14 @@
                 <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
 
                     <div class="btn  btn-default text-dark">
-                        <div class="">
-                            <div class="float-left">
+                        <div class="row" style="height:30px;clear:both;">
+                            <div class="float-left pl-4">
                                 <svg class="c-icon text-danger c-icon-lg ">
                                     <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-warning"></use>
                                 </svg>
                             </div>
                             <div class="text-danger text-value-lg float-left ">&nbsp; @ViewData["NeedAttention"] </div>
-                        </div><br />
+                        </div>
                         <div class="row text-muted text-uppercase font-weight-bold small  ">Needs Attention</div>
                     </div>
                 </div>
@@ -107,73 +107,74 @@
     </div>
 
     <div class="row m-2 p-5 gridcurve-border bg-white">
-        <h5 class="text-primary">Needs Attention</h5>
-        <div class="row table-responsive">
-            <table class="table table-borderless table-striped  table-hover display" id="vTable">
-                <thead>
-                    <tr>
-                        <th scope="col">Category</th>
-                        <th scope="col">Asset</th>
-
-                        <th scope="col">Customer Name</th>
-                        <th scope="col">Institution</th>
-                        <th scope="col">Reason</th>
-                        <th scope="col">Document</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.DocumentDetails)
-                    {
+        <div class="row mb-2">
+            <h5 class="text-primary">Needs Attention</h5></div>
+            <div class="row table-responsive ">
+                <table class="table table-borderless table-striped  table-hover display" id="vTable">
+                    <thead>
                         <tr>
-                            <td>@item.Category    </td>
-                            <td>@item.JSONFileIdentifier </td>
+                            <th scope="col">Category</th>
+                            <th scope="col">Asset</th>
 
-                            <td>
-                                @item.CustomerDetail.CustomerFirstName
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Institution</th>
+                            <th scope="col">Reason</th>
+                            <th scope="col">Document</th>
 
-                            </td>
-                            <td>@item.Institution </td>
-                            <td>
-                                @item.Reason
-                            </td>
-                            <td>
-                                @if (item.DocumentURL != null)
-                                {
-                                    <a class="btn btn  btn-link btn-sm" href="@item.DocumentURL" target="_blank" rel="tooltip" title="@item.DocumentName" alt="">
-                                        <i class="material-icons">vertical_align_bottom</i>
-
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a class="btn btn btn-primary btn-link btn-sm" rel="tooltip" title="File not available">
-                                        <i class="material-icons">block</i>
-                                    </a>
-
-                                }
-                            </td>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DocumentDetails)
+                        {
+                            <tr>
+                                <td>@item.Category    </td>
+                                <td>@item.JSONFileIdentifier </td>
 
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th scope="col">Category</th>
-                        <th scope="col">Asset</th>
+                                <td>
+                                    @item.CustomerDetail.CustomerFirstName
 
-                        <th scope="col">Customer Name</th>
-                        <th scope="col">Institution</th>
-                        <th scope="col">Reason</th>
-                        <th scope="col">Document</th>
+                                </td>
+                                <td>@item.Institution </td>
+                                <td>
+                                    @item.Reason
+                                </td>
+                                <td>
+                                    @if (item.DocumentURL != null)
+                                    {
+                                        <a class="btn btn  btn-link btn-sm" href="@item.DocumentURL" target="_blank" rel="tooltip" title="@item.DocumentName" alt="">
+                                            <i class="material-icons">vertical_align_bottom</i>
 
-                    </tr>
-                </tfoot>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn btn-primary btn-link btn-sm" rel="tooltip" title="File not available">
+                                            <i class="material-icons">block</i>
+                                        </a>
 
-            </table>
+                                    }
+                                </td>
+                            </tr>
 
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Asset</th>
+
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Institution</th>
+                            <th scope="col">Reason</th>
+                            <th scope="col">Document</th>
+
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+            </div>
         </div>
-    </div>
 </form>
 
 
@@ -216,8 +217,8 @@
     $(document).ready(function () {
 
         $('#vTable').DataTable({
-           "bLengthChange": false,
-        });
+                });
+        $('#vTable_length select').removeClass('custom-select custom-select-sm form-control form-control-sm');
         $('.dataTables_length').addClass('bs-select');
     });
 </script>

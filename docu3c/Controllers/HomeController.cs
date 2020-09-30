@@ -439,6 +439,7 @@ namespace docu3c.Controllers
                                         }
 
                                     }
+                                    else { strErrorMessage += "Document not recognized"; }
 
 
                                 }

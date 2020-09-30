@@ -16,6 +16,8 @@
 <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
 <style>   
     .paginate_button .page-item a:active ,.page-link a{background-color:#989898}
+  
+    
 </style>
 
 <form role="form" method="post">
@@ -128,7 +130,7 @@
 
 
     <div class="row m-2 p-5 gridcurve-border bg-white">
-        <div class="row">
+        <div class="row mb-2">
             <h5 class="text-primary mb-3">Document Details</h5>
         </div>
         <div class="row table-responsive">
@@ -202,12 +204,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                       <th scope="col">Customer Name</th>
+                        <th scope="col">Customer Name</th>
                         <th scope="col">Asset</th>
                         <th scope="col">Institute</th>
-                       
+
                         <th scope="col">Reason</th>
-                      
+
                         <th scope="col">Uploaded On</th>
                         <th scope="col">Action</th>
 
@@ -233,6 +235,7 @@
         }
 
     </div>
+    @Html.Hidden("RedirectTo", Url.Action("Compliance", "Home"));
 </form>
 
 
@@ -276,15 +279,18 @@
 
     $(document).ready(function () {
         $('#ddTable').DataTable({
-            "bLengthChange": false,
+           
              "orderClasses": true,
 
         });
+        $('#ddTable_length select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+        
         $('.dataTables_length').addClass('bs-select');
 
 
 
     });
+   
 </script>
 
 <script>
@@ -292,6 +298,12 @@
         $("#divProcessing").hide();
         $('#btnCompliance').click(function () {
             // alert($(this).val());
+            this.disabled = true;
+            //this.removeClass('btn-primary:disable');
+            $(this).css('background-color', 'grey');
+              $(this).css('border-color','grey');
+          
+           var url = $("#RedirectTo").val();
             $("#divProcessing").show();
             $.ajax({
 
@@ -300,8 +312,8 @@
                 data: null,
                 contentType: "application/json; charset=utf-8",
                 success: function (Data) {
-
-                    window.location.reload();
+                    
+                    window.location.href=url;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
 
