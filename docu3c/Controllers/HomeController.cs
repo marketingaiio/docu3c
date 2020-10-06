@@ -201,8 +201,7 @@ namespace docu3c.Controllers
             int iPortFolioID = Convert.ToInt32(Session["dPortfolioID"]);
             BlobManager blobManagerObj = new BlobManager("uploadfiles");
             string FileAbsoluteUri;
-            string strErrorMessage = string.Empty;
-            string strJSONIdentifier = string.Empty;
+           
             DocumentUpload docUpload = new DocumentUpload();
             string strUserEmailID = Session["UserEmailID"].ToString();
             int userId = 0;
@@ -213,6 +212,8 @@ namespace docu3c.Controllers
                 //Ensure model state is valid  
                 if (ModelState.IsValid)
                 {   //iterating through multiple file collection  
+                    string strErrorMessage = string.Empty;
+                    string strJSONIdentifier = string.Empty;
                     if (iPortFolioID > 0)
                     {
                         foreach (HttpPostedFileBase file in files)
@@ -285,7 +286,9 @@ namespace docu3c.Controllers
                                                     string CustomerAddress = string.Empty;
                                                     string CustomerSSN = string.Empty;
                                                     string ExDocumentName = string.Empty;
-                                                    // DateTime dtDOB;
+                                                    string[] formats = { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
+                                                    DateTime dtDOB;
+
 
                                                     if (!isDocumentAlreadyExists)
                                                     {
@@ -323,11 +326,16 @@ namespace docu3c.Controllers
 
                                                                 if (strJSONIdentifier == "Client Relationship Agreement")
                                                                 {
-
-
+                                                                   
                                                                     if (docinfo[0].docProps.ContainsKey("cust.dob"))
-
-                                                                        item.DOB = DateTime.Parse(docinfo[0].docProps["cust.dob"].Value.ToString(), invariantCulture);
+                                                                    {
+                                                                        
+                                                                        bool isValidDOB = DateTime.TryParseExact(docinfo[0].docProps["cust.dob"].Value.ToString(), formats, invariantCulture, DateTimeStyles.None, out dtDOB);
+                                                                        if (isValidDOB)
+                                                                        { item.DOB = DateTime.Parse(docinfo[0].docProps["cust.dob"].Value.ToString(), invariantCulture); }
+                                                                       
+                                                                           
+                                                                    }
                                                                     item.DocCustomerID = CustomerSSN;
                                                                     item.Address = CustomerAddress;
                                                                     item.ModifiedBy = userId.ToString();
@@ -357,8 +365,15 @@ namespace docu3c.Controllers
                                                         nDocumentDetails.DocumentURL = docinfo[0].docURL.ToString();
 
                                                         if (docinfo[0].docProps.ContainsKey("cust.dob"))
+                                                        {
 
-                                                            nDocumentDetails.DOB = DateTime.Parse(docinfo[0].docProps["cust.dob"].Value.ToString(), invariantCulture);
+                                                            bool isValidDOB = DateTime.TryParseExact(docinfo[0].docProps["cust.dob"].Value.ToString(), formats, invariantCulture, DateTimeStyles.None, out dtDOB);
+                                                            if (isValidDOB)
+                                                            { nDocumentDetails.DOB = DateTime.Parse(docinfo[0].docProps["cust.dob"].Value.ToString(), invariantCulture); }
+                                                           
+
+                                                        }
+                                                       // nDocumentDetails.DOB = DateTime.Parse(docinfo[0].docProps["cust.dob"].Value.ToString(), invariantCulture);
                                                         //   nDocumentDetails.Reason = strReason;
                                                         if (docinfo[0].docProps.ContainsKey("doc.type"))
                                                         {
@@ -369,36 +384,38 @@ namespace docu3c.Controllers
                                                             // strJSONIdentifier = string()
                                                             nDocumentDetails.JSONFileIdentifier = strJSONIdentifier;
                                                             strJSONIdentifier = strJSONIdentifier.ToLowerInvariant();
-
-                                                            if (db.CategoryDetails.Any(x => x.JSONIdentifier.Contains(strJSONIdentifier)))
+                                                           
+                                                            var CategoryNameExists = db.DocumentIdentifiers.Any(x => x.JSONIdentifier.Contains(strJSONIdentifier));
+                                                            if (CategoryNameExists)
                                                             {
-                                                                string strCategoryName = string.Empty;
-                                                                List<CategoryDetail> strJSON = new List<CategoryDetail>();
-                                                                strJSON = db.CategoryDetails.Where(m => m.JSONIdentifier.Contains(strJSONIdentifier)).ToList();
-                                                                foreach (var item in strJSON)
+                                                                var strCategoryName = string.Empty;
+                                                                //List<CategoryDetail> strJSON = new List<CategoryDetail>();
+                                                                //strJSON = db.DocumentIdentifiers.Where(m => m.JSONIdentifier.Contains(strJSONIdentifier)).ToList();
+                                                                //foreach (var item in strJSON)
 
-                                                                {
-                                                                    Dictionary<string, List<string>> dstrJson = new Dictionary<string, List<string>>();
-                                                                    dstrJson.Add(item.CategoryName, item.JSONIdentifier.Split(',').ToList());
-                                                                    if (dstrJson.FirstOrDefault().Value.Any(m => m.Equals(strJSONIdentifier, StringComparison.OrdinalIgnoreCase)))
-                                                                    {
-                                                                        strCategoryName = dstrJson.FirstOrDefault().Key;
-                                                                        break;
-                                                                    }
+                                                                //{
+                                                                //    Dictionary<string, List<string>> dstrJson = new Dictionary<string, List<string>>();
+                                                                //    dstrJson.Add(item.CategoryName, item.JSONIdentifier.Split(',').ToList());
+                                                                //    if (dstrJson.FirstOrDefault().Value.Any(m => m.Equals(strJSONIdentifier, StringComparison.OrdinalIgnoreCase)))
+                                                                //    {db.CustomerDetails.FirstOrDefault(m => m.CustomerFirstName.Equals(strCustomerName)).CustomerID
+                                                                strCategoryName = db.DocumentIdentifiers.FirstOrDefault(x => x.JSONIdentifier.Equals(strJSONIdentifier)).Category;
+                                                                       // break;
+                                                                //    }
 
 
-                                                                }
+                                                                //}
 
                                                                 nDocumentDetails.Category = strCategoryName;
                                                             }
-                                                            if (db.SubCategoryDetails.Any(x => x.JSONIdentifier.Equals(strJSONIdentifier)))
-                                                            {
-                                                                int iCategoryID = 0;
-                                                                string strSubCategoryName = db.SubCategoryDetails.FirstOrDefault(m => m.JSONIdentifier.Equals(strJSONIdentifier)).SubCategoryName;
-                                                                nDocumentDetails.SubCategory = strSubCategoryName;
-                                                                iCategoryID = db.SubCategoryDetails.FirstOrDefault(m => m.SubCategoryName.Equals(strSubCategoryName)).CategoryID;
-                                                                nDocumentDetails.Category = db.CategoryDetails.FirstOrDefault(m => m.CategoryID.Equals(iCategoryID)).CategoryName;
-                                                            }
+                                                            else { nDocumentDetails.Category = "Others"; }
+                                                            //if (db.SubCategoryDetails.Any(x => x.JSONIdentifier.Equals(strJSONIdentifier)))
+                                                            //{
+                                                            //    int iCategoryID = 0;
+                                                            //    string strSubCategoryName = db.SubCategoryDetails.FirstOrDefault(m => m.JSONIdentifier.Equals(strJSONIdentifier)).SubCategoryName;
+                                                            //    nDocumentDetails.SubCategory = strSubCategoryName;
+                                                            //    iCategoryID = db.SubCategoryDetails.FirstOrDefault(m => m.SubCategoryName.Equals(strSubCategoryName)).CategoryID;
+                                                            //    nDocumentDetails.Category = db.CategoryDetails.FirstOrDefault(m => m.CategoryID.Equals(iCategoryID)).CategoryName;
+                                                            //}
 
 
                                                         }
@@ -966,6 +983,7 @@ namespace docu3c.Controllers
             if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
             {
                 ProfileModel ProfileModel = new ProfileModel();
+                //Session["SuccessMsg"]= string.Empty;
                 if (!string.IsNullOrEmpty(portfolioname))
                 {
                     string strUserEmailID = Session["UserEmailID"].ToString();
@@ -981,10 +999,13 @@ namespace docu3c.Controllers
                         portfolioDetails.CreatedOn = DateTime.Now;
                         portfolioDetails.CreatedBy = userId.ToString();
                         portfolioDetails.UserID = Convert.ToInt32(userId.ToString());
-                        db.PortfolioDetails.Add(portfolioDetails);
-                        db.SaveChanges();
-                        RedirectToAction("PortFolioDetails", "Home");
+                         db.PortfolioDetails.Add(portfolioDetails);
+                         db.SaveChanges();
+
+                      //  Session["SuccessMsg"] = string.Format("{0} added successfully...", portfolioname);
+                       
                     }
+                    return RedirectToAction("PortfolioDetails");
                 }
                 return View(ProfileModel);
             }

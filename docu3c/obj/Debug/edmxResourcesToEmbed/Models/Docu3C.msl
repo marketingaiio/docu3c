@@ -120,5 +120,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DocumentIdentifiers">
+      <EntityTypeMapping TypeName="docu3cModel.DocumentIdentifier">
+        <MappingFragment StoreEntitySet="DocumentIdentifier">
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="JSONIdentifier" ColumnName="JSONIdentifier" />
+          <ScalarProperty Name="SubCategory" ColumnName="SubCategory" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="CIdentifierID" ColumnName="CIdentifierID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

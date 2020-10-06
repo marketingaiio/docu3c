@@ -26,6 +26,7 @@
         <div class="text-center hidden text-success" id="divProcessing">
             Processing, please wait . . . <img src="~/Content/Images/ajax-loader.gif" class="rounded" alt="...">
         </div>
+        <div class="text-center hidden text-danger" id="selectportfolio">Please select the Portfolio before uploading the documents</div>
         @*<div class="col-md-offset-2 col-md-10 alert alert-danger collapse" id="myAlert">
         <a id="linkclose" href="#" class="close"> &times;</a>*@
         <div class="text-danger text-center pl-10" id="myAlert" >
@@ -38,7 +39,7 @@
             <div class="col-md-3">
                 <div class="row">
                     <select id="iPortFolioID" class="border-primary mb-3 form-control w-75" asp-for="PortFolioID">
-                        <option value="0">All Portfolio</option>
+                        <option value="0">Portfolio</option>
 
                         @{
                             using (docu3cEntities db = new docu3cEntities())
@@ -81,7 +82,7 @@
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
+                                <div class="col-md-10" id="browsefiles">
                                     @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
                                 </div>
@@ -115,6 +116,7 @@
   
     $(document).ready(function () {
         $("#divProcessing").hide();
+      
      
     
      
@@ -141,7 +143,7 @@
 <script>
 
     $(document).ready(function () {
-      
+       
             setTimeout(function () {
                 var drpVal = @Session["dPortFolioID"];
                 if (drpVal != "") {
@@ -167,9 +169,15 @@
                 }
             });
         });
+      $("#selectportfolio").hide();
+          var drpVal = @Session["dPortFolioID"];
+        if (drpVal == "") {
+            // alert($(this).val());
 
-
-
+            document.getElementById("files").disabled = true;
+            document.getElementById("btnUpdate").disabled = true;
+              $("#selectportfolio").show();
+        }
 
     });
 

@@ -172,6 +172,9 @@
     <Compile Include="Models\DocumentDetail.cs">
       <DependentUpon>Docu3C.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentIdentifier.cs">
+      <DependentUpon>Docu3C.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DocumentUpload.cs" />
     <Compile Include="Models\PortfolioDetail.cs">
       <DependentUpon>Docu3C.tt</DependentUpon>

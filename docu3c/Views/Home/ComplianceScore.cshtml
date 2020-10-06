@@ -322,7 +322,7 @@
 
 
 
-                            <select id="strCategory" class="border-primary w-50 form-control">
+                            <select id="strCategory" class="border-primary form-control" style="width:40%">
                                 <option value="">Category</option>
                                 @using (docu3cEntities db = new docu3cEntities())
                                 {
@@ -416,6 +416,11 @@
                             <div style="display:none;" id="BarChart2" class="mt-3">
                                 <canvas id="barcanvas"></canvas>
                                 <script>
+                                    function nullToZero(array) {
+  return array.map(function(v) { 
+    if (v==null) return 0; else return v;
+  });
+}
         var ctx = document.getElementById('barcanvas').getContext('2d');
 
 
@@ -571,7 +576,7 @@
                                         </div>
                                     </div>
 
-                                    <select id="strInstitution" class="border-primary w-25 form-control" asp-for="strInstitution">
+                                    <select id="strInstitution" class="border-primary form-control" asp-for="strInstitution" style="width:40%">
                                         <option value="">All Assets</option>
 
                                         @using (docu3cEntities db = new docu3cEntities())
@@ -620,9 +625,9 @@
                                                             <td>@item.Key</td>
 
 
-                                                            <td class="pl-3" >@db.DocumentDetails.Where(x => x.FileStatus == "Red" && x.Institution == item.Key).Count()</td>
-                                                            <td class="pl-3" > @db.DocumentDetails.Where(x => x.FileStatus == "Yellow" && x.Institution == item.Key).Count()</td>
-                                                            <td class="pl-3" >@db.DocumentDetails.Where(x => x.FileStatus == "Green" && x.Institution == item.Key).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == item.Key).Count()</td>
+                                                            <td class="pl-3" > @Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == item.Key).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == item.Key).Count()</td>
 
 
 

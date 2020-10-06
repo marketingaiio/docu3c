@@ -31,5 +31,6 @@ namespace docu3c.Models
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<CustomerDetail> CustomerDetails { get; set; }
         public virtual DbSet<DocumentDetail> DocumentDetails { get; set; }
+        public virtual DbSet<DocumentIdentifier> DocumentIdentifiers { get; set; }
     }
 }

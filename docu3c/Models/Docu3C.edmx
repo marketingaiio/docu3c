@@ -70,6 +70,27 @@
           <Property Name="ModifiedBy" Type="nvarchar(max)" />
           <Property Name="ModifiedOn" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'docu3c.dbo.DocumentIdentifier' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DocumentIdentifier">
+          <Key>
+            <PropertyRef Name="CIdentifierID" />
+            <PropertyRef Name="Category" />
+            <PropertyRef Name="JSONIdentifier" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedOn" />
+          </Key>
+          <Property Name="CIdentifierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SubCategory" Type="nvarchar(max)" />
+          <Property Name="JSONIdentifier" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nchar" MaxLength="10" />
+          <Property Name="ModifiedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="PortfolioDetails">
           <Key>
             <PropertyRef Name="PortfolioID" />
@@ -209,6 +230,19 @@
           <EntitySet Name="PortfolioDetails" EntityType="Self.PortfolioDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategoryDetails" EntityType="Self.SubCategoryDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentIdentifier" EntityType="Self.DocumentIdentifier" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DocumentIdentifier].[CIdentifierID] AS [CIdentifierID], 
+    [DocumentIdentifier].[Category] AS [Category], 
+    [DocumentIdentifier].[SubCategory] AS [SubCategory], 
+    [DocumentIdentifier].[JSONIdentifier] AS [JSONIdentifier], 
+    [DocumentIdentifier].[IsActive] AS [IsActive], 
+    [DocumentIdentifier].[CreatedBy] AS [CreatedBy], 
+    [DocumentIdentifier].[CreatedOn] AS [CreatedOn], 
+    [DocumentIdentifier].[ModifiedBy] AS [ModifiedBy], 
+    [DocumentIdentifier].[ModifiedOn] AS [ModifiedOn]
+    FROM [dbo].[DocumentIdentifier] AS [DocumentIdentifier]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CustomerDetails_PortfolioDetails" Association="Self.FK_CustomerDetails_PortfolioDetails">
             <End Role="PortfolioDetails" EntitySet="PortfolioDetails" />
             <End Role="CustomerDetails" EntitySet="CustomerDetails" />
@@ -370,6 +404,7 @@
             <End Role="UserDetail" EntitySet="UserDetails" />
             <End Role="DocumentDetail" EntitySet="DocumentDetails" />
           </AssociationSet>
+          <EntitySet Name="DocumentIdentifiers" EntityType="docu3cModel.DocumentIdentifier" />
           </EntityContainer>
         <EntityType Name="CustomerDetail">
           <Key>
@@ -489,6 +524,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DocumentIdentifier">
+          <Key>
+            <PropertyRef Name="CIdentifierID" />
+            <PropertyRef Name="Category" />
+            <PropertyRef Name="JSONIdentifier" />
+            <PropertyRef Name="IsActive" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedOn" />
+          </Key>
+          <Property Name="CIdentifierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JSONIdentifier" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -611,6 +665,21 @@
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="DocCustomerID" ColumnName="DocCustomerID" />
                 <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentIdentifiers">
+            <EntityTypeMapping TypeName="docu3cModel.DocumentIdentifier">
+              <MappingFragment StoreEntitySet="DocumentIdentifier">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="JSONIdentifier" ColumnName="JSONIdentifier" />
+                <ScalarProperty Name="SubCategory" ColumnName="SubCategory" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CIdentifierID" ColumnName="CIdentifierID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
