@@ -526,7 +526,8 @@ namespace docu3c.Controllers
                             foreach (var docitem in documentDetails)
                             {
                                 string strComplianceData = string.Empty;
-                                if (string.IsNullOrEmpty(docitem.Reason) && docitem.JSONFileIdentifier != "Client Relationship Agreement")
+                                //  if (string.IsNullOrEmpty(docitem.Reason) && docitem.JSONFileIdentifier != "Client Relationship Agreement")
+                                if (string.IsNullOrEmpty(docitem.Reason))
                                 {
                                     string docSSN = docitem.DocCustomerID;
                                     string docCustomerName = docitem.CustomerName;
