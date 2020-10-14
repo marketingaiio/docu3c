@@ -56,6 +56,7 @@
     <Property Name="JSONFileIdentifier" Type="nvarchar(max)" />
     <Property Name="Reason" Type="nvarchar(max)" />
     <Property Name="FileStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsCheckCompliance" Type="bit" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="DOB" Type="date" />
     <Property Name="Address" Type="nvarchar(max)" />
@@ -113,6 +114,16 @@ warning 6002: The table/view 'docu3c.dbo.DocumentIdentifier' does not have a pri
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="UserDetails">
     <Key>
@@ -224,6 +235,7 @@ warning 6002: The table/view 'docu3c.dbo.DocumentIdentifier' does not have a pri
     <EntitySet Name="DocumentDetails" EntityType="Self.DocumentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PortfolioDetails" EntityType="Self.PortfolioDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubCategoryDetails" EntityType="Self.SubCategoryDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DocumentIdentifier" EntityType="Self.DocumentIdentifier" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 

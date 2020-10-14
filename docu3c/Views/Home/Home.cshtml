@@ -1,0 +1,294 @@
+﻿@model docu3c.ViewModel.ProfileModel
+@using docu3c.Models;
+@{
+    ViewBag.Title = "Home";
+}
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+
+@*<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />*@
+<script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+<link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+<style>
+     table.dataTable thead th {
+  border-bottom: none;
+}
+    .quad-border {
+        border-radius: 30px;
+        width: 450px;
+        height: 480px;
+        padding-bottom: 10px;
+        align-items: center;
+    }
+</style>
+<h5>
+
+    @if (Session["UserName"] != null)
+    {
+        <text>
+            Hi <b>@Session["UserName"].ToString() </b>,<br />
+
+        </text>
+
+    }
+
+</h5>
+
+<div class="row mt-5 ml-1">
+    <div class="col-lg-4">
+        <div class="card p-3 quad-border">
+
+
+            @*<div class="card-body w-auto">*@
+            <div class="row">
+                <div class="badge-icon align-content-center">
+                    <svg class="c-icon text-white c-icon-3xl rounded-circle bg-primary p-2">
+                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                    </svg>
+                </div>
+
+                <div class="text-center m-md-auto  w-100 font-2xl " style="color:#090a8f">Classify Documents </div>
+            </div>
+            <div class="row table-responsive">
+                <table class="table table-borderless table-striped  table-hover display" id="cdTable">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Portfolio</th>
+                            <th scope="col">Status</th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @using (docu3cEntities db = new docu3cEntities())
+                        {
+                            foreach (var item in Model.PortfolioDetails)
+                            {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("DocumentDetails", "Home")?pid=@item.PortfolioID" class="text-black">
+                                    @item.PortfolioName
+                                </a>
+                            </td>
+
+                            @if (@db.DocumentDetails.Where(x => x.PortfolioID == item.PortfolioID).Count() > 0)
+                            {
+                                <td>
+                                    <span class="text-success"> Completed</span>
+                                </td>
+                                <td>
+                                    <img src="~/Content/Images/Icons/eye.svg" width="20px" height="20px" />
+                                </td>
+
+
+
+                            }
+                            else
+                            {
+
+                                <td>
+                                    <span class="text-warning">Yet to start</span>
+                                </td>
+                                <td>
+                                    <img src="~/Content/Images/Icons/penciledit.svg" width="20px" height="20px" />
+                                </td>
+                            }
+
+
+
+                        </tr>
+
+                            }
+                        }
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+            @*</div>*@
+        </div>
+    </div>
+    <div class="col-lg-4 ">
+        <div class="card p-3 quad-border">
+
+            @*<div class="card-body w-auto">*@
+            <div class="row">
+                <div class="badge-icon ">
+                    <svg class="c-icon text-white c-icon-3xl rounded-circle bg-primary p-2">
+                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-compass"></use>
+                    </svg>
+                </div>
+
+                <div class="text-center m-md-auto  w-100 font-2xl " style="color:#090a8f">Check Compliance </div>
+            </div>
+            <div class="row table-responsive">
+                <table class="table table-borderless table-striped  table-hover display" id="ccTable">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Portfolio</th>
+                            <th scope="col">Status</th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @using (docu3cEntities db = new docu3cEntities())
+                        {
+                            foreach (var item in Model.PortfolioDetails)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.Action("Compliance", "Home")?pid=@item.PortfolioID" class="text-black">
+                                            @item.PortfolioName
+                                        </a>
+                                    </td>
+
+                                    @if (@db.DocumentDetails.Where(x => x.PortfolioID == item.PortfolioID).Count() > 0)
+                                    {
+                                        if (@db.DocumentDetails.Where(x => x.IsCheckCompliance == false && x.PortfolioID == item.PortfolioID).Count() > 0)
+                                        {
+                                            <td>
+                                                <span class="text-warning">  Yet to start</span>
+                                            </td>
+                                            <td>
+                                               <img src="~/Content/Images/Icons/penciledit.svg" width="20px" height="20px" />
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                <td>   <span class="text-success">  Completed </span> </td>
+                                            <td>
+                                                <img src="~/Content/Images/Icons/eye.svg" width="20px" height="20px" />
+                                            </td>
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+
+                                <td>
+                                    <span class="text-warning">  Yet to start</span>
+                                </td>
+                                        <td>
+                                            <img src="~/Content/Images/Icons/penciledit.svg" width="20px" height="20px" />
+                                        </td>
+                                    }
+
+
+
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+
+
+                </table>
+            </div>
+            @*</div>*@
+        </div>
+    </div>
+    <div class="col-lg-4 ">
+        <div class="card p-3 quad-border">
+
+            @*<div class="card-body w-auto">*@
+            <div class="row">
+                <div class="badge-icon ">
+                    <svg class="c-icon text-white c-icon-3xl rounded-circle  bg-primary p-1">
+                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-graph"></use>
+                    </svg>
+                </div>
+
+                <div class="text-center m-md-auto  w-100 font-2xl " style="color:#090a8f">View Comprehension </div>
+            </div>
+            <div class="row table-responsive">
+                <table class="table table-borderless table-striped  table-hover display" id="ccTable">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Customer</th>
+                            <th scope="col">Status</th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Aaron B McDaniel</td>
+                            <td><span class="text-success ">Completed</span></td>
+                            <td>
+                                <img src="~/Content/Images/Icons/eye.svg" width="20px" height="20px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Barbara R Phillips</td>
+                            <td><span class="text-success ">Completed</span></td>
+                            <td>
+                                <img src="~/Content/Images/Icons/eye.svg" width="20px" height="20px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Harry D Colon</td>
+                            <td><span class="text-warning ">Yet to start</span></td>
+                            <td>
+                                <img src="~/Content/Images/Icons/penciledit.svg" width="20px" height="20px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Audrey R Duffin</td>
+                            <td><span class="text-success ">Completed</span></td>
+                            <td>
+                                <img src="~/Content/Images/Icons/eye.svg" width="20px" height="20px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Linda B Brown</td>
+                            <td><span class="text-warning ">Yet to start</span></td>
+                            <td>
+                                <img src="~/Content/Images/Icons/penciledit.svg" width="20px" height="20px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Heather F Bailey</td>
+                            <td><span class="text-success ">Completed</span></td>
+                            <td>
+                                <img src="~/Content/Images/Icons/eye.svg" width="20px" height="20px" />
+                            </td>
+                        </tr>
+                    </tbody>
+
+
+                </table>
+            </div>
+            @*</div>*@
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $('#ccTable').DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false, "searching": false,
+
+        });
+          $('#cdTable').DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false, "searching": false,
+
+        });
+        $('#idTable_length select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>

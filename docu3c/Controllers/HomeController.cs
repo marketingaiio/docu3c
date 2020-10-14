@@ -526,8 +526,9 @@ namespace docu3c.Controllers
                             foreach (var docitem in documentDetails)
                             {
                                 string strComplianceData = string.Empty;
+                                bool isCheckCompliance = docitem.IsCheckCompliance;
                                 //  if (string.IsNullOrEmpty(docitem.Reason) && docitem.JSONFileIdentifier != "Client Relationship Agreement")
-                                if (string.IsNullOrEmpty(docitem.Reason))
+                                if (isCheckCompliance == false)
                                 {
                                     string docSSN = docitem.DocCustomerID;
                                     string docCustomerName = docitem.CustomerName;
@@ -594,6 +595,7 @@ namespace docu3c.Controllers
 
                                     docitem.ModifiedOn = DateTime.Now;
                                     docitem.ModifiedBy = docitem.UserID.ToString();
+                                    docitem.IsCheckCompliance = true;
                                     //db.DocumentDetails.Append(docitem.Reason);
 
                                     db.SaveChanges();
@@ -662,7 +664,7 @@ namespace docu3c.Controllers
 
             return View();
         }
-        public ActionResult DocumentDetails(int? queryid)
+        public ActionResult DocumentDetails(int? queryid, int? pID)
         {
             ProfileModel ProfileModel = new ProfileModel();
             if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
@@ -670,6 +672,10 @@ namespace docu3c.Controllers
                 string strUserEmailID = Session["UserEmailID"].ToString();
                 //   int userId = 0;
                 int SessionPortFolioID;
+                if(pID != null)
+                {
+                    Session["dPortFolioID"] = pID;
+                }
                 if (Session["dPortFolioID"] != null)
                 {
                     SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
@@ -1060,7 +1066,7 @@ namespace docu3c.Controllers
             return RedirectToAction("DocumentDetails");
         }
 
-        public ActionResult Compliance()
+        public ActionResult Compliance(int? pID)
         {
             ProfileModel ProfileModel = new ProfileModel();
             if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
@@ -1072,6 +1078,13 @@ namespace docu3c.Controllers
                     if (User != null)
                     {
                         int SessionPortFolioID;
+                        if(pID!=null)
+                        {
+                            Session["dPortFolioID"] = pID;
+                           
+
+
+                        }
                         if (Session["dPortFolioID"] != null)
                         {
                             SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
@@ -1385,6 +1398,31 @@ namespace docu3c.Controllers
             }
             else { return RedirectToAction("Login", "Login"); }
 
+        }
+
+        public ActionResult Home()
+        {
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                // string strUserEmailID = Session["UserEmailID"].ToString();
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                    ProfileModel = new ProfileModel
+                    {
+
+                       
+                        PortfolioDetails = db.PortfolioDetails.ToList(),
+                      
+                       
+                    };
+                  
+                }
+
+                return View(ProfileModel);
+            }
+           
+              else { return RedirectToAction("Login", "Login"); }
         }
     }
 

@@ -129,6 +129,7 @@
       <End Role="DocumentDetail" EntitySet="DocumentDetails" />
     </AssociationSet>
     <EntitySet Name="DocumentIdentifiers" EntityType="docu3cModel.DocumentIdentifier" />
+    <EntitySet Name="sysdiagrams" EntityType="docu3cModel.sysdiagram" />
   </EntityContainer>
   <EntityType Name="CustomerDetail">
     <Key>
@@ -187,6 +188,7 @@
     <Property Name="DOB" Type="DateTime" Precision="0" />
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsCheckCompliance" Type="Boolean" Nullable="false" />
   </EntityType>
   <Association Name="FK_CustomerDetails_PortfolioDetails">
     <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />
@@ -266,5 +268,15 @@
     <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="ModifiedBy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
 </Schema>

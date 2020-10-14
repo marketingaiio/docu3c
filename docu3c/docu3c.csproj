@@ -182,6 +182,9 @@
     <Compile Include="Models\SubCategoryDetail.cs">
       <DependentUpon>Docu3C.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Docu3C.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserDetail.cs">
       <DependentUpon>Docu3C.tt</DependentUpon>
@@ -210,7 +213,9 @@
     <Content Include="Content\Images\docu3c login logo.PNG" />
     <Content Include="Content\Images\Icons\briefcase.svg" />
     <Content Include="Content\Images\Icons\compass.svg" />
+    <Content Include="Content\Images\Icons\eye.svg" />
     <Content Include="Content\Images\Icons\graph.svg" />
+    <Content Include="Content\Images\Icons\penciledit.svg" />
     <Content Include="Content\Images\Icons\settings.svg" />
     <Content Include="Content\Images\Icons\sort_asc.png" />
     <Content Include="Content\Images\Illustration.png" />
@@ -827,6 +832,7 @@
     <Content Include="Views\Home\Attention.cshtml" />
     <Content Include="Views\Home\Verification.cshtml" />
     <Content Include="Views\Home\ComplianceScore.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

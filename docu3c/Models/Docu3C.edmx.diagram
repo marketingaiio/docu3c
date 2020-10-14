@@ -19,6 +19,7 @@
         <AssociationConnector Association="docu3cModel.FK_DocumentDetails_PortfolioDetails" />
         <AssociationConnector Association="docu3cModel.FK_DocumentDetails_UserDetails" />
         <EntityTypeShape EntityType="docu3cModel.DocumentIdentifier" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="docu3cModel.sysdiagram" Width="1.5" PointX="5.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
