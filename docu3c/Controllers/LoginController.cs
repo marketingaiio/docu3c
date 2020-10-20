@@ -47,7 +47,7 @@ namespace docu3c.Controllers
                             Session["UserEmailID"] = userEmailID;
                             Session["UserName"] = userName;
                             Session["Role"] = role;
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Home", "Home");
                         }
                         else {
                             ViewBag.ErrorMsg = "Please enter the correct username and password";

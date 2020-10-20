@@ -4,9 +4,24 @@
     ViewBag.Title = "PortFolioDetails";
 }
 
-<h2>Portfolio Details</h2>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
-<div class="row float-right mb-4 w-25">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+
+@*<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />*@
+<script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+<link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+<style>
+    .paginate_button .page-item a:active, .page-link a {
+        background-color: #989898
+    }
+    
+</style>
+
+
+<div class="row float-right mb-4 mr-5 pr-5">
 
 
     <a class="btn btn-warning text-white float-right" role="button" href="@Url.Action("AddPortFolio", "Home")">Create New Portfolio</a>
@@ -17,9 +32,12 @@
 <div class="row m-2 p-5 gridcurve-border bg-white">
 
     @*<h5 class="text-primary mb-3">Document Details</h5>*@
-    <div class="table-responsive m-6">
-        <table class="table table-bordered table-striped table-hover " id="ddTable">
-            <thead class="bg-primary text-white ">
+    <div class="row mb-2">
+        <h5 class="text-primary">Portfolio Details</h5>
+    </div>
+    <div class="row table-responsive">
+        <table class="table table-borderless table-striped  table-hover display" id="ddTable">
+            <thead>
                 <tr>
                     <th scope="col">Portfolio Name</th>
                     <th>No.of Customers</th>
@@ -43,14 +61,24 @@
                             <td>@item.CreatedOn </td>
                             @*<td>
 
-                                    <span>@Html.ActionLink("Change Status", "ChangeStatus", "Home", new { id = StudentObj.RowKey, Status = StudentObj.IsActive }, new { })</span>
-                                    ||
-                                    <span>@Html.ActionLink("Delete", "Delete", "Home", new { id = StudentObj.RowKey }, new { })</span>
-                                </td>*@
+                            <span>@Html.ActionLink("Change Status", "ChangeStatus", "Home", new { id = StudentObj.RowKey, Status = StudentObj.IsActive }, new { })</span>
+                            ||
+                            <span>@Html.ActionLink("Delete", "Delete", "Home", new { id = StudentObj.RowKey }, new { })</span>
+                        </td>*@
                         </tr>
                     }
                 }
             </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="col">Portfolio Name</th>
+                    <th>No.of Customers</th>
+                    <th>No.Documents</th>
+                    <th>Created On</th>
+
+
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -60,11 +88,17 @@
 
     $(document).ready(function () {
 
-        $('#pdTable').DataTable({
-            "paging": true,
-            "ordering": true,
-            "info": false, "searching": true
+        $('#ddTable').DataTable({
+           
+             "orderClasses": true,
+
         });
+        $('#ddTable_length select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+        
+        $('.dataTables_length').addClass('bs-select');
+
+
+
     });
 </script>
 

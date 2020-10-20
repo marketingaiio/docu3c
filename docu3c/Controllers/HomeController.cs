@@ -1093,13 +1093,15 @@ namespace docu3c.Controllers
                         if (SessionPortFolioID == 0)
                         {
                             var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
                             var meetCompliance = db.DocumentDetails.Count();
-                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
+                            ViewData["NeedAttention"] = needsAttention;
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance;
-                            ViewData["MeetCompliance"] = meetCompliance; if (meetCompliance > 0)
+                             if (meetCompliance > 0)
                             {
-                                var complianceScore = (Convert.ToDecimal(needsVerification) / Convert.ToDecimal(meetCompliance)) * 100;
+                                var dividend = needsAttention + needsVerification + meetCompliance;
+                                var complianceScore = (Convert.ToDecimal(meetCompliance) / Convert.ToDecimal(dividend));
                                 ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
                             }
                             else { ViewData["ComplianceScore"] = 0; }
@@ -1117,14 +1119,16 @@ namespace docu3c.Controllers
                         }
                         else
                         {
-                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
                             var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
                             var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["NeedAttention"] = needsAttention;
+
                             ViewData["NeedVerification"] = needsVerification;
-                            ViewData["MeetCompliance"] = meetCompliance;
                             ViewData["MeetCompliance"] = meetCompliance; if (meetCompliance > 0)
                             {
-                                var complianceScore = (Convert.ToDecimal(needsVerification) / Convert.ToDecimal(meetCompliance)) * 100;
+                                var dividend = needsAttention + needsVerification + meetCompliance;
+                                var complianceScore = (Convert.ToDecimal(meetCompliance) / Convert.ToDecimal(dividend));
                                 ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
                             }
                             else { ViewData["ComplianceScore"] = 0; }
@@ -1168,13 +1172,15 @@ namespace docu3c.Controllers
                         if (SessionPortFolioID == 0)
                         {
                             var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
                             var meetCompliance = db.DocumentDetails.Count();
-                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
+                            ViewData["NeedAttention"] = needsAttention;
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance;
-                            ViewData["MeetCompliance"] = meetCompliance; if (meetCompliance > 0)
+                            if (meetCompliance > 0)
                             {
-                                var complianceScore = (Convert.ToDecimal(needsVerification) / Convert.ToDecimal(meetCompliance)) * 100;
+                                var dividend = needsAttention + needsVerification + meetCompliance;
+                                var complianceScore = (Convert.ToDecimal(meetCompliance) / Convert.ToDecimal(dividend));
                                 ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
                             }
                             else { ViewData["ComplianceScore"] = 0; }
@@ -1192,14 +1198,16 @@ namespace docu3c.Controllers
                         else
                         {
 
-                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
                             var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
                             var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["NeedAttention"] = needsAttention;
+
                             ViewData["NeedVerification"] = needsVerification;
-                            ViewData["MeetCompliance"] = meetCompliance;
                             ViewData["MeetCompliance"] = meetCompliance; if (meetCompliance > 0)
                             {
-                                var complianceScore = (Convert.ToDecimal(needsVerification) / Convert.ToDecimal(meetCompliance)) * 100;
+                                var dividend = needsAttention + needsVerification + meetCompliance;
+                                var complianceScore = (Convert.ToDecimal(meetCompliance) / Convert.ToDecimal(dividend));
                                 ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
                             }
                             else { ViewData["ComplianceScore"] = 0; }
@@ -1242,13 +1250,15 @@ namespace docu3c.Controllers
                         if (SessionPortFolioID == 0)
                         {
                             var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
                             var meetCompliance = db.DocumentDetails.Count();
-                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
+                            ViewData["NeedAttention"] = needsAttention;
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance;
-                            ViewData["MeetCompliance"] = meetCompliance; if (meetCompliance > 0)
+                            if (meetCompliance > 0)
                             {
-                                var complianceScore = (Convert.ToDecimal(needsVerification) / Convert.ToDecimal(meetCompliance)) * 100;
+                                var dividend = needsAttention + needsVerification + meetCompliance;
+                                var complianceScore = (Convert.ToDecimal(meetCompliance) / Convert.ToDecimal(dividend));
                                 ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
                             }
                             else { ViewData["ComplianceScore"] = 0; }
@@ -1265,14 +1275,16 @@ namespace docu3c.Controllers
                         }
                         else
                         {
-                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
                             var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
                             var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["NeedAttention"] = needsAttention;
+
                             ViewData["NeedVerification"] = needsVerification;
-                            ViewData["MeetCompliance"] = meetCompliance;
                             ViewData["MeetCompliance"] = meetCompliance; if (meetCompliance > 0)
                             {
-                                var complianceScore = (Convert.ToDecimal(needsVerification) / Convert.ToDecimal(meetCompliance)) * 100;
+                                var dividend = needsAttention + needsVerification + meetCompliance;
+                                var complianceScore = (Convert.ToDecimal(meetCompliance) / Convert.ToDecimal(dividend));
                                 ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
                             }
                             else { ViewData["ComplianceScore"] = 0; }
@@ -1330,17 +1342,18 @@ namespace docu3c.Controllers
                         if (SessionPortFolioID == 0)
                         {
                             var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
                             var meetCompliance = db.DocumentDetails.Count();
-                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
+                            ViewData["NeedAttention"] = needsAttention;
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance;
-                            ViewData["MeetCompliance"] = meetCompliance; if (meetCompliance > 0)
+                            if (meetCompliance > 0)
                             {
-                                var complianceScore = (Convert.ToDecimal(needsVerification) / Convert.ToDecimal(meetCompliance)) * 100;
+                                var dividend = needsAttention + needsVerification + meetCompliance;
+                                var complianceScore = (Convert.ToDecimal(meetCompliance) / Convert.ToDecimal(dividend));
                                 ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
                             }
                             else { ViewData["ComplianceScore"] = 0; }
-
                             profileModel = new ProfileModel
                             {
 
@@ -1362,15 +1375,18 @@ namespace docu3c.Controllers
                         }
                         else
                         {
-                            ViewData["NeedAttention"] = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsAttention= db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
                             var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
                             var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            ViewData["NeedAttention"] = needsAttention;
+                           
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance; if (meetCompliance > 0)
-                            { 
-                            var complianceScore = (Convert.ToDecimal(needsVerification) / Convert.ToDecimal(meetCompliance)) * 100;
-                            ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
-                        }
+                            {
+                                var dividend = needsAttention + needsVerification + meetCompliance;
+                                var complianceScore = (Convert.ToDecimal(meetCompliance) / Convert.ToDecimal(dividend));
+                                ViewData["ComplianceScore"] = Convert.ToInt32(complianceScore);
+                            }
                             else { ViewData["ComplianceScore"] = 0; }
 
                             profileModel = new ProfileModel

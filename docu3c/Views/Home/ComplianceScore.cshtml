@@ -27,7 +27,7 @@
 
 
 <form role="form" action="/Home/LoadPortfolio" method="get">
-    <div class="row">
+    <div class="row ml-1">
         <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
             <option value="0">Portfolio</option>
 
@@ -46,7 +46,7 @@
 
 
         <div class="col">
-            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3 bg-gradient-success">
+            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left mt-3 mr-3 ml-1 bg-gradient-success">
 
                 <div class="btn  btn-default text-white">
                     <div class="" >
@@ -120,13 +120,13 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-4 ">
             <div class="card p-3 ">
                 @if (Convert.ToInt32(ViewData["MeetCompliance"]) != 0)
                 {
                     <div class="row">
 
-                        <div class="w-75 float-left text-muted p-2">Category View</div>
+                        <div class="w-75 float-left text-muted p-3">Category View</div>
 
                         <div class="w-25 float-right pl-5 ">
                             <nav class="navbar">
@@ -303,7 +303,7 @@
                         @if (Convert.ToInt32(ViewData["MeetCompliance"]) != 0)
                         {
                             <div class="row">
-                                <div class="w-75 float-left text-muted p-2 card-title">Asset View</div>
+                                <div class="w-75 float-left text-muted p-2 pl-3 card-title">Asset View</div>
                                 <div class="w-25 float-right pl-5 ">
                                     <nav class="navbar">
                                         <div class="navbar-header">
@@ -558,7 +558,7 @@
                                 @if (Convert.ToInt32(ViewData["MeetCompliance"]) != 0)
                                 {
                                     <div class="row">
-                                        <div class="w-75 float-left text-muted p-2 card-title">Institution View</div>
+                                        <div class="w-75 float-left text-muted p-2 pl-3 card-title">Institution View</div>
                                         <div class="w-25 float-right pl-5 ">
                                             <nav class="navbar">
                                                 <div class="navbar-header">

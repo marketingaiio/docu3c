@@ -15,7 +15,7 @@
 <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
 <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <form role="form" action="/Home/LoadPortfolio" method="post">
-    <div class="row">
+    <div class="row ml-1">
         <select id="icPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
             <option value="0">Portfolio</option>
 
@@ -34,9 +34,9 @@
     <div class="row">
 
 
-        <div class="col">
+        <div class="col ml-0">
             <a href="@Url.Action("Index", "Home")">
-                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left mt-3 mr-3 ml-1">
 
                     <div class="btn  btn-default text-dark">
                         <div class="">

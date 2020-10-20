@@ -14,7 +14,7 @@
 <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
 <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
 <form role="form" action="/Home/LoadPortfolio" method="get">
-    <div class="row">
+    <div class="row ml-1">
         <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
             <option value="0">Portfolio</option>
 
@@ -34,7 +34,7 @@
 
         <div class="col">
             <a href="@Url.Action("ComplianceScore", "Home")">
-                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left mt-3 mr-3 ml-1">
 
                     <div class="btn  btn-default text-dark">
                         <div class="">
@@ -108,7 +108,7 @@
 
     </div>
 
-    <div class="row m-2 p-5 gridcurve-border bg-white">
+    <div class="row m-2 ml-1 p-5 gridcurve-border bg-white">
         <div class="row mb-2">
             <h5 class="text-primary">Needs Attention</h5></div>
             <div class="row table-responsive">

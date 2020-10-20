@@ -6,7 +6,7 @@
 }
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <form role="form" action="/Home/LoadPortfolio" method="get">
-    <div class="row">
+    <div class="row pl-3">
         <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
             <option value="0">Portfolio</option>
 
@@ -24,8 +24,8 @@
     <div class="row">
 
 
-        <div class="col">
-            <div class="card overflow-hidden shadow-lg bg-gradient-warning  badge-curve align-items-center float-left m-3">
+        <div class="col ml-0">
+            <div class="card overflow-hidden shadow-lg bg-gradient-warning  badge-curve align-items-center float-left mt-3 mr-3">
 
                 <div class="btn  btn-outline-warning text-dark" type="button">
                     <div class="">
@@ -108,7 +108,7 @@
                 </ul>
                 <div class="tab-content shadow-lg">
                     <div class="tab-pane align-items-center m-5 active" id="home-1" role="tabpanel">
-                        <div class="row justify-content-center ">
+                        <div class="row ">
 
                             <a href="@Url.Action("DocumentDetails", "Home")?queryid=1" class="fontcolor">
                                 <div class="card border-warning curve-border float-left m-3 ">
@@ -181,7 +181,7 @@
 
 
 
-                        <div class="row justify-content-center ">
+                        <div class="row ">
                             <a href="@Url.Action("DocumentDetails", "Home")?queryid=5" class="fontcolor">
                                 <div class="card border-warning curve-border float-left m-3">
                                     <div class="card-body w-auto">
@@ -287,9 +287,9 @@
         </div>
     </div>
 </form>
-<div class="row w-75 justify-content-end">
+<div class="row justify-content-end" style="width:84%">
 
-    <a class="c-header-nav-link" href='@Url.Action("DocumentsUpload", "Home")'> <div class="btn btn-pill btn-block btn-primary active">Upload Documents</div> </a>
+        <a class="c-header-nav-link" href='@Url.Action("DocumentsUpload", "Home")'> <div class="mr-5 btn btn-pill btn-block btn-primary active">Upload Documents</div> </a>
 
 </div>
 
