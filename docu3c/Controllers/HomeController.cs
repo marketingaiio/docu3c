@@ -1427,7 +1427,12 @@ namespace docu3c.Controllers
                     ProfileModel = new ProfileModel
                     {
 
-                       
+                        CustomerDetails = db.CustomerDetails.ToList(),
+                        
+                        DocumentDetails = db.DocumentDetails.ToList(),
+                        ddCategoryCompliance = db.DocumentDetails.ToList(),
+                        ddInstitutionCompliance = db.DocumentDetails.ToList(),
+                        CategoryDetails = db.CategoryDetails.ToList(),
                         PortfolioDetails = db.PortfolioDetails.ToList(),
                       
                        
