@@ -56,6 +56,7 @@
     <Property Name="JSONFileIdentifier" Type="nvarchar(max)" />
     <Property Name="Reason" Type="nvarchar(max)" />
     <Property Name="FileStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsCheckCompliance" Type="bit" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="DOB" Type="date" />
     <Property Name="Address" Type="nvarchar(max)" />
@@ -63,6 +64,27 @@
     <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
     <Property Name="ModifiedBy" Type="nvarchar(max)" />
+    <Property Name="ModifiedOn" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'docu3c.dbo.DocumentIdentifier' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="DocumentIdentifier">
+    <Key>
+      <PropertyRef Name="CIdentifierID" />
+      <PropertyRef Name="Category" />
+      <PropertyRef Name="JSONIdentifier" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="CreatedBy" />
+      <PropertyRef Name="CreatedOn" />
+    </Key>
+    <Property Name="CIdentifierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SubCategory" Type="nvarchar(max)" />
+    <Property Name="JSONIdentifier" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="nchar" MaxLength="10" />
     <Property Name="ModifiedOn" Type="datetime" />
   </EntityType>
   <EntityType Name="PortfolioDetails">
@@ -92,6 +114,16 @@
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="UserDetails">
     <Key>
@@ -203,7 +235,21 @@
     <EntitySet Name="DocumentDetails" EntityType="Self.DocumentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PortfolioDetails" EntityType="Self.PortfolioDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubCategoryDetails" EntityType="Self.SubCategoryDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DocumentIdentifier" EntityType="Self.DocumentIdentifier" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [DocumentIdentifier].[CIdentifierID] AS [CIdentifierID], 
+    [DocumentIdentifier].[Category] AS [Category], 
+    [DocumentIdentifier].[SubCategory] AS [SubCategory], 
+    [DocumentIdentifier].[JSONIdentifier] AS [JSONIdentifier], 
+    [DocumentIdentifier].[IsActive] AS [IsActive], 
+    [DocumentIdentifier].[CreatedBy] AS [CreatedBy], 
+    [DocumentIdentifier].[CreatedOn] AS [CreatedOn], 
+    [DocumentIdentifier].[ModifiedBy] AS [ModifiedBy], 
+    [DocumentIdentifier].[ModifiedOn] AS [ModifiedOn]
+    FROM [dbo].[DocumentIdentifier] AS [DocumentIdentifier]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_CustomerDetails_PortfolioDetails" Association="Self.FK_CustomerDetails_PortfolioDetails">
       <End Role="PortfolioDetails" EntitySet="PortfolioDetails" />
       <End Role="CustomerDetails" EntitySet="CustomerDetails" />

@@ -1,3 +1,5 @@
+D:\WebSites\docu3c\docu3c\bin\System.Web.Razor.dll
+D:\WebSites\docu3c\docu3c\bin\System.Web.Razor.xml
 D:\WebSites\docu3c\docu3c\bin\docu3c.dll.config
 D:\WebSites\docu3c\docu3c\bin\docu3c.dll
 D:\WebSites\docu3c\docu3c\bin\docu3c.pdb
@@ -63,7 +65,6 @@ D:\WebSites\docu3c\docu3c\bin\System.Data.SqlClient.dll
 D:\WebSites\docu3c\docu3c\bin\System.Web.Helpers.dll
 D:\WebSites\docu3c\docu3c\bin\System.Web.Mvc.dll
 D:\WebSites\docu3c\docu3c\bin\System.Web.Optimization.dll
-D:\WebSites\docu3c\docu3c\bin\System.Web.Razor.dll
 D:\WebSites\docu3c\docu3c\bin\System.Web.WebPages.Deployment.dll
 D:\WebSites\docu3c\docu3c\bin\System.Web.WebPages.dll
 D:\WebSites\docu3c\docu3c\bin\System.Web.WebPages.Razor.dll
@@ -78,14 +79,12 @@ D:\WebSites\docu3c\docu3c\bin\System.Data.SqlClient.xml
 D:\WebSites\docu3c\docu3c\bin\System.Web.Helpers.xml
 D:\WebSites\docu3c\docu3c\bin\System.Web.Mvc.xml
 D:\WebSites\docu3c\docu3c\bin\System.Web.Optimization.xml
-D:\WebSites\docu3c\docu3c\bin\System.Web.Razor.xml
 D:\WebSites\docu3c\docu3c\bin\System.Web.WebPages.xml
 D:\WebSites\docu3c\docu3c\bin\System.Web.WebPages.Deployment.xml
 D:\WebSites\docu3c\docu3c\bin\System.Web.WebPages.Razor.xml
 D:\WebSites\docu3c\docu3c\bin\Newtonsoft.Json.xml
 D:\WebSites\docu3c\docu3c\bin\Antlr3.Runtime.pdb
 D:\WebSites\docu3c\docu3c\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\WebSites\docu3c\docu3c\obj\Release\docu3c.csprojAssemblyReference.cache
 D:\WebSites\docu3c\docu3c\obj\Release\docu3c.csproj.CopyComplete
 D:\WebSites\docu3c\docu3c\obj\Release\docu3c.dll
 D:\WebSites\docu3c\docu3c\obj\Release\docu3c.pdb
