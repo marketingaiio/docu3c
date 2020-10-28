@@ -148,18 +148,18 @@
                         <canvas id="barmaincanvas"></canvas>
                         <script>
         var ctx = document.getElementById('barmaincanvas').getContext('2d');
-                            var input1='@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Green")).Count()';
-                            var input2='@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Green")).Count()';
-                            var input3='@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Green")).Count()';
-                            var input4='@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Green")).Count()';
-                            var input5='@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Yellow")).Count()';
-                            var input6='@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Yellow")).Count()';
-                            var input7='@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Yellow")).Count()';
-                            var input8 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Yellow")).Count()';
-                            var input9 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Red")).Count()';
-                            var input10 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Red")).Count()';
-                            var input11 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Red")).Count()';
-                            var input12 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Red")).Count()';
+                            var input1='@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                            var input2='@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                            var input3='@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                            var input4='@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                            var input5='@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                            var input6='@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                            var input7='@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                            var input8 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                            var input9 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+                            var input10 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+                            var input11 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+                            var input12 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
 
       var myChart = new Chart(ctx, {
             type: 'horizontalBar',
@@ -246,10 +246,10 @@
                         <script>
 
 
-                       var input1 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements")).Count()';
-        var input2 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements")).Count()';
-                        var input3 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements")).Count()';
-                        var input4 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles")).Count()';
+                       var input1 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.IsCheckCompliance ==true).Count()';
+        var input2 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.IsCheckCompliance ==true).Count()';
+                        var input3 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.IsCheckCompliance ==true).Count()';
+                        var input4 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.IsCheckCompliance ==true).Count()';
 
         var ctx = document.getElementById('piemainChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -373,9 +373,9 @@
                                                     <td>@item.Key</td>
 
 
-                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.JSONFileIdentifier == item.Key).Count()</td>
-                                                    <td class="pl-3"> @Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.JSONFileIdentifier == item.Key).Count()</td>
-                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.JSONFileIdentifier == item.Key).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.JSONFileIdentifier == item.Key && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3"> @Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.JSONFileIdentifier == item.Key && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.JSONFileIdentifier == item.Key && x.IsCheckCompliance ==true).Count()</td>
 
 
 
@@ -387,11 +387,11 @@
                                             if (Session["strCategory"] != null && Session["strCategory"] != "")
                                             {
                                                 var strCategory = Session["strCategory"].ToString();
-                                                <tr>
+                                                <tr class="border-top">
                                                     <th> Total:</th>
-                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.Category == strCategory).Count()</td>
-                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.Category == strCategory).Count()</td>
-                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.Category == strCategory).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.Category == strCategory && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.Category == strCategory && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.Category == strCategory && x.IsCheckCompliance ==true).Count()</td>
                                                 </tr>
 
                                             }
@@ -399,9 +399,9 @@
                                             {
                                                 <tr class="border-top">
                                                     <th> Total:</th>
-                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red").Count()</td>
-                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow").Count()</td>
-                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green").Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.IsCheckCompliance ==true).Count()</td>
                                                 </tr>
 
                                             }
@@ -424,9 +424,9 @@
         var ctx = document.getElementById('barcanvas').getContext('2d');
 
 
-                 var input1 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Green")).Count()';
-                 var input2 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Yellow")).Count()';
-                 var input3 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Red")).Count()';
+                 var input1 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                 var input2 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                 var input3 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
 
              var myChart = new Chart(ctx, {
             type: 'bar',
@@ -504,9 +504,9 @@
                                 <canvas id="myChart"></canvas>
                                 <script>
         var allList = '@Model.ddCategoryCompliance.GroupBy(o => o.JSONFileIdentifier).ToList()';
-        var input1 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Green")).Count()';
-        var input2 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Yellow")).Count()';
-        var input3 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Red")).Count()';
+        var input1 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+        var input2 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+        var input3 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -625,9 +625,9 @@
                                                             <td>@item.Key</td>
 
 
-                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == item.Key).Count()</td>
-                                                            <td class="pl-3" > @Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == item.Key).Count()</td>
-                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == item.Key).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == item.Key && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="pl-3" > @Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == item.Key && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == item.Key && x.IsCheckCompliance ==true).Count()</td>
 
 
 
@@ -639,11 +639,11 @@
                                                     if (Session["strInstitution"] != "" && Session["strInstitution"] != null)
                                                     {
                                                         var strInstitution = Session["strInstitution"].ToString();
-                                                        <tr>
+                                                        <tr class="border-top">
                                                             <th> Total:</th>
-                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == strInstitution).Count()</td>
-                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == strInstitution).Count()</td>
-                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == strInstitution).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == strInstitution && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == strInstitution && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == strInstitution && x.IsCheckCompliance ==true).Count()</td>
                                                         </tr>
 
                                                     }
@@ -651,9 +651,9 @@
                                                     {
                                                         <tr class="border-top">
                                                             <th> Total:</th>
-                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red").Count()</td>
-                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow").Count()</td>
-                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green").Count()</td>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.IsCheckCompliance ==true).Count()</td>
                                                         </tr>
                                                     }
                                                 }
@@ -666,9 +666,9 @@
         var ctx = document.getElementById('bar2canvas').getContext('2d');
 
 
-           var input1 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Green")).Count()';
-        var input2 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Yellow")).Count()';
-        var input3 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Red")).Count()';
+           var input1 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+        var input2 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+        var input3 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
 
 
       var myChart = new Chart(ctx, {
@@ -735,9 +735,9 @@
                                         <script>
 
 
-                        var input1 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Green")).Count()';
-        var input2 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Yellow")).Count()';
-        var input3 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Red")).Count()';
+                        var input1 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+        var input2 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+        var input3 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
 
         var ctx = document.getElementById('my2Chart').getContext('2d');
         var myChart = new Chart(ctx, {

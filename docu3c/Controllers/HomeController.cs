@@ -1092,9 +1092,9 @@ namespace docu3c.Controllers
                         else { SessionPortFolioID = 0; }
                         if (SessionPortFolioID == 0)
                         {
-                            var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
-                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
-                            var meetCompliance = db.DocumentDetails.Count();
+                            var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow") && x.IsCheckCompliance== true).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance == true).Count();
+                            var meetCompliance = db.DocumentDetails.Where(x => x.IsCheckCompliance == true).Count();
                             ViewData["NeedAttention"] = needsAttention;
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance;
@@ -1111,7 +1111,7 @@ namespace docu3c.Controllers
 
                                 CustomerDetails = db.CustomerDetails.ToList(),
                                 PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.IsCheckCompliance == true).ToList(),
 
                                 CategoryDetails = db.CategoryDetails.ToList(),
                                 SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
@@ -1119,9 +1119,9 @@ namespace docu3c.Controllers
                         }
                         else
                         {
-                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
-                            var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
-                            var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance == true && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.IsCheckCompliance == true && a.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID) && m.IsCheckCompliance == true).Count();
                             ViewData["NeedAttention"] = needsAttention;
 
                             ViewData["NeedVerification"] = needsVerification;
@@ -1138,7 +1138,7 @@ namespace docu3c.Controllers
 
                                 CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
                                 PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true).ToList(),
 
                                 CategoryDetails = db.CategoryDetails.ToList(),
                                 SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
@@ -1171,9 +1171,9 @@ namespace docu3c.Controllers
                         else { SessionPortFolioID = 0; }
                         if (SessionPortFolioID == 0)
                         {
-                            var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
-                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
-                            var meetCompliance = db.DocumentDetails.Count();
+                            var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow") && x.IsCheckCompliance ==true).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance == true).Count();
+                            var meetCompliance = db.DocumentDetails.Where(x =>x.IsCheckCompliance ==true).Count();
                             ViewData["NeedAttention"] = needsAttention;
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance;
@@ -1189,7 +1189,7 @@ namespace docu3c.Controllers
 
                                 CustomerDetails = db.CustomerDetails.ToList(),
                                 PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance==true).ToList(),
 
                                 CategoryDetails = db.CategoryDetails.ToList(),
                                 SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
@@ -1198,9 +1198,9 @@ namespace docu3c.Controllers
                         else
                         {
 
-                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
-                            var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
-                            var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance == true && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.IsCheckCompliance == true && a.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID) && m.IsCheckCompliance == true).Count();
                             ViewData["NeedAttention"] = needsAttention;
 
                             ViewData["NeedVerification"] = needsVerification;
@@ -1216,7 +1216,7 @@ namespace docu3c.Controllers
 
                                 CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
                                 PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.FileStatus.Equals("Red")).ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true && x.FileStatus.Equals("Red")).ToList(),
 
                                 CategoryDetails = db.CategoryDetails.ToList(),
                                 SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
@@ -1249,9 +1249,9 @@ namespace docu3c.Controllers
                         else { SessionPortFolioID = 0; }
                         if (SessionPortFolioID == 0)
                         {
-                            var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
-                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
-                            var meetCompliance = db.DocumentDetails.Count();
+                            var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow") && x.IsCheckCompliance == true).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance == true).Count();
+                            var meetCompliance = db.DocumentDetails.Where(x=> x.IsCheckCompliance == true).Count();
                             ViewData["NeedAttention"] = needsAttention;
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance;
@@ -1267,7 +1267,7 @@ namespace docu3c.Controllers
 
                                 CustomerDetails = db.CustomerDetails.ToList(),
                                 PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow") && x.IsCheckCompliance == true).ToList(),
 
                                 CategoryDetails = db.CategoryDetails.ToList(),
                                 SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
@@ -1275,9 +1275,9 @@ namespace docu3c.Controllers
                         }
                         else
                         {
-                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
-                            var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
-                            var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance == true && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.IsCheckCompliance == true && a.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID) && m.IsCheckCompliance == true).Count();
                             ViewData["NeedAttention"] = needsAttention;
 
                             ViewData["NeedVerification"] = needsVerification;
@@ -1293,7 +1293,7 @@ namespace docu3c.Controllers
 
                                 CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
                                 PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.FileStatus.Equals("Yellow")).ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance==true  && x.FileStatus.Equals("Yellow")).ToList(),
 
                                 CategoryDetails = db.CategoryDetails.ToList(),
                                 SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
@@ -1341,9 +1341,9 @@ namespace docu3c.Controllers
 
                         if (SessionPortFolioID == 0)
                         {
-                            var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow")).Count();
-                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red")).Count();
-                            var meetCompliance = db.DocumentDetails.Count();
+                            var needsVerification = db.DocumentDetails.Where(x => x.FileStatus.Equals("Yellow") && x.IsCheckCompliance ==true).Count();
+                            var needsAttention = db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance == true).Count();
+                            var meetCompliance = db.DocumentDetails.Where(x=> x.IsCheckCompliance == true).Count();
                             ViewData["NeedAttention"] = needsAttention;
                             ViewData["NeedVerification"] = needsVerification;
                             ViewData["MeetCompliance"] = meetCompliance;
@@ -1359,7 +1359,7 @@ namespace docu3c.Controllers
 
                                 CustomerDetails = db.CustomerDetails.ToList(),
                                 PortfolioDetails = db.PortfolioDetails.ToList(),
-                                DocumentDetails = db.DocumentDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.IsCheckCompliance == true).ToList(),
                                 ddCategoryCompliance = db.DocumentDetails.ToList(),
                                 ddInstitutionCompliance = db.DocumentDetails.ToList(),
                                 CategoryDetails = db.CategoryDetails.ToList()
@@ -1367,17 +1367,17 @@ namespace docu3c.Controllers
 
 
                             if (!string.IsNullOrEmpty(SessionCategory))
-                                profileModel.ddCategoryCompliance = db.DocumentDetails.Where(x => x.Category.Equals(SessionCategory)).ToList();
+                                profileModel.ddCategoryCompliance = db.DocumentDetails.Where(x => x.Category.Equals(SessionCategory) && x.IsCheckCompliance ==true).ToList();
 
                             if (!string.IsNullOrEmpty(SessionInstitution))
-                                profileModel.ddInstitutionCompliance = db.DocumentDetails.Where(x => x.Institution.Equals(SessionInstitution)).ToList();
+                                profileModel.ddInstitutionCompliance = db.DocumentDetails.Where(x => x.Institution.Equals(SessionInstitution) && x.IsCheckCompliance == true).ToList();
 
                         }
                         else
                         {
-                            var needsAttention= db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.PortfolioID.Equals(SessionPortFolioID)).Count();
-                            var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.PortfolioID.Equals(SessionPortFolioID)).Count();
-                            var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsAttention= db.DocumentDetails.Where(x => x.FileStatus.Equals("Red") && x.IsCheckCompliance ==true && x.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var needsVerification = db.DocumentDetails.Where(a => a.FileStatus.Equals("Yellow") && a.IsCheckCompliance == true && a.PortfolioID.Equals(SessionPortFolioID)).Count();
+                            var meetCompliance = db.DocumentDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID) && m.IsCheckCompliance == true).Count();
                             ViewData["NeedAttention"] = needsAttention;
                            
                             ViewData["NeedVerification"] = needsVerification;
@@ -1394,18 +1394,18 @@ namespace docu3c.Controllers
 
                                 CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
                                 PortfolioDetails = db.PortfolioDetails.ToList(),
-                                ddInstitutionCompliance = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
-                                ddCategoryCompliance = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                ddInstitutionCompliance = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance==true).ToList(),
+                                ddCategoryCompliance = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true).ToList(),
                                 CategoryDetails = db.CategoryDetails.ToList(),
                                 SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
-                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true).ToList(),
                             };
 
                             if (!string.IsNullOrEmpty(SessionCategory))
-                                profileModel.ddCategoryCompliance = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.Category.Equals(SessionCategory)).ToList();
+                                profileModel.ddCategoryCompliance = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true && x.Category.Equals(SessionCategory)).ToList();
 
                             if (!string.IsNullOrEmpty(SessionInstitution))
-                                profileModel.ddInstitutionCompliance = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.Institution.Equals(SessionInstitution)).ToList();
+                                profileModel.ddInstitutionCompliance = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true && x.Institution.Equals(SessionInstitution)).ToList();
 
                         }
                     }
