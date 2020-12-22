@@ -322,6 +322,7 @@ namespace docu3c.Controllers
                                                     
                                                         docAddress = docinfo.details.Street.ToString();
                                                    
+
                                                     
                                                     if (docinfo.details.City != null && docinfo.details.City != string.Empty)
                                                         docCity = docinfo.details.City.ToString();

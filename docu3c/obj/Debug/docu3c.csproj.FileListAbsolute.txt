@@ -51,6 +51,7 @@ D:\WebSites\docu3c\docu3c\bin\roslyn\vbc.rsp
 D:\WebSites\docu3c\docu3c\bin\roslyn\VBCSCompiler.exe
 D:\WebSites\docu3c\docu3c\bin\roslyn\VBCSCompiler.exe.config
 D:\WebSites\docu3c\docu3c\bin\Antlr3.Runtime.dll
+D:\WebSites\docu3c\docu3c\bin\ConvertApi.dll
 D:\WebSites\docu3c\docu3c\bin\EntityFramework.dll
 D:\WebSites\docu3c\docu3c\bin\EntityFramework.SqlServer.dll
 D:\WebSites\docu3c\docu3c\bin\Microsoft.Azure.KeyVault.Core.dll
@@ -85,8 +86,7 @@ D:\WebSites\docu3c\docu3c\bin\System.Web.WebPages.Razor.xml
 D:\WebSites\docu3c\docu3c\bin\Newtonsoft.Json.xml
 D:\WebSites\docu3c\docu3c\bin\Antlr3.Runtime.pdb
 D:\WebSites\docu3c\docu3c\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.csprojAssemblyReference.cache
 D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.csproj.CopyComplete
 D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.dll
 D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.pdb
-D:\WebSites\docu3c\docu3c\bin\ConvertApi.dll
-D:\WebSites\docu3c\docu3c\obj\Debug\docu3c.csprojAssemblyReference.cache
