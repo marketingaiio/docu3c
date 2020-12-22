@@ -282,14 +282,14 @@ namespace docu3c.Controllers
 
                                                    // if (!string.IsNullOrEmpty(docinfo[0].docURL.ToString()))
                                                         docURL = FileAbsoluteUri;
-                                                    if (string.IsNullOrEmpty(docinfo.details.FirstName.ToString() ))
-                                                     strCustomerFirstName = docinfo.details.FirstName.ToString(); 
-                                                    
-                                                    if (string.IsNullOrEmpty(docinfo.details.MiddleName.ToString()))
+                                                    if (docinfo.details.FirstName !=null && docinfo.details.FirstName!=string.Empty )
+                                                     strCustomerFirstName = docinfo.details.FirstName.ToString();
+
+                                                    if (docinfo.details.MiddleName != null && docinfo.details.MiddleName != string.Empty)
                                                         strCustomerMiddleName = docinfo.details.MiddleName.ToString();
-                                                    if (string.IsNullOrEmpty(docinfo.details.LastName.ToString()))
+                                                    if (docinfo.details.MiddleName != null && docinfo.details.MiddleName != string.Empty)
                                                         strCustomerLastName = docinfo.details.LastName.ToString();
-                                                    if (string.IsNullOrEmpty(strCustomerFirstName) && string.IsNullOrEmpty(strCustomerLastName))
+                                                    if (!string.IsNullOrEmpty(strCustomerFirstName) && !string.IsNullOrEmpty(strCustomerLastName))
                                                     {
                                                         strCustomerName = string.Format("{0} {1} {2}", strCustomerFirstName, strCustomerMiddleName, strCustomerLastName);
                                                     }
@@ -318,37 +318,37 @@ namespace docu3c.Controllers
                                                     string[] formats = { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
                                                     DateTime dtDOB;
                                                     nDocumentDetails.ClassifyJSON =jsonString;
-                                                    if (string.IsNullOrEmpty(docinfo.details.Street))
+                                                    if (docinfo.details.Street != null && docinfo.details.Street !=string.Empty)
                                                     
                                                         docAddress = docinfo.details.Street.ToString();
                                                    
                                                     
-                                                    if (string.IsNullOrEmpty(docinfo.details.City))
+                                                    if (docinfo.details.City != null && docinfo.details.City != string.Empty)
                                                         docCity = docinfo.details.City.ToString();
-                                                    if (string.IsNullOrEmpty(docinfo.details.State))
+                                                    if (docinfo.details.State != null && docinfo.details.State != string.Empty)
                                                         docState = docinfo.details.State.ToString();
-                                                    if (string.IsNullOrEmpty(docinfo.details.Zipcode))
+                                                    if (docinfo.details.Zipcode != null && docinfo.details.Zipcode != string.Empty)
                                                         docPostalCode = docinfo.details.Zipcode.ToString();
                                                     if(string.IsNullOrEmpty(docAddress) || string.IsNullOrEmpty(docCity) || string.IsNullOrEmpty(docState) || string.IsNullOrEmpty(docPostalCode))
                                                     { strReason += string.Format("{0}Address is missing", Environment.NewLine); }
 
-                                                    if (string.IsNullOrEmpty(docinfo.details.Organisation ))
+                                                    if (docinfo.details.Organisation !=null && docinfo.details.Organisation !=string.Empty)
                                                     {
                                                         docOrganisation = docinfo.details.Organisation.ToString(); }
                                                     else {  strReason += string.Format("{0}Institution is missing", Environment.NewLine);  }
-                                                    if (string.IsNullOrEmpty(docinfo.details.SSN))
+                                                    if (docinfo.details.SSN !=null && docinfo.details.SSN!=string.Empty)
                                                     {
                                                         docSSN = docinfo.details.SSN.ToString();
                                                     }
                                                     else {  strReason += string.Format("{0}SSN is missing", Environment.NewLine);  }
-                                                    if (string.IsNullOrEmpty(docinfo.details.Category))
+                                                    if (docinfo.details.Category!=null && docinfo.details.Category !=string.Empty)
                                                         docJSONIdentifier = docinfo.details.Category.ToString();
-                                                    if (string.IsNullOrEmpty(docinfo.SubCategory))
+                                                    if (docinfo.SubCategory != null && docinfo.SubCategory != string.Empty)
                                                     {
                                                         docSubcategory = docinfo.SubCategory.ToString();
                                                     }
-                                                    else { strReason += string.Format("{0}Asset is missing", Environment.NewLine); }
-                                                    if (string.IsNullOrEmpty(docinfo.details.AccountNo))
+                                                    
+                                                    if (docinfo.details.AccountNo !=null && docinfo.details.AccountNo !=string.Empty)
                                                     {
                                                         docAccountNo = docinfo.details.AccountNo.ToString();
                                                     }
@@ -377,7 +377,7 @@ namespace docu3c.Controllers
                                                             if (docJSONIdentifier == "Client Relationship Agreement")
                                                             {
 
-                                                                if (string.IsNullOrEmpty(docinfo.details.DOB.ToString()))
+                                                                if (docinfo.details.DOB !=null && docinfo.details.DOB !=string.Empty)
                                                                 {
 
                                                                     bool isValidDOB = DateTime.TryParseExact(docinfo.details.DOB.ToString(), formats, invariantCulture, DateTimeStyles.None, out dtDOB);
@@ -414,8 +414,8 @@ namespace docu3c.Controllers
                                                             if (docJSONIdentifier == "Client Relationship Agreement")
                                                             {
 
-                                                                if (string.IsNullOrEmpty(docinfo.details.DOB.ToString()))
-                                                                {
+                                                                    if (docinfo.details.DOB != null && docinfo.details.DOB != string.Empty)
+                                                                    {
 
                                                                         item.DOB = DateTime.Parse(docinfo.details.DOB.ToString(), invariantCulture);
 
@@ -441,27 +441,27 @@ namespace docu3c.Controllers
 
 
 
-                                                    if (string.IsNullOrEmpty(docSSN))
+                                                    if (!string.IsNullOrEmpty(docSSN))
                                                     nDocumentDetails.DocCustomerID = docSSN;
                                                     nDocumentDetails.PortfolioID = iPortFolioID;
                                                     nDocumentDetails.UserID = userId;
-                                                    if(string.IsNullOrEmpty(strCustomerName))
+                                                    if(!string.IsNullOrEmpty(strCustomerName))
                                                     nDocumentDetails.CustomerName = strCustomerName;
                                                        
-                                                            if (string.IsNullOrEmpty(docAddress))
+                                                            if (!string.IsNullOrEmpty(docAddress))
                                                     nDocumentDetails.Address = docAddress;
-                                                        if (string.IsNullOrEmpty(docCity))
+                                                        if (!string.IsNullOrEmpty(docCity))
                                                             nDocumentDetails.City  = docCity;
-                                                        if (string.IsNullOrEmpty(docState ))
+                                                        if (!string.IsNullOrEmpty(docState ))
                                                             nDocumentDetails.State = docState;
-                                                        if (string.IsNullOrEmpty(docPostalCode ))
+                                                        if (!string.IsNullOrEmpty(docPostalCode ))
                                                             nDocumentDetails.PostalCode = docPostalCode;
 
                                                         nDocumentDetails.DocumentName = System.IO.Path.GetFileName(FileAbsoluteUri);
                                                     nDocumentDetails.DocumentURL = FileAbsoluteUri;
                                                         if (jsonString.Contains("DOB"))
                                                         {
-                                                            if (string.IsNullOrEmpty(docinfo.details.DOB.ToString()) )
+                                                            if (docinfo.details.DOB != null && docinfo.details.DOB != string.Empty)
                                                             {
 
 
@@ -506,7 +506,7 @@ namespace docu3c.Controllers
 
                                                                 nDocumentDetails.SubCategory = strSubCategoryName;
                                                             }
-                                                            else { nDocumentDetails.SubCategory = "Others"; }
+                                                            else { nDocumentDetails.SubCategory = "Others";  strReason += string.Format("{0}Asset is missing", Environment.NewLine); } 
 
 
 
@@ -518,7 +518,7 @@ namespace docu3c.Controllers
                                                         if(docAccountNo!=null && docAccountNo!=string.Empty)
                                                         nDocumentDetails.AccountNo = docAccountNo;
                                                     nDocumentDetails.FileStatus = "Green";
-                                                        if (strReason != null && strReason != string.Empty)
+                                                        if (!string.IsNullOrEmpty(strReason))
                                                             nDocumentDetails.Reason = strReason;
                                                     nDocumentDetails.IsActive = true;
                                                     nDocumentDetails.CreatedBy = userId.ToString();
