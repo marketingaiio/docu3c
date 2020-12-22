@@ -137,6 +137,7 @@
                         {
                             foreach (var item in Model.DocumentDetails.GroupBy(o => o.Institution).ToList())
                             {
+
                         <tr>
                             <td>@item.Key</td>
                             <td>@item.Count()</td>
