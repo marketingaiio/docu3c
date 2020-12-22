@@ -125,7 +125,8 @@
                         <tr>
                             <th scope="col">Institution</th>
                             <th scope="col">Documents</th>
-                            @*<th scope="col">Category</th>*@
+                            <th scope="col">Category</th>
+                            <th scope="col">SubCategory</th>
                             <th scope="col">Assets</th>
                             <th scope="col">Customers</th>
 
@@ -136,18 +137,19 @@
                         {
                             foreach (var item in Model.DocumentDetails.GroupBy(o => o.Institution).ToList())
                             {
-                                <tr>
-                                    <td>@item.Key</td>
-                                    <td>@item.Count()</td>
+                        <tr>
+                            <td>@item.Key</td>
+                            <td>@item.Count()</td>
+                            <td>@item.Select(x => x.Category).Distinct().Count()</td>
+                            <td>@item.Select(x => x.SubCategory).Distinct().Count()</td>
+                            @*<td>@db.DocumentDetails.Where(x => x.Institution == item.Key).Select(v => v.SubCategory).Distinct().Count()</td>*@
+                            <td>@item.Select(x => x.AssetJSONIdentifier).Distinct().Count()</td>
+                            <td>@item.Select(x => x.CustomerID).Distinct().Count()</td>
 
-                                    @*<td>@db.DocumentDetails.Where(x => x.Institution == item.Key).Select(v => v.CustomerID).Distinct().Count()</td>*@
-                                    <td> @item.Select(x => x.JSONFileIdentifier).Distinct().Count()</td>
-                                    <td>@item.Select(x => x.CustomerID).Distinct().Count()</td>
 
 
 
-
-                                </tr>
+                        </tr>
 
                             }
                         }
@@ -156,7 +158,8 @@
                         <tr>
                             <th scope="col">Institution</th>
                             <th scope="col">Documents</th>
-                            @*<th scope="col">Category</th>*@
+                            <th scope="col">Category</th>
+                            <th scope="col">SubCategory</th>
                             <th scope="col">Assets</th>
                             <th scope="col">Customers</th>
 

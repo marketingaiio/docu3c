@@ -41,6 +41,8 @@ namespace docu3c.Models
         public System.DateTime CreatedOn { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
+        public string CustomerMiddleName { get; set; }
+        public string AccountNo { get; set; }
     
         public virtual PortfolioDetail PortfolioDetail { get; set; }
         public virtual UserDetail UserDetail { get; set; }

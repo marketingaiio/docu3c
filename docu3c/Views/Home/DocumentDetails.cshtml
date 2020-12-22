@@ -137,15 +137,16 @@
             <table class="table table-borderless table-striped  table-hover display" id="ddTable">
                 <thead>
                     <tr>
-                        @*<th scope="col">Category</th>*@
-
+                        <th scope="col">Category</th>
+                        <th scope="col">SubCategory</th>
+                        <th scope="col">Assets</th>
                         <th scope="col">Customer Name</th>
-                        <th scope="col">Asset</th>
+
                         <th scope="col">Institute</th>
                         @*<th scope="col">Document</th>*@
-                        <th scope="col">Reason</th>
-                        @*<th scope="col">Status</th>*@
-                        <th scope="col">Uploaded On</th>
+                        @* <th scope="col">Reason</th>
+        <th scope="col">Status</th>
+                        <th scope="col">Uploaded On</th>*@
                         <th scope="col">Action</th>
 
                     </tr>
@@ -154,63 +155,69 @@
                 <tbody>
                     @foreach (var item in Model.DocumentDetails)
                     {
-                        <tr>
-                            <td>
-                                @item.CustomerDetail.CustomerFirstName
-                            </td>
-                            @*<td>@item.Category  </td>*@
-                            <td>@item.JSONFileIdentifier  </td>
+                    <tr>
+                        <td>@item.Category  </td>
+                       <td>@item.SubCategory </td>
+                        <td>@item.AssetJSONIdentifier </td>
+                        <td>
+                            @item.CustomerName
+                        </td>
 
 
-                            <td>@item.Institution </td>
-                            @*<td><a href="@item.DocumentURL" alt="@item.DocumentName" target="_blank">@item.DocumentName </a> </td>*@
-                            <td>@item.Reason  </td>
-                            @*<td>@item.FileStatus </td>*@
-                            <td>
-                                @item.CreatedOn
-                            </td>
-                            <td>
-                                @*@Html.ActionLink("Delete", "Delete", "Home", new { documentid = item.DocumentID }, new { @class = "material-icons" })*@
 
 
-                                <span class="float-left ">
-                                    @if (item.DocumentURL != null)
-                                    {
-                                        <a class="btn btn  btn-link btn-sm" href="@item.DocumentURL" target="_blank" rel="tooltip" title="@item.DocumentName" alt="">
-                                            <i class="material-icons">vertical_align_bottom</i>
+                        <td>@item.Institution </td>
+                        @*<td><a href="@item.DocumentURL" alt="@item.DocumentName" target="_blank">@item.DocumentName </a> </td>*@
+                        @*<td>@item.Reason  </td>*@
+                        @*<td>@item.FileStatus </td>*@
+                        @*<td>
+            @item.CreatedOn
+        </td>*@
+                        <td>
+                            @*@Html.ActionLink("Delete", "Delete", "Home", new { documentid = item.DocumentID }, new { @class = "material-icons" })*@
 
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a class="btn btn btn-primary btn-link btn-sm" rel="tooltip" title="File not available">
-                                            <i class="material-icons">block</i>
-                                        </a>
 
-                                    }
-                                </span>
-                                <span class="float-left ">
-                                    <a href="@Url.Action("Delete", "Home", new { documentid = item.DocumentID })" class="btn btn  btn-link btn-sm">
-                                        <span class="material-icons">
-                                            delete_outline
-                                        </span>
+                            <span class="float-left ">
+                                @if (item.DocumentURL != null)
+                                {
+                                    <a class="btn btn  btn-link btn-sm" href="@item.DocumentURL" target="_blank" rel="tooltip" title="@item.DocumentName" alt="">
+                                        <i class="material-icons">vertical_align_bottom</i>
+
                                     </a>
-                                </span>
+                                }
+                                else
+                                {
+                                    <a class="btn btn btn-primary btn-link btn-sm" rel="tooltip" title="File not available">
+                                        <i class="material-icons">block</i>
+                                    </a>
 
-                            </td>
-                        </tr>
+                                }
+                            </span>
+                            <span class="float-left ">
+                                <a href="@Url.Action("Delete", "Home", new { documentid = item.DocumentID })" class="btn btn  btn-link btn-sm">
+                                    <span class="material-icons">
+                                        delete_outline
+                                    </span>
+                                </a>
+                            </span>
+
+                        </td>
+                    </tr>
 
                     }
                 </tbody>
                 <tfoot>
                     <tr>
+                        <th scope="col">Category</th>
+                        <th scope="col">SubCategory</th>
+                        <th scope="col">Assets</th>
                         <th scope="col">Customer Name</th>
-                        <th scope="col">Asset</th>
+
                         <th scope="col">Institute</th>
 
-                        <th scope="col">Reason</th>
+                        @*<th scope="col">Reason</th>
 
-                        <th scope="col">Uploaded On</th>
+        <th scope="col">Uploaded On</th>*@
                         <th scope="col">Action</th>
 
                     </tr>
@@ -220,20 +227,21 @@
             </table>
 
         </div>
-        @if (Convert.ToInt32(Session["dPortFolioID"]) > 0)
-        {
-            <div class="row m-2 w-100 justify-content-end">
+        @*
+            @if (Convert.ToInt32(Session["dPortFolioID"]) > 0)
+            {
+                <div class="row m-2 w-100 justify-content-end">
 
-                <input type="submit" value="Check Compliance" class="btn btn-primary" id="btnCompliance" />
-                @*<a class="c-header-nav-link" href="@Url.Action("CheckCompliance", "Home")" > <div class="btn btn-pill btn-block btn-primary active">Check Compliance</div> </>*@
+                    <input type="submit" value="Check Compliance" class="btn btn-primary" id="btnCompliance" />
+                   
 
 
-            </div>
-            <div class="row m-2 w-100 justify-content-center text-center hidden text-success" id="divProcessing">
-                Checking for Compliance Data, please wait . . . <img src="~/Content/Images/ajax-loader.gif" class="rounded" alt="...">
-            </div>
-        }
-
+    </div>
+    <div class="row m-2 w-100 justify-content-center text-center hidden text-success" id="divProcessing">
+        Checking for Compliance Data, please wait . . . <img src="~/Content/Images/ajax-loader.gif" class="rounded" alt="...">
+    </div>
+    }
+    *@
     </div>
     @Html.Hidden("RedirectTo", Url.Action("Compliance", "Home"));
 </form>

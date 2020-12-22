@@ -130,6 +130,7 @@
     </AssociationSet>
     <EntitySet Name="DocumentIdentifiers" EntityType="docu3cModel.DocumentIdentifier" />
     <EntitySet Name="sysdiagrams" EntityType="docu3cModel.sysdiagram" />
+    <EntitySet Name="SubCategoryJSONIdentifiers" EntityType="docu3cModel.SubCategoryJSONIdentifier" />
   </EntityContainer>
   <EntityType Name="CustomerDetail">
     <Key>
@@ -159,6 +160,8 @@
     <NavigationProperty Name="PortfolioDetail" Relationship="docu3cModel.FK_CustomerDetails_PortfolioDetails" FromRole="CustomerDetail" ToRole="PortfolioDetail" />
     <NavigationProperty Name="UserDetail" Relationship="docu3cModel.FK_CustomerDetails_UserDetails" FromRole="CustomerDetail" ToRole="UserDetail" />
     <NavigationProperty Name="DocumentDetails" Relationship="docu3cModel.FK_DocumentDetails_CustomerDetails" FromRole="CustomerDetail" ToRole="DocumentDetail" />
+    <Property Name="CustomerMiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="DocumentDetail">
     <Key>
@@ -189,6 +192,13 @@
     <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsCheckCompliance" Type="Boolean" Nullable="false" />
+    <Property Name="AccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ComplianceReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="ClassifyJSON" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AssetJSONIdentifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_CustomerDetails_PortfolioDetails">
     <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />
@@ -278,5 +288,24 @@
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="SubCategoryJSONIdentifier">
+    <Key>
+      <PropertyRef Name="SCID" />
+      <PropertyRef Name="SubCategoryName" />
+      <PropertyRef Name="SCJSONIdentifier" />
+      <PropertyRef Name="CreatedOn" />
+      <PropertyRef Name="CreatedBy" />
+      <PropertyRef Name="IsActive" />
+    </Key>
+    <Property Name="SCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubCategoryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SCJSONIdentifier" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

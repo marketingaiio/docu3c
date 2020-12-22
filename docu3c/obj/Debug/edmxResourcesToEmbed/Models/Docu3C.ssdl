@@ -22,8 +22,10 @@
     <Property Name="AdvisorID" Type="int" Nullable="false" />
     <Property Name="PortfolioID" Type="int" Nullable="false" />
     <Property Name="CustomerFirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerMiddleName" Type="nvarchar(max)" />
     <Property Name="CustomerLastName" Type="nvarchar(max)" />
     <Property Name="CustomerEmailID" Type="nvarchar(max)" />
+    <Property Name="AccountNo" Type="nvarchar" MaxLength="50" />
     <Property Name="PhoneNo" Type="int" />
     <Property Name="Address" Type="nvarchar(max)" />
     <Property Name="City" Type="nvarchar" MaxLength="50" />
@@ -54,12 +56,19 @@
     <Property Name="SubCategory" Type="nvarchar(max)" />
     <Property Name="Institution" Type="nvarchar(max)" />
     <Property Name="JSONFileIdentifier" Type="nvarchar(max)" />
+    <Property Name="AssetJSONIdentifier" Type="nvarchar(max)" />
     <Property Name="Reason" Type="nvarchar(max)" />
+    <Property Name="ComplianceReason" Type="nvarchar(max)" />
+    <Property Name="ClassifyJSON" Type="nvarchar(max)" />
     <Property Name="FileStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="IsCheckCompliance" Type="bit" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="DOB" Type="date" />
     <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="PostalCode" Type="nchar" MaxLength="50" />
+    <Property Name="AccountNo" Type="nvarchar" MaxLength="50" />
     <Property Name="CustomerName" Type="nvarchar(max)" />
     <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -114,6 +123,27 @@ warning 6002: The table/view 'docu3c.dbo.DocumentIdentifier' does not have a pri
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
     <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
     <Property Name="ModifiedOn" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'docu3c.dbo.SubCategoryJSONIdentifier' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="SubCategoryJSONIdentifier">
+    <Key>
+      <PropertyRef Name="SCID" />
+      <PropertyRef Name="SubCategoryName" />
+      <PropertyRef Name="SCJSONIdentifier" />
+      <PropertyRef Name="CreatedOn" />
+      <PropertyRef Name="CreatedBy" />
+      <PropertyRef Name="IsActive" />
+    </Key>
+    <Property Name="SCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubCategoryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SCJSONIdentifier" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Category" Type="nvarchar(max)" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="ModifiedOn" Type="datetime" />
+    <Property Name="ModifiedBy" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -249,6 +279,19 @@ warning 6002: The table/view 'docu3c.dbo.DocumentIdentifier' does not have a pri
     [DocumentIdentifier].[ModifiedBy] AS [ModifiedBy], 
     [DocumentIdentifier].[ModifiedOn] AS [ModifiedOn]
     FROM [dbo].[DocumentIdentifier] AS [DocumentIdentifier]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="SubCategoryJSONIdentifier" EntityType="Self.SubCategoryJSONIdentifier" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [SubCategoryJSONIdentifier].[SCID] AS [SCID], 
+    [SubCategoryJSONIdentifier].[SubCategoryName] AS [SubCategoryName], 
+    [SubCategoryJSONIdentifier].[SCJSONIdentifier] AS [SCJSONIdentifier], 
+    [SubCategoryJSONIdentifier].[Category] AS [Category], 
+    [SubCategoryJSONIdentifier].[CreatedOn] AS [CreatedOn], 
+    [SubCategoryJSONIdentifier].[CreatedBy] AS [CreatedBy], 
+    [SubCategoryJSONIdentifier].[IsActive] AS [IsActive], 
+    [SubCategoryJSONIdentifier].[ModifiedOn] AS [ModifiedOn], 
+    [SubCategoryJSONIdentifier].[ModifiedBy] AS [ModifiedBy]
+    FROM [dbo].[SubCategoryJSONIdentifier] AS [SubCategoryJSONIdentifier]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_CustomerDetails_PortfolioDetails" Association="Self.FK_CustomerDetails_PortfolioDetails">
       <End Role="PortfolioDetails" EntitySet="PortfolioDetails" />

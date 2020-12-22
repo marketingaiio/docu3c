@@ -120,17 +120,18 @@
                         <th scope="col">Customer Name</th>
 
                         <th scope="col">DOB</th>
-                        <th scope="col">Martial Status</th>
-                        <th scope="col">Address</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">SubCategory</th>
+                        <th scope="col">Assets</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.CustomerDetails)
+                    @foreach (var item in Model.DocumentDetails)
                     {
                         <tr>
-                            <td>@item.CustomerID   </td>
-                            <td>@item.CustomerFirstName</td>
+                            <td>@item.CustomerID  </td>
+                            <td>@item.CustomerName </td>
 
                             <td>
 
@@ -142,8 +143,9 @@
                                 }
 
                             </td>
-                            <td>@item.MartialStatus </td>
-                            <td>@item.Address</td>
+                            <td>@item.Category  </td>
+                            <td>@item.SubCategory </td>
+                            <td>@item.AssetJSONIdentifier </td>
                         </tr>
 
                     }
@@ -154,8 +156,9 @@
                         <th scope="col">Customer Name</th>
 
                         <th scope="col">DOB</th>
-                        <th scope="col">Martial Status</th>
-                        <th scope="col">Address</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">SubCategory</th>
+                        <th scope="col">Assets</th>
 
                     </tr>
                 </tfoot>

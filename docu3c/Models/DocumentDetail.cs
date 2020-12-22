@@ -36,6 +36,13 @@ namespace docu3c.Models
         public string Address { get; set; }
         public string CustomerName { get; set; }
         public bool IsCheckCompliance { get; set; }
+        public string AccountNo { get; set; }
+        public string ComplianceReason { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public string ClassifyJSON { get; set; }
+        public string AssetJSONIdentifier { get; set; }
     
         public virtual CustomerDetail CustomerDetail { get; set; }
         public virtual PortfolioDetail PortfolioDetail { get; set; }

@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ConvertApi, Version=3.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConvertApi.3.0.5\lib\netstandard2.0\ConvertApi.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -180,6 +183,9 @@
       <DependentUpon>Docu3C.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SubCategoryDetail.cs">
+      <DependentUpon>Docu3C.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SubCategoryJSONIdentifier.cs">
       <DependentUpon>Docu3C.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
@@ -432,6 +438,7 @@
     <Content Include="Models\Docu3C.edmx.diagram">
       <DependentUpon>Docu3C.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\Images\Marco S Ng.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
