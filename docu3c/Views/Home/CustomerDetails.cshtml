@@ -1,4 +1,5 @@
 ﻿@model docu3c.ViewModel.ProfileModel
+@using docu3c.Models;
 @{
     ViewBag.Title = "CustomerDetails";
 }
@@ -116,22 +117,34 @@
             <table class="table table-borderless table-striped  table-hover display" id="CdTable">
                 <thead>
                     <tr>
-                        <th scope="col">Customer ID</th>
+                        @*<th scope="col">Customer ID</th>*@
                         <th scope="col">Customer Name</th>
 
                         <th scope="col">DOB</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">SubCategory</th>
-                        <th scope="col">Assets</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">No.Of Documents</th>
+
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.DocumentDetails)
+                    @foreach (var item in Model.CustomerDetails)
                     {
                         <tr>
-                            <td>@item.CustomerID  </td>
-                            <td>@item.CustomerName </td>
+                            <td>
+
+                                @if (!string.IsNullOrEmpty(item.CustomerFirstName) && !string.IsNullOrEmpty(item.CustomerMiddleName) && !string.IsNullOrEmpty(@item.CustomerLastName))
+                                {
+                                    string Customername = String.Format("{0} {1} {2}", @item.CustomerFirstName, @item.CustomerMiddleName, @item.CustomerLastName);
+                                    @Html.DisplayFor(c => Customername);
+                                }
+                                else
+                                {
+                                    string Customername = String.Format("{0} {1}", item.CustomerFirstName, item.CustomerLastName);
+                                    @Html.DisplayFor(c => Customername);
+                                }
+
+                            </td>
 
                             <td>
 
@@ -143,22 +156,27 @@
                                 }
 
                             </td>
-                            <td>@item.Category  </td>
-                            <td>@item.SubCategory </td>
-                            <td>@item.AssetJSONIdentifier </td>
+                            <td>@item.Address  </td>
+
+                            <td>
+                                @using (docu3cEntities db = new docu3cEntities())
+                                {
+                                    @db.DocumentDetails.Where(m => m.CustomerID == item.CustomerID).Count();
+                                }
+                            </td>
                         </tr>
 
                     }
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th scope="col">Customer ID</th>
+                       
                         <th scope="col">Customer Name</th>
 
                         <th scope="col">DOB</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">SubCategory</th>
-                        <th scope="col">Assets</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">No.Of Documents</th>
+                        
 
 
 
@@ -212,7 +230,7 @@
     $(document).ready(function () {
         $('#CdTable').DataTable({
         });
-         $('#CdTable_length select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+        $('#CdTable_length select').removeClass('custom-select custom-select-sm form-control form-control-sm');
         $('.dataTables_length').addClass('bs-select');
     });
 </script>

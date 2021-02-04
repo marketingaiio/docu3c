@@ -1,10 +1,10 @@
 ﻿
 @model docu3c.ViewModel.ProfileModel
-
+@using docu3c.Models;
 @{
     ViewBag.Title = "Home Page";
 }
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <form role="form" action="/Home/LoadPortfolio" method="get">
     <div class="row pl-3">
         <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
@@ -33,8 +33,8 @@
                             <svg class="c-icon text-white c-icon-lg">
                                 <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
                             </svg>
-                        </div> <div class="text-white text-value-lg pl-0 float-left" >&nbsp;@ViewData["NoofCategory"] </div>
-                    </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small pl-2" >Category</div>
+                        </div> <div class="text-white text-value-lg pl-0 float-left">&nbsp;@ViewData["NoofCategory"] </div>
+                    </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small pl-2">Category</div>
                 </div>
 
 
@@ -173,7 +173,8 @@
                                         <div class="text-center w-100 ">Asset Transfer Agreements</div>
 
                                     </div>
-                                </div></a> 
+                                </div>
+                            </a>
                         </div>
 
 
@@ -223,7 +224,7 @@
 
                                     </div>
                                 </div>
-</a> 
+                            </a>
 
 
 
@@ -241,31 +242,146 @@
                                 <thead style="border-bottom:1px solid #111">
                                     <tr>
                                         <th scope="col">Category</th>
+                                        <th scope="col">SubCategory</th>
 
-                                        @*<th scope="col">Asset</th>*@
+                                        <th scope="col">Asset</th>
                                         <th scope="col">Documents</th>
-                                        <th scope="col">Institution</th>
                                         <th scope="col">Customers</th>
+                                        <th scope="col">Institution</th>
+
 
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.CategoryDetails)
+                                   
+                                    @using (docu3cEntities db = new docu3cEntities())
                                     {
-                                        <tr>
-                                            <td>@item.CategoryName  </td>
-                                            @*<td>@item.JSONIdentifier   </td>*@
-                                            <td><a href="@Url.Action("DocumentDetails", "Home")?queryid=@item.CategoryID">@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).ToList().Count  </a></td>
-                                            <td><a href="@Url.Action("InstitutionDetails", "Home")?queryid=@item.CategoryID">@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).GroupBy(o => o.Institution).ToList().Count  </td>
+                                        foreach (var iCategory in Model.DocumentDetails.GroupBy(o => o.Category).ToList())
+                                        {
 
-                                            <td><a href="@Url.Action("CustomerDetails", "Home")?queryid=@item.CategoryID">@Model.DocumentDetails.Where(CategoryName => CategoryName.Category == @item.CategoryName).GroupBy(o => o.CustomerID).ToList().Count</a> </td>
+                                            foreach (var isubCategory in Model.DocumentDetails.Where(g => g.Category == iCategory.Key).GroupBy(m => m.SubCategory).ToList())
+                                            {
+                                                foreach (var iasset in Model.DocumentDetails.Where(c=>c.Category == iCategory.Key && c.SubCategory == isubCategory.Key ).GroupBy(a => a.AssetJSONIdentifier).ToList())
+                                                {
+                                    <tr>
+                                        
 
-                                        </tr>
+
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                                <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                    @iCategory.Key
+                                                </a>}
+                                            else
+                                            { <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+                                                    @iCategory.Key
+                                                </a>}
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                                <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                    @isubCategory.Key
+                                                </a>}
+                                            else
+                                            { <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+                                                    @isubCategory.Key
+                                                </a>}
+
+
+
+                                        </td>
+
+                                        <td>
+                                            @if(!string.IsNullOrEmpty(isubCategory.Key) &&!string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                @iasset.Key
+                                            </a>}
+                                            else{ <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+                                                @iasset.Key
+                                            </a>}
+
+
+
+
+
+
+                                           
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                                <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                    @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).ToList().Count
+                                                </a>}
+                                            else
+                                            { <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+                                                    @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).ToList().Count
+                                                </a>}
+
+
+
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                            <a href="@Url.Action("CustomerDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).GroupBy(o => o.CustomerID).ToList().Count
+                                            </a>}
+                                            else
+                                            { <a href="@Url.Action("CustomerDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+    @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).GroupBy(o => o.CustomerID).ToList().Count
+</a>}
+
+
+                                           
+                                        </td>
+                                        <td>
+
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                            <a href="@Url.Action("InstitutionDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).GroupBy(o => o.Institution).ToList().Count
+                                            </a>}
+                                            else
+                                            { <a href="@Url.Action("InstitutionDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+    @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).GroupBy(o => o.Institution).ToList().Count
+</a>}
+
+
+
+                                           
+                                        </td>
+
+                                    </tr>
+                                            }
+                                        }
 
                                     }
-                                </tbody>
-                            </table>
+
+                                    @*<td>@db.DocumentDetails.FirstOrDefault(m => m.AssetJSONIdentifier.Equals(@item.SCJSONIdentifier)).Category  </td>
+            <td>@item.SubCategoryName </td>
+            <td>@item.SCJSONIdentifier   </td> *@
+                                }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">SubCategory</th>
+
+                                            <th scope="col">Asset</th>
+                                            <th scope="col">Documents</th>
+                                            <th scope="col">Customers</th>
+                                            <th scope="col">Institution</th>
+
+
+
+                                        </tr>
+                                    </tfoot>
+                                </table>
 
                         </div>
 
@@ -289,12 +405,12 @@
 </form>
 <div class="row justify-content-end" style="width:84%">
 
-        <a class="c-header-nav-link" href='@Url.Action("DocumentsUpload", "Home")'> <div class="mr-5 btn btn-pill btn-block btn-primary active">Upload Documents</div> </a>
+    <a class="c-header-nav-link" href='@Url.Action("DocumentsUpload", "Home")'> <div class="mr-5 btn btn-pill btn-block btn-primary active">Upload Documents</div> </a>
 
 </div>
 
 <script>
-  
+
         $(document).ready(function () {
             setTimeout(function () {
                 var drpVal = @Session["dPortFolioID"];
@@ -302,7 +418,7 @@
                     $('#iPortFolioID').val(drpVal);
                 }
             }, 1000);
-   
+
         $('#iPortFolioID').change(function () {
             //  alert($(this).val());
 
@@ -322,16 +438,16 @@
         });
 
 
-       
+
 
     });
-    
+
 </script>
 <script>
     $(document).ready(function () {
 
         $('#hdataTable').DataTable({
-           
+
         });
     });
 </script>

@@ -21,6 +21,7 @@ namespace docu3c.ViewModel
 
         public IEnumerable<DocumentDetail> ddCategoryCompliance { set; get; }
         public IEnumerable<DocumentDetail> ddInstitutionCompliance { set; get; }
+        public IEnumerable<SubCategoryJSONIdentifier> Assets { set; get; }
     }
 
   
