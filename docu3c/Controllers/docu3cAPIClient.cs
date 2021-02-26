@@ -12,7 +12,9 @@ namespace docu3c.Models
 {
     public class Details
     {
-        
+        [JsonProperty("Account Type")]
+        public string AccountType { get; set; }
+
         [JsonProperty("Account No.")]
         public string AccountNo { get; set; }
         [JsonProperty("Category")]
@@ -33,8 +35,8 @@ namespace docu3c.Models
         [JsonProperty("Middle Name")]
         public string MiddleName { get; set; }
 
-        [JsonProperty("Organisation")]
-        public string Organisation { get; set; }
+        [JsonProperty("Organization")]
+        public string Organization { get; set; }
 
         [JsonProperty("SSN")]
         public string SSN { get; set; }
@@ -47,6 +49,14 @@ namespace docu3c.Models
 
         [JsonProperty("Zip-code")]
         public string Zipcode { get; set; }
+        [JsonProperty("Client2 First Name")]
+        public string Client2FirstName { get; set; }
+
+        [JsonProperty("Client2 Last Name")]
+        public string Client2LastName { get; set; }
+
+        [JsonProperty("Client2 Middle Name")]
+        public string Client2MiddleName { get; set; }
     }
 
     public class docu3cAPI

@@ -131,6 +131,7 @@
     <EntitySet Name="DocumentIdentifiers" EntityType="docu3cModel.DocumentIdentifier" />
     <EntitySet Name="sysdiagrams" EntityType="docu3cModel.sysdiagram" />
     <EntitySet Name="SubCategoryJSONIdentifiers" EntityType="docu3cModel.SubCategoryJSONIdentifier" />
+    <EntitySet Name="BlogFeeds" EntityType="docu3cModel.BlogFeed" />
   </EntityContainer>
   <EntityType Name="CustomerDetail">
     <Key>
@@ -199,6 +200,19 @@
     <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
     <Property Name="ClassifyJSON" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="AssetJSONIdentifier" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ComplianceJSONInput" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AccountType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Client2Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ComplianceJSONOutput" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsDOB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsAccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsCustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsSSN" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IsAssetType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsSignature" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsMutualViolation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsSubCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_CustomerDetails_PortfolioDetails">
     <End Type="docu3cModel.PortfolioDetail" Role="PortfolioDetail" Multiplicity="1" />
@@ -307,5 +321,14 @@
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
     <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="BlogFeed">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Description" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Tags" Type="Binary" MaxLength="50" FixedLength="false" />
   </EntityType>
 </Schema>

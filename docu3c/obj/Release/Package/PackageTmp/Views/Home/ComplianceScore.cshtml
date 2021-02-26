@@ -1,0 +1,958 @@
+﻿@model docu3c.ViewModel.ProfileModel
+@using docu3c.Models;
+@{
+    ViewBag.Title = "ComplianceScore";
+   // var ic = Model.DocumentDetails.Where(o => o.Category.Equals("Clients Agreements") && o.FileStatus.Equals("Green")).ToList().Count();
+}
+
+
+<style>
+    .test:after {
+        content: '\2807';
+        font-size: 2em;
+        color: #2e2e2e;
+        cursor: pointer;
+    }
+    .dataTables_filter{
+       float:right;
+    }
+    .dataTables_filter input{border:1px solid #dee2e6;margin-left:5px}
+   
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+
+
+
+<form role="form" action="/Home/LoadPortfolio" method="get">
+    <div class="row ml-1">
+        <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
+            <option value="0">Portfolio</option>
+
+            @using (docu3cEntities db = new docu3cEntities())
+            {
+                foreach (var item in db.PortfolioDetails)
+                {
+                    <option value="@item.PortfolioID">@item.PortfolioName </option>
+                }
+            }
+
+        </select>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col">
+            <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left mt-3 mr-3 ml-1 bg-gradient-success">
+
+                <div class="btn  btn-default text-white">
+                    <div class="" >
+                        <div class="float-left pt-1" >
+                            <svg class="c-icon text-white c-icon-lg">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-thumb-up"></use>
+                            </svg>
+                        </div> <div class="text-white text-value-lg float-left">&nbsp; @ViewData["ComplianceScore"]% </div>
+                    </div><br/>
+                    <div class=" row  text-white text-uppercase font-weight-bold small">Compliance Score</div>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Attention", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+
+                    <div class="btn btn-default text-danger">
+                        <div class="row" style="height:30px;clear:both;">
+                            <div class="float-left pl-4">
+                                <svg class="c-icon text-danger c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-warning"></use>
+                                </svg>
+                            </div>
+                            <div class="text-danger text-value-lg float-left">&nbsp; @ViewData["NeedAttention"] </div>
+                        </div>
+                        <div class="row  text-danger text-uppercase font-weight-bold small ">Needs Attention</div>
+                    </div>
+
+
+                </div>
+
+            </a>
+
+
+            <a href="@Url.Action("Verification", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+
+                    <div class="btn btn-default text-dark">
+                        <div class="row" style="height:30px;clear:both;">
+                            <div class="float-left pl-4">
+                                <svg class="c-icon text-warning c-icon-lg">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
+                                </svg>
+                            </div>
+                            <div class="text-warning text-value-lg float-left" >&nbsp; @ViewData["NeedVerification"] </div>
+                        </div>
+                        <div class="row text-muted text-uppercase font-weight-bold small">Needs Verification</div>
+                    </div>
+
+                </div>
+            </a>
+            <a href="@Url.Action("Compliance", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+
+                    <div class="btn btn-default text-dark">
+                        <div class="row" style="clear:both;height:30px;">
+                            <div class="float-left pl-4 " >
+                                <svg class="c-icon text-success c-icon-lg ">
+
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-badge"></use>
+                                </svg>
+                            </div>
+                            <div class="text-success text-value-lg float-left  " >&nbsp; @ViewData["MeetCompliance"] </div>
+                        </div> <div class="row text-muted text-uppercase font-weight-bold small">Meets Compliance</div>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 ">
+            <div class="card p-3 ">
+                @if (Convert.ToInt32(ViewData["MeetCompliance"]) != 0)
+                {
+                    <div class="row">
+
+                        <div class="w-75 float-left text-muted p-3">Category View</div>
+
+                        <div class="w-25 float-right pl-5 ">
+                            <nav class="navbar">
+                                <div class="navbar-header">
+                                    <div class="dropdown">
+                                        <div class="test" data-toggle="dropdown"></div>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" onclick="viewBarChart1()" style="cursor:pointer;">Bar Chart</a>
+                                            <a class="dropdown-item" onclick="viewPieChart1()" style="cursor:pointer;">Pie Chart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+
+
+                    <div id="BarChart1">
+                        <canvas id="barmaincanvas"></canvas>
+                        <script>
+        var ctx = document.getElementById('barmaincanvas').getContext('2d');
+                            var input1='@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                            var input2='@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                            var input3='@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                            var input4='@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                            var input5='@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                            var input6='@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                            var input7='@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                            var input8 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                            var input9 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+                            var input10 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+                            var input11 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+                            var input12 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+
+      var myChart = new Chart(ctx, {
+            type: 'horizontalBar',
+
+            data: {
+                labels: ['Clients Agmnts', 'Invst Agmnts', 'Asset Agmnts', 'Client Profiles'],
+
+                datasets: [{
+				label: 'Green',
+				backgroundColor: 'rgba(0, 230, 64, 1)',
+
+				data: [input1,input2,input3,input4]
+			}, {
+				label: 'Yellow',
+				backgroundColor: 'rgba(247, 202, 24, 1)',
+				data: [input5,input6,input7,input8]
+			}, {
+				label: 'Red',
+				backgroundColor: 'rgba(207, 0, 15, 1)',
+				data: [input9,input10,input11,input12]
+                    }]
+
+
+            },
+            //  Horizontal View
+           // options: {
+				//	// Elements options apply to all of the options unless overridden in a dataset
+				//	// In this case, we are setting the border of each horizontal bar to be 2px wide
+				//	elements: {
+				//		rectangle: {
+				//			borderWidth: 2,
+				//		}
+				//	},
+				//	responsive: true,
+				//	legend: {
+				//		position: 'right',
+				//	},
+				//	title: {
+				//		display: true,
+				//		text: 'Chart.js Horizontal Bar Chart'
+				//	}
+				//}
+
+              options: {
+					title: {
+						display: false,
+						text: 'Category View'
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false
+                    },
+					elements: {
+						rectangle: {
+							borderWidth: 1,
+						}
+					},
+                  responsive: true,
+                    maintainAspectRatio: false,
+                  legend: {
+                        display: false,
+						position: 'right',
+					},
+					scales: {
+						xAxes: [{
+                            stacked: true,
+                            display: false,
+
+						}],
+						yAxes: [{
+                            stacked: true,
+
+						}]
+					}
+				}
+            });
+                        </script>
+                    </div>
+
+
+
+                    <div style="display:none;" id="PieChart1">
+                        <canvas id="piemainChart"></canvas>
+                        <script>
+
+
+                       var input1 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Client Agreements") && o.IsCheckCompliance ==true).Count()';
+        var input2 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Investment Agreements") && o.IsCheckCompliance ==true).Count()';
+                        var input3 = '@Model.DocumentDetails.Where(o => o.Category.Equals("Asset Transfer Agreements") && o.IsCheckCompliance ==true).Count()';
+                        var input4 = '@Model.DocumentDetails.Where(o => o.Category.Equals("ClientProfiles") && o.IsCheckCompliance ==true).Count()';
+
+        var ctx = document.getElementById('piemainChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+
+            data: {
+                labels: ['Client Agreements','Investment Agreements','Asset Transfer Agreements','ClientProfiles'],
+                datasets: [{
+                    label: '# of Documents',
+                    data: [input1,input2,input3,input4],
+                    backgroundColor: [
+                        'rgba(63, 191, 191, 1)',
+                        'rgba(63, 127, 191, 1)',
+                        'rgba(127, 63, 191, 0.7)',
+                         'rgba(191, 191, 63, 0.7)',
+
+                    ],
+                    borderColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                       'rgba(191, 191, 63, 0.7)',
+                        'rgba(191, 191, 63, 0.7)'
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options:
+                            {
+                                title:
+                                {
+                                    display: false,
+                                    text: "Institution View"
+                                },
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+        });
+                        </script>
+                    </div>
+                }
+                else
+                { <div class="w-75 float-left text-muted p-2">Category View</div><br/>
+                <div class="p-2">No Record</div>}
+            </div>
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="card p-3">
+                        @if (Convert.ToInt32(ViewData["MeetCompliance"]) != 0)
+                        {
+                            <div class="row">
+                                <div class="w-75 float-left text-muted p-2 pl-3 card-title">Asset View</div>
+                                <div class="w-25 float-right pl-5 ">
+                                    <nav class="navbar">
+                                        <div class="navbar-header">
+                                            <div class="dropdown">
+                                                <div class="test" data-toggle="dropdown"></div>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" onclick="viewGridTable2()" style="cursor:pointer;">Grid</a>
+                                                    <a class="dropdown-item" onclick="viewBarChart2()" style="cursor:pointer;">Bar Chart</a>
+                                                    <a class="dropdown-item" onclick="viewPieChart2()" style="cursor:pointer;">Pie Chart</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </div>
+
+
+
+                            <select id="strCategory" class="border-primary form-control" style="width:40%">
+                                <option value="">Category</option>
+                                @using (docu3cEntities db = new docu3cEntities())
+                                {
+
+                                    foreach (var item in Model.DocumentDetails.GroupBy(m => m.Category).ToList())
+                                    //  foreach(var item in db.DocumentDetails.GroupBy(m => m.Category).Where(g => g != null).ToList())
+                                    {
+                                        <option value="@item.Key">@item.Key </option>
+                                    }
+
+                                }
+
+                            </select>
+
+
+
+                            <div class="table-responsive" style="width:95%;margin:2% 0" id="GridTable2">
+                                <table class="table table-borderless" id="csTable">
+                                    <thead class="border-bottom">
+                                        <tr>
+                                            <th scope="col">Asset</th>
+                                            <th scope="col">
+                                                <svg class="c-icon  bg-danger  c-icon-lg rounded-circle ">
+                                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                                </svg>
+                                            </th>
+                                            <th scope="col">
+                                                <svg class="c-icon bg-warning c-icon-lg rounded-circle ">
+                                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                                </svg>
+                                            </th>
+                                            <th scope="col">
+                                                <svg class="c-icon bg-success  c-icon-lg rounded-circle ">
+                                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                                </svg>
+                                            </th>
+
+
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        @using (docu3cEntities db = new docu3cEntities())
+                                        {
+                                            foreach (var item in Model.ddCategoryCompliance.GroupBy(o => o.JSONFileIdentifier).ToList())
+                                            {
+                                                <tr>
+                                                    <td>@item.Key</td>
+
+
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.JSONFileIdentifier == item.Key && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3"> @Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.JSONFileIdentifier == item.Key && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.JSONFileIdentifier == item.Key && x.IsCheckCompliance ==true).Count()</td>
+
+
+
+
+                                                </tr>
+
+
+                                            }
+                                            if (Session["strCategory"] != null && Session["strCategory"] != "")
+                                            {
+                                                var strCategory = Session["strCategory"].ToString();
+                                                <tr class="border-top">
+                                                    <th> Total:</th>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.Category == strCategory && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.Category == strCategory && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.Category == strCategory && x.IsCheckCompliance ==true).Count()</td>
+                                                </tr>
+
+                                            }
+                                            else
+                                            {
+                                                <tr class="border-top">
+                                                    <th> Total:</th>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Red" && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Yellow" && x.IsCheckCompliance ==true).Count()</td>
+                                                    <td class="pl-3">@Model.ddCategoryCompliance.Where(x => x.FileStatus == "Green" && x.IsCheckCompliance ==true).Count()</td>
+                                                </tr>
+
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                            <div style="display:none;" id="BarChart2" class="mt-3">
+                                <canvas id="barcanvas"></canvas>
+                                <script>
+                                    function nullToZero(array) {
+  return array.map(function(v) { 
+    if (v==null) return 0; else return v;
+  });
+}
+        var ctx = document.getElementById('barcanvas').getContext('2d');
+
+
+                 var input1 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+                 var input2 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+                 var input3 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+
+             var myChart = new Chart(ctx, {
+            type: 'bar',
+
+            data: {
+             labels: ['Green','Yellow','Red'],
+                datasets: [{
+                 label: '# of Documents',
+                    data: [input1,input2,input3],
+                    backgroundColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                        'rgba(207, 0, 15, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                        'rgba(207, 0, 15, 1)'
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            //  Horizontal View
+           // options: {
+				//	// Elements options apply to all of the options unless overridden in a dataset
+				//	// In this case, we are setting the border of each horizontal bar to be 2px wide
+				//	elements: {
+				//		rectangle: {
+				//			borderWidth: 2,
+				//		}
+				//	},
+				//	responsive: true,
+				//	legend: {
+				//		position: 'right',
+				//	},
+				//	title: {
+				//		display: true,
+				//		text: 'Chart.js Horizontal Bar Chart'
+				//	}
+				//}
+
+              options:
+              {
+                 
+             title:
+                 {
+                 display: false,
+                                    text: "Category View"
+                  },
+                  legend: {
+                      display: false,
+                  },
+                   scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: false,
+                      
+                }
+                       }],
+                      
+        },
+
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+         });
+                                </script>
+                            </div>
+
+
+
+                            <div style="display:none;" id="PieChart2">
+                                <canvas id="myChart"></canvas>
+                                <script>
+        var allList = '@Model.ddCategoryCompliance.GroupBy(o => o.JSONFileIdentifier).ToList()';
+        var input1 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+        var input2 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+        var input3 = '@Model.ddCategoryCompliance.Where(o => o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+
+            data: {
+                labels: ['Green','Yellow','Red'],
+                datasets: [{
+                    label: '# of Documents',
+                    data: [input1,input2,input3],
+                    backgroundColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                        'rgba(207, 0, 15, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                        'rgba(207, 0, 15, 1)'
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options:
+                            {
+                                title:
+                                {
+                                    display: false,
+                                    text: "Category View"
+                                },
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+        });
+                                </script>
+                            </div>
+                        }
+                        else
+                        { <div class="w-75 float-left text-muted p-2">Asset View</div><br />
+                            <div class="p-2">No Record</div>}
+                    </div>
+                        </div>
+
+                        <div class="col-lg-4">
+
+                            <div class="card p-3">
+                                @if (Convert.ToInt32(ViewData["MeetCompliance"]) != 0)
+                                {
+                                    <div class="row">
+                                        <div class="w-75 float-left text-muted p-2 pl-3 card-title">Institution View</div>
+                                        <div class="w-25 float-right pl-5 ">
+                                            <nav class="navbar">
+                                                <div class="navbar-header">
+                                                    <div class="dropdown">
+                                                        <div class="test" data-toggle="dropdown"></div>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" onclick="viewGridTable3()" style="cursor:pointer;">Grid</a>
+                                                            <a class="dropdown-item" onclick="viewBarChart3()" style="cursor:pointer;">Bar Chart</a>
+                                                            <a class="dropdown-item" onclick="viewPieChart3()" style="cursor:pointer;">Pie Chart</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nav>
+
+                                        </div>
+                                    </div>
+
+                                    <select id="strInstitution" class="border-primary form-control" asp-for="strInstitution" style="width:40%">
+                                        <option value="">All Assets</option>
+
+                                        @using (docu3cEntities db = new docu3cEntities())
+                                        {
+                                            foreach (var item in Model.DocumentDetails.GroupBy(m => m.Institution).ToList())
+                                            {
+                                                <option value="@item.Key">@item.Key </option>
+                                            }
+                                        }
+
+                                    </select>
+
+
+
+                                    <div class="table-responsive" style="width: 95%; margin: 2% 0 " id="GridTable3">
+                                        <table class="table table-borderless" id="iTable">
+                                            <thead class="border-bottom">
+                                                <tr>
+                                                    <th scope="col">Institution</th>
+                                                    <th scope="col">
+                                                        <svg class="c-icon  bg-danger  c-icon-lg rounded-circle">
+                                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                                        </svg>
+                                                    </th>
+                                                    <th scope="col" >
+                                                        <svg class="c-icon bg-warning c-icon-lg rounded-circle ">
+                                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                                        </svg>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <svg class="c-icon bg-success  c-icon-lg rounded-circle">
+                                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                                        </svg>
+                                                    </th>
+
+
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                @using (docu3cEntities db = new docu3cEntities())
+                                                {
+                                                    foreach (var item in Model.ddInstitutionCompliance.GroupBy(o => o.Institution).ToList())
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Key</td>
+
+
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == item.Key && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="pl-3" > @Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == item.Key && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == item.Key && x.IsCheckCompliance ==true).Count()</td>
+
+
+
+
+                                                        </tr>
+
+
+                                                    }
+                                                    if (Session["strInstitution"] != "" && Session["strInstitution"] != null)
+                                                    {
+                                                        var strInstitution = Session["strInstitution"].ToString();
+                                                        <tr class="border-top">
+                                                            <th> Total:</th>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.Institution == strInstitution && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.Institution == strInstitution && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="pl-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.Institution == strInstitution && x.IsCheckCompliance ==true).Count()</td>
+                                                        </tr>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr class="border-top">
+                                                            <th> Total:</th>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Red" && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Yellow" && x.IsCheckCompliance ==true).Count()</td>
+                                                            <td class="p-3" >@Model.ddInstitutionCompliance.Where(x => x.FileStatus == "Green" && x.IsCheckCompliance ==true).Count()</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div style="display:none;" id="BarChart3" class="mt-3">
+                                        <canvas id="bar2canvas" ></canvas>
+                                        <script>
+        var ctx = document.getElementById('bar2canvas').getContext('2d');
+
+
+           var input1 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+        var input2 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+        var input3 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+
+
+      var myChart = new Chart(ctx, {
+            type: 'bar',
+
+            data: {
+      labels: ['Green','Yellow','Red'],
+                datasets: [{
+          label: '# of Documents',
+                    data: [input1,input2,input3],
+                    backgroundColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                        'rgba(207, 0, 15, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                        'rgba(207, 0, 15, 1)'
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            //  Horizontal View
+           // options: {
+				//	// Elements options apply to all of the options unless overridden in a dataset
+				//	// In this case, we are setting the border of each horizontal bar to be 2px wide
+				//	elements: {
+				//		rectangle: {
+				//			borderWidth: 2,
+				//		}
+				//	},
+				//	responsive: true,
+				//	legend: {
+				//		position: 'right',
+				//	},
+				//	title: {
+				//		display: true,
+				//		text: 'Chart.js Horizontal Bar Chart'
+				//	}
+				//}
+
+              options:
+      {
+      title:
+          {
+          display: false,
+                                    text: "Institution View"
+                  },
+           legend: {
+                      display: false,
+                  },
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+  });
+                                        </script>
+                                    </div>
+
+                                    <div style="display:none;" id="PieChart3">
+                                        <canvas id="my2Chart"></canvas>
+                                        <script>
+
+
+                        var input1 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Green") && o.IsCheckCompliance ==true).Count()';
+        var input2 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Yellow") && o.IsCheckCompliance ==true).Count()';
+        var input3 = '@Model.ddInstitutionCompliance.Where(o => o.FileStatus.Equals("Red") && o.IsCheckCompliance ==true).Count()';
+
+        var ctx = document.getElementById('my2Chart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+
+            data: {
+                labels: ['Green','Yellow','Red'],
+                datasets: [{
+                    label: '# of Documents',
+                    data: [input1,input2,input3],
+                    backgroundColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                        'rgba(207, 0, 15, 1)'
+
+                    ],
+                    borderColor: [
+                        'rgba(0, 230, 64, 1)',
+                        'rgba(247, 202, 24, 1)',
+                        'rgba(207, 0, 15, 1)'
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options:
+                            {
+                                title:
+                                {
+                                    display: false,
+                                    text: "Institution View"
+                                },
+                                responsive: true,
+                                maintainAspectRatio: true
+                            }
+        });
+                                        </script>
+                                    </div>
+                                }
+                                else
+                                { <div class="w-75 float-left text-muted p-2">Institution View</div><br />
+                                    <div class="p-2">No Record</div>}
+                            </div>
+                                </div>
+
+                            </div>
+
+</form>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                var drpVal = '@Session["dPortFolioID"]';
+                if (drpVal != "") {
+                    $('#iPortFolioID').val(drpVal);
+                }
+            }, 1000);
+
+        $('#iPortFolioID').change(function () {
+            //  alert($(this).val());
+
+            $.ajax({
+
+                type: 'get',
+                url: '/Home/LoadPortfolio',
+                data: { dPortFolioID: parseInt($(this).val()) },
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        });
+
+
+
+    });
+
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+            setTimeout(function () {
+                var drpVal = '@Session["strCategory"]';
+                if (drpVal != "") {
+                    $('#strCategory').val(drpVal);
+                }
+            }, 1000);
+
+        $('#strCategory').change(function () {
+           
+            $.ajax({
+                type: 'get',
+                url: '/Home/LoadCategory',
+                data: { strCategory: $(this).val() },
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+                    // alert(JSON.stringify(Data));
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        });
+    });
+
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+            setTimeout(function () {
+                var drpVal = '@Session["strInstitution"]';
+                if (drpVal != "") {
+                    $('#strInstitution').val(drpVal);
+                }
+            }, 1000);
+
+        $('#strInstitution').change(function () {
+          
+            $.ajax({
+                type: 'get',
+                url: '/Home/LoadInstitution',
+                data: { strInstitution: $(this).val() },
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+                   // alert(JSON.stringify(Data));
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        });
+    });
+
+</script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#csTable').DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false, "searching": true
+        });
+
+        $('#iTable').DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false, "searching": true
+        });
+
+
+    });
+
+
+
+    function viewBarChart1() {
+        $('#BarChart1').show();
+        $('#PieChart1').hide();
+        $('#GridTable1').hide();
+    }
+    function viewPieChart1() {
+        $('#BarChart1').hide();
+        $('#PieChart1').show();
+        $('#GridTable1').hide();
+    }
+
+    function viewGridTable2() {
+        $('#BarChart2').hide();
+        $('#PieChart2').hide();
+        $('#GridTable2').show();
+    }
+
+
+    function viewBarChart2() {
+        $('#BarChart2').show();
+        $('#PieChart2').hide();
+        $('#GridTable2').hide();
+    }
+    function viewPieChart2() {
+        $('#BarChart2').hide();
+        $('#PieChart2').show();
+        $('#GridTable2').hide();
+    }
+
+    function viewGridTable3() {
+        $('#BarChart3').hide();
+        $('#PieChart3').hide();
+        $('#GridTable3').show();
+    }
+
+    function viewBarChart3() {
+        $('#BarChart3').show();
+        $('#PieChart3').hide();
+        $('#GridTable3').hide();
+    }
+    function viewPieChart3() {
+
+        $('#GridTable3').hide();
+        $('#BarChart3').hide();
+        $('#PieChart3').show();
+    }
+
+
+
+</script>
+
+

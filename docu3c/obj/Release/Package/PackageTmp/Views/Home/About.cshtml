@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+@using (Html.BeginForm("AddPortFolio", "Home", FormMethod.Post))
+
+
+    {
+        <form role="form" action="/Home/AddPortFolio" method="post">
+<div class="row">
+    <div class="col-lg-8 col-md-12 portfolio-item">
+        <div class="card border-secondary">
+
+            <div class="form-label-group userformrow">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Portfolio Name</label>
+                    <input type="text" class="form-control" id="txtpName" name="pname" placeholder="Enter name">
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-primary float-right" type="submit">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</form>
+    }

@@ -43,6 +43,19 @@ namespace docu3c.Models
         public string PostalCode { get; set; }
         public string ClassifyJSON { get; set; }
         public string AssetJSONIdentifier { get; set; }
+        public string ComplianceJSONInput { get; set; }
+        public string AccountType { get; set; }
+        public string Client2Name { get; set; }
+        public string ComplianceJSONOutput { get; set; }
+        public string IsDOB { get; set; }
+        public string IsAddress { get; set; }
+        public string IsAccountNo { get; set; }
+        public string IsCustomerName { get; set; }
+        public string IsSSN { get; set; }
+        public string IsAssetType { get; set; }
+        public string IsSignature { get; set; }
+        public string IsMutualViolation { get; set; }
+        public string IsSubCategory { get; set; }
     
         public virtual CustomerDetail CustomerDetail { get; set; }
         public virtual PortfolioDetail PortfolioDetail { get; set; }

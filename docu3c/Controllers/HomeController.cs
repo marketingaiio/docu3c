@@ -236,7 +236,7 @@ namespace docu3c.Controllers
                                             string filecontent = blobManagerObj.ReadBlob(FileAbsoluteUri);
                                             if (!string.IsNullOrEmpty(filecontent))
                                             {
-                                                string SERVICE_URL = "https://docu3c-modelservice.azurewebsites.net/?url=";
+                                                string SERVICE_URL = "http://signed-modelservice.azurewebsites.net/?url=";
                                                 //  docu3cAPIClient d3 = new docu3cAPIClient();
                                                 string fileurl = "https://docu3capp.blob.core.windows.net/uploadfiles/";
                                                 HttpClient client = new HttpClient();
@@ -275,14 +275,33 @@ namespace docu3c.Controllers
 
                                                     if (docinfo.details.MiddleName != null && docinfo.details.MiddleName != string.Empty)
                                                         strCustomerMiddleName = docinfo.details.MiddleName.ToString();
-                                                    if (docinfo.details.MiddleName != null && docinfo.details.MiddleName != string.Empty)
+                                                    if (docinfo.details.LastName != null && docinfo.details.LastName != string.Empty)
                                                         strCustomerLastName = docinfo.details.LastName.ToString();
                                                     if (!string.IsNullOrEmpty(strCustomerFirstName) && !string.IsNullOrEmpty(strCustomerLastName))
                                                     {
                                                         strCustomerName = string.Format("{0} {1} {2}", strCustomerFirstName, strCustomerMiddleName, strCustomerLastName);
                                                     }
-                                                    else { strReason = "Name is missing"; }
-                                                    var isDocCustomerAlreadyExists = db.DocumentDetails.Any(x => x.CustomerName == strCustomerName);
+                                                    else { strReason = "Name is missing; "; }
+
+
+                                                        ///Client2 
+                                                        ///
+
+                                                        string strClient2FirstName = string.Empty;string strClient2MiddleName = string.Empty;
+                                                        string strClient2LastName = string.Empty; string strClient2Name = string.Empty;
+                                                        if (docinfo.details.Client2FirstName  != null && docinfo.details.Client2FirstName != string.Empty)
+                                                            strClient2FirstName = docinfo.details.Client2FirstName.ToString();
+
+                                                        if (docinfo.details.Client2MiddleName != null && docinfo.details.Client2MiddleName != string.Empty)
+                                                            strClient2MiddleName = docinfo.details.Client2MiddleName.ToString();
+                                                        if (docinfo.details.Client2LastName != null && docinfo.details.Client2LastName != string.Empty)
+                                                            strClient2LastName = docinfo.details.Client2LastName.ToString();
+                                                        if (!string.IsNullOrEmpty(strClient2FirstName) && !string.IsNullOrEmpty(strClient2LastName))
+                                                        {
+                                                            strClient2Name = string.Format("{0} {1} {2}", strClient2FirstName, strClient2MiddleName, strClient2LastName);
+                                                        }
+
+                                                        var isDocCustomerAlreadyExists = db.DocumentDetails.Any(x => x.CustomerName == strCustomerName);
 
                                                     var isDocumentAlreadyExists = db.DocumentDetails.Any(x => x.DocumentURL == docURL);
                                                     DocumentDetail nDocumentDetails = new DocumentDetail();
@@ -303,6 +322,8 @@ namespace docu3c.Controllers
                                                     string docOrganisation = string.Empty;
                                                     string ExDocumentName = string.Empty;
                                                     string docAccountNo = string.Empty;
+                                                        string docAccountType = string.Empty;
+
                                                     string[] formats = { "dd.MM.yyyy", "dd-MM-yyyy", "dd/MM/yyyy" };
                                                     DateTime dtDOB;
                                                     nDocumentDetails.ClassifyJSON = jsonString;
@@ -311,26 +332,27 @@ namespace docu3c.Controllers
                                                         docAddress = docinfo.details.Street.ToString();
 
 
-
-                                                    if (docinfo.details.City != null && docinfo.details.City != string.Empty)
+                                                        if (docinfo.details.AccountType != null && docinfo.details.AccountType != string.Empty)
+                                                            docAccountType = docinfo.details.AccountType.ToString();
+                                                            if (docinfo.details.City != null && docinfo.details.City != string.Empty)
                                                         docCity = docinfo.details.City.ToString();
                                                     if (docinfo.details.State != null && docinfo.details.State != string.Empty)
                                                         docState = docinfo.details.State.ToString();
                                                     if (docinfo.details.Zipcode != null && docinfo.details.Zipcode != string.Empty)
                                                         docPostalCode = docinfo.details.Zipcode.ToString();
                                                     if (string.IsNullOrEmpty(docAddress) || string.IsNullOrEmpty(docCity) || string.IsNullOrEmpty(docState) || string.IsNullOrEmpty(docPostalCode))
-                                                    { strReason += string.Format("{0}Address is missing", Environment.NewLine); }
+                                                    { strReason += string.Format(" {0}Address is missing; ", Environment.NewLine); }
 
-                                                    if (docinfo.details.Organisation != null && docinfo.details.Organisation != string.Empty)
+                                                    if (docinfo.details.Organization != null && docinfo.details.Organization != string.Empty)
                                                     {
-                                                        docOrganisation = docinfo.details.Organisation.ToString();
+                                                        docOrganisation = docinfo.details.Organization.ToString();
                                                     }
-                                                    else { strReason += string.Format("{0}Institution is missing", Environment.NewLine); }
+                                                    else { strReason += string.Format(" {0}Institution is missing; ", Environment.NewLine); }
                                                     if (docinfo.details.SSN != null && docinfo.details.SSN != string.Empty)
                                                     {
                                                         docSSN = docinfo.details.SSN.ToString();
                                                     }
-                                                    else { strReason += string.Format("{0}SSN is missing", Environment.NewLine); }
+                                                    else { strReason += string.Format(" {0}SSN is missing; ", Environment.NewLine); }
                                                     if (docinfo.details.Category != null && docinfo.details.Category != string.Empty)
                                                         docJSONIdentifier = docinfo.details.Category.ToString();
                                                     if (docinfo.SubCategory != null && docinfo.SubCategory != string.Empty)
@@ -342,7 +364,7 @@ namespace docu3c.Controllers
                                                     {
                                                         docAccountNo = docinfo.details.AccountNo.ToString();
                                                     }
-                                                    else { strReason += string.Format("{0}Account No. is missing", Environment.NewLine); }
+                                                    else { strReason += string.Format(" {0}Account No. is missing; ", Environment.NewLine); }
 
 
                                                     if (!isDocumentAlreadyExists)
@@ -404,18 +426,21 @@ namespace docu3c.Controllers
                                                                 if (docJSONIdentifier == "Client Relationship Agreement")
                                                                 {
 
-                                                                    if (docinfo.details.DOB != null && docinfo.details.DOB != string.Empty)
-                                                                    {
+                                                                        if (jsonString.Contains("DOB"))
+                                                                        {
+                                                                            if (docinfo.details.DOB != null && docinfo.details.DOB != string.Empty)
+                                                                            {
 
-                                                                        item.DOB = DateTime.Parse(docinfo.details.DOB.ToString(), invariantCulture);
 
-
-                                                                    }
-                                                                    item.DocCustomerID = docSSN;
+                                                                                item.DOB = DateTime.Parse(docinfo.details.DOB.ToString(), invariantCulture);
+                                                                            }
+                                                                            else { strReason += string.Format(" {0}DOB is missing; ", Environment.NewLine); }
+                                                                        }
+                                                                        item.DocCustomerID = docSSN;
                                                                     item.Address = docAddress;
                                                                     item.State = docState;
                                                                     item.City = docCity;
-
+                                                                        
                                                                     item.PostalCode = docPostalCode;
                                                                     item.AccountNo = docAccountNo;
                                                                     item.ModifiedBy = userId.ToString();
@@ -429,9 +454,12 @@ namespace docu3c.Controllers
                                                             }
                                                         }
 
+                                                            if (docJSONIdentifier == "Client Relationship Agreement")
+                                                            {
+                                                                nDocumentDetails.IsCheckCompliance = true;
+                                                            }
 
-
-                                                        if (!string.IsNullOrEmpty(docSSN))
+                                                                if (!string.IsNullOrEmpty(docSSN))
                                                             nDocumentDetails.DocCustomerID = docSSN;
                                                         nDocumentDetails.PortfolioID = iPortFolioID;
                                                         nDocumentDetails.UserID = userId;
@@ -457,7 +485,7 @@ namespace docu3c.Controllers
 
                                                                 nDocumentDetails.DOB = DateTime.Parse(docinfo.details.DOB.ToString(), invariantCulture);
                                                             }
-                                                            else { strReason += string.Format("{0}DOB is missing", Environment.NewLine); }
+                                                            else { strReason += string.Format(" {0}DOB is missing; ", Environment.NewLine); }
                                                         }
                                                         if (docJSONIdentifier != null && docJSONIdentifier != string.Empty)
                                                         {
@@ -504,7 +532,7 @@ namespace docu3c.Controllers
                                                                   
                                                                         nDocumentDetails.SubCategory = "Others";
                                                                     
-                                                                    strReason += string.Format("{0}Asset is missing", Environment.NewLine); 
+                                                                    strReason += string.Format(" {0}Asset is missing; ", Environment.NewLine); 
                                                                 }
 
 
@@ -524,6 +552,12 @@ namespace docu3c.Controllers
                                                         nDocumentDetails.CreatedOn = DateTime.Now;
                                                         iCustomerID = db.CustomerDetails.FirstOrDefault(m => m.CustomerFirstName.Equals(strCustomerFirstName) && m.CustomerMiddleName.Equals(strCustomerMiddleName) && m.CustomerLastName.Equals(strCustomerLastName)).CustomerID;
                                                         nDocumentDetails.CustomerID = iCustomerID;
+                                                        nDocumentDetails.AccountType = docAccountType;
+                                                            if(docAccountType != "Single")
+                                                            {
+                                                                nDocumentDetails.Client2Name = strClient2Name;
+
+                                                            }
                                                         db.DocumentDetails.Add(nDocumentDetails);
 
                                                         db.SaveChanges();
@@ -589,128 +623,99 @@ namespace docu3c.Controllers
         {
             if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
             {
-                int SessionPortFolioID;
-                if (Session["dPortFolioID"] != null)
+                int iSessionCustomerID = Convert.ToInt32(Session["CustomerID"].ToString());
+                if (iSessionCustomerID >0)
                 {
-                    SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
-                }
-                else { SessionPortFolioID = 0; }
-                if (SessionPortFolioID > 0)
-                {
+                    List<DocumentDetail> documentDetails = new List<DocumentDetail>();
                     using (docu3cEntities db = new docu3cEntities())
-                    {
-                        List<CustomerDetail> customerDetails = new List<CustomerDetail>();
-                        List<DocumentDetail> documentDetails = new List<DocumentDetail>();
-                        string CRASSN = string.Empty;
-                        string CRACustomerName = string.Empty;
-                        string CRAAddress = string.Empty;
-                        DateTime? CRADOB = null;
-                        int CRACustomerID = 0;
-                       
-                        string strStatus = string.Empty;
-                        customerDetails = db.CustomerDetails.Where(m => m.PortfolioID.Equals(SessionPortFolioID)).ToList();
-                        foreach (var item in customerDetails)
                         {
-                            // if(item.CustomerFirstName!=null)
-                            CRACustomerName = item.CustomerFirstName;
-                           // if (item.Address != null)
-                                CRAAddress = item.Address;
-                           // if (item.DocCustomerID != null)
-                                CRASSN = item.DocCustomerID;
-                          //  if (item.DOB != null)
-                                CRADOB = Convert.ToDateTime(item.DOB);
-                            CRACustomerID = item.CustomerID;
-                            string strReason = string.Empty;
-                            documentDetails = db.DocumentDetails.Where(m => m.CustomerID.Equals(CRACustomerID)).ToList();
-                            foreach (var docitem in documentDetails)
+                        string CustomerCRAJSON = string.Empty;
+                        int iCustomerID = Convert.ToInt32(iSessionCustomerID);
+                        documentDetails = db.DocumentDetails.Where(m => m.CustomerID.Equals(iCustomerID) && m.JSONFileIdentifier != "Client Relationship Agreement").ToList();
+                        if (db.DocumentDetails.Where(m => m.JSONFileIdentifier == "Client Relationship Agreement" && m.CustomerID.Equals(iCustomerID)).Count() > 0)
+                        {
+                            CustomerCRAJSON = db.DocumentDetails.Where(m => m.JSONFileIdentifier == "Client Relationship Agreement" && m.CustomerID.Equals(iCustomerID)).FirstOrDefault().ClassifyJSON;
+                            if (!string.IsNullOrEmpty(CustomerCRAJSON))
                             {
-                                string strComplianceData = string.Empty;
-                                bool isCheckCompliance = docitem.IsCheckCompliance;
-                                //  if (string.IsNullOrEmpty(docitem.Reason) && docitem.JSONFileIdentifier != "Client Relationship Agreement")
-                                if (isCheckCompliance == false)
+                                foreach (var docitem in documentDetails)
                                 {
-                                    string docSSN = docitem.DocCustomerID;
-                                    string docCustomerName = docitem.CustomerName;
-                                    string docAddress = docitem.Address;
-
-                                    DateTime? docDOB = null;
-                                    docDOB = Convert.ToDateTime(docitem.DOB);
-
-                                    if (CRACustomerName != docCustomerName && !string.IsNullOrEmpty(docCustomerName))
-                                    { strComplianceData += "Customer Name is mismatch;"; }
-
-                                    if (!string.IsNullOrEmpty(CRASSN))
+                                    string strComplianceData = string.Empty;
+                                    bool isCheckCompliance = docitem.IsCheckCompliance;
+                                    string strDocumentClassifyJSON = docitem.ClassifyJSON;
+                                    if (docitem.JSONFileIdentifier != "Client Relationship Agreement" && isCheckCompliance == false)
                                     {
-                                        if (!string.IsNullOrEmpty(docSSN))
-                                        {
-                                            if (CRASSN != docSSN)
-                                            { strComplianceData += string.Format("SSN is mismatch;{0}", Environment.NewLine); }
-                                        }
-                                        //else { strComplianceData += string.Format("SSN is missing;{0}", Environment.NewLine); }
-                                    }
-                                    else { strComplianceData += string.Format("CRA SSN is missing;{0}", Environment.NewLine); }
 
-                                    if (CRADOB.HasValue)
-                                    {
-                                        if (docDOB.HasValue)
-                                        {
-                                            if (CRADOB != docDOB)
-                                            { strComplianceData += string.Format("DOB is mismatch;{0}", Environment.NewLine); }
-                                        }
-                                        //else { strComplianceData += string.Format("DOB is missing; {0}", Environment.NewLine); }
-                                    }
-                                    else { strComplianceData += string.Format("CRA DOB is missing; {0}", Environment.NewLine); }
-                                    if (!string.IsNullOrEmpty(strComplianceData))
-                                    {
-                                        if (!string.IsNullOrEmpty(CRAAddress))
-                                        {
-                                            if (!string.IsNullOrEmpty(docAddress))
-                                            {
-                                                if (CRAAddress != docAddress)
-                                                { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); docitem.FileStatus = "Red"; }
-                                            }
-                                         //   else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Red"; }
-                                        }
-                                        else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Red"; }
-                                       
+                                        var ComplianceServiceURL = string.Format("{0}{1}{2}{3}", "https://compliance-service123.azurewebsites.net/?json1=", CustomerCRAJSON, "&json2=", strDocumentClassifyJSON);
+                                        HttpClient client = new HttpClient();
+                                        client.BaseAddress = new Uri(ComplianceServiceURL);
+                                        var request = new HttpRequestMessage(HttpMethod.Post, string.Empty);
+                                        string strComplianceReason = string.Empty;
+                                        var response = client.SendAsync(request).Result;
 
-                                    }
-                                    else
-                                    {
-                                        if (!string.IsNullOrEmpty(CRAAddress))
+
+                                        var jsonString = response.Content.ReadAsStringAsync().Result;
+                                        var docComplianceinfo = JsonConvert.DeserializeObject<DocumentController>(jsonString);
+                                        if (docComplianceinfo != null)
                                         {
-                                            if (!string.IsNullOrEmpty(docAddress))
-                                            {
-                                                if (CRAAddress != docAddress)
-                                                { strComplianceData += string.Format("Address is mismatch; {0}", Environment.NewLine); docitem.FileStatus = "Yellow"; }
-                                            }
-                                       //     else { strComplianceData += string.Format("Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Yellow"; }
+                                            docitem.ComplianceJSONOutput = jsonString;
+                                            if (!string.IsNullOrEmpty(docComplianceinfo.FullName.ToString()) && docComplianceinfo.FullName.ToString() != "---")
+
+                                                docitem.IsCustomerName = docComplianceinfo.FullName.ToString();
+
+                                            if (docComplianceinfo.FullName.ToString() == "Mismatched")
+                                            { strComplianceReason += "Customer Name: Mismatched; "; }
+
+
+                                            if (!string.IsNullOrEmpty(docComplianceinfo.DOB.ToString()) && docComplianceinfo.DOB.ToString() != "---")
+                                                docitem.IsDOB = docComplianceinfo.DOB.ToString();
+                                            if (docComplianceinfo.DOB.ToString() == "Mismatched")
+                                            { strComplianceReason += " DOB: Mismatched; "; }
+
+
+                                            if (!string.IsNullOrEmpty(docComplianceinfo.Address.ToString()) && docComplianceinfo.Address.ToString() != "---")
+                                                docitem.IsAddress = docComplianceinfo.Address.ToString();
+                                            if (docComplianceinfo.Address.ToString() == "Mismatched")
+                                            { strComplianceReason += " Address: Mismatched; "; }
+
+                                            if (!string.IsNullOrEmpty(docComplianceinfo.AccountNo.ToString()) && docComplianceinfo.AccountNo.ToString() != "---")
+                                                docitem.IsAccountNo = docComplianceinfo.AccountNo.ToString();
+                                            if (docComplianceinfo.AccountNo.ToString() == "Mismatched")
+                                            { strComplianceReason += " Account No: Mismatched; "; }
+
+                                            if (!string.IsNullOrEmpty(docComplianceinfo.SSN.ToString()) && docComplianceinfo.SSN.ToString() != "---")
+                                                docitem.IsSSN = docComplianceinfo.SSN.ToString();
+                                            if (docComplianceinfo.SSN.ToString() == "Mismatched")
+                                            { strComplianceReason += " SSN: Mismatched; "; }
+
+                                            if (!string.IsNullOrEmpty(docComplianceinfo.SubCategory.ToString()) && docComplianceinfo.SubCategory.ToString() != "---")
+                                                docitem.IsSubCategory = docComplianceinfo.SubCategory.ToString();
+                                            if (docComplianceinfo.SubCategory.ToString() == "Mismatched")
+                                            { strComplianceReason += " SubCategory: Mismatched; "; }
+
+                                            if (!string.IsNullOrEmpty(docComplianceinfo.Signature.ToString()) && docComplianceinfo.Signature.ToString() != "---")
+                                                docitem.IsSignature = docComplianceinfo.Signature.ToString();
+                                            if (docComplianceinfo.Signature.ToString() == "Mismatched")
+                                            { strComplianceReason += " Signature: Mismatched; "; }
+
+                                            if (!string.IsNullOrEmpty(docComplianceinfo.ViolationofMutualFund.ToString()) && docComplianceinfo.ViolationofMutualFund.ToString() != "---")
+                                                docitem.IsMutualViolation = docComplianceinfo.ViolationofMutualFund.ToString();
+                                            if (docComplianceinfo.ViolationofMutualFund.ToString() == "Mismatched")
+                                            { strComplianceReason += "  Violation of MutualFund: Mismatched; "; }
+                                            docitem.IsCheckCompliance = true;
+                                            if (!string.IsNullOrEmpty(strComplianceReason))
+                                                docitem.ComplianceReason = strComplianceReason;
+                                            db.SaveChanges();
+                                           
                                         }
-                                        else { strComplianceData += string.Format("CRA Address is missing;{0}", Environment.NewLine); docitem.FileStatus = "Yellow"; }
-                                        
                                     }
-                                    
-                                    docitem.Reason = strComplianceData;
-
-                                    docitem.ModifiedOn = DateTime.Now;
-                                    docitem.ModifiedBy = docitem.UserID.ToString();
-                                    docitem.IsCheckCompliance = true;
-                                    //db.DocumentDetails.Append(docitem.Reason);
-
-                                    db.SaveChanges();
                                 }
-
                             }
-
+                            else { ViewData["AlertMessage"] = "CRA does not exist"; }
                         }
-                        // return RedirectToAction("DocumentDetails", "Home");
-
-
-                    }
-
-
+                        else { ViewData["AlertMessage"] = "CRA does not exist"; return string.Empty; }
                 }
-                else { ViewData["ErrorMessage"] = "Please Select the PortFolio to check for Compliance"; }
+                }
+
             }
             return string.Empty;
         }
@@ -742,7 +747,7 @@ namespace docu3c.Controllers
                 }
                 else
                 {
-                    ViewData["NoofCategory"] = db.DocumentDetails.Select(o => o.Category).Distinct().Count();
+                    ViewData["NoofCategory"] = db.DocumentDetails.Where(x=>x.PortfolioID == SessionPortFolioID).Select(o => o.Category).Distinct().Count();
                     ViewData["NoofCustomers"] = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).Count();
                     ViewData["NoofDocumets"] = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID).Count();
 
@@ -1140,16 +1145,16 @@ namespace docu3c.Controllers
                                 else
                                 {
                                     ProfileModel = new ProfileModel
-                                    {
+                                {
 
-                                        CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
-                                        PortfolioDetails = db.PortfolioDetails.ToList(),
-                                        DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.Category == strCategoryName).ToList(),
+                                    CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                    PortfolioDetails = db.PortfolioDetails.ToList(),
+                                    DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.Category  ==strCategoryName).ToList(),
 
-                                        CategoryDetails = db.CategoryDetails.ToList(),
-                                        SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
-                                    };
-                                }
+                                    CategoryDetails = db.CategoryDetails.ToList(),
+                                    SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                                };
+                                    }
                             }
                             else
                             {
@@ -1638,6 +1643,259 @@ namespace docu3c.Controllers
            
               else { return RedirectToAction("Login", "Login"); }
         }
+
+
+        public ActionResult MissingInfo()
+        {
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                string strUserEmailID = Session["UserEmailID"].ToString();
+
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                    if (User != null)
+                    {
+                        int SessionPortFolioID;
+                        if (Session["dPortFolioID"] != null)
+                        {
+                            SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
+                        }
+                        else { SessionPortFolioID = 0; }
+                     
+                        if (SessionPortFolioID == 0)
+                        {
+                           
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.IsCheckCompliance == true).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                            DisplayComplianceBand(SessionPortFolioID, ProfileModel);
+                        }
+                        else
+                        {
+                           
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x =>  x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                            DisplayComplianceBand(SessionPortFolioID, ProfileModel);
+                        }
+                    }
+                }
+                return View(ProfileModel);
+            }
+            else { return RedirectToAction("Login", "Login"); }
+
+        }
+
+        public ActionResult MismatchInfo()
+        {
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                string strUserEmailID = Session["UserEmailID"].ToString();
+
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                    if (User != null)
+                    {
+                        int SessionPortFolioID;
+                        if (Session["dPortFolioID"] != null)
+                        {
+                            SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
+                        }
+                        else { SessionPortFolioID = 0; }
+                       
+                        if (SessionPortFolioID == 0)
+                        {
+
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(m => m.IsCheckCompliance == true).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                            DisplayComplianceBand(SessionPortFolioID, ProfileModel);
+                        }
+                        else
+                        {
+
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                            DisplayComplianceBand(SessionPortFolioID, ProfileModel);
+                        }
+                       
+
+                    }
+                }
+                return View(ProfileModel);
+            }
+            else { return RedirectToAction("Login", "Login"); }
+
+        }
+
+        public ActionResult ComplianceDashboard()
+        {
+            ProfileModel ProfileModel = new ProfileModel();
+            if (Session["UserName"] != null && Session["Role"] != null && Session["UserEmailID"] != null)
+            {
+                string strUserEmailID = Session["UserEmailID"].ToString();
+
+                using (docu3cEntities db = new docu3cEntities())
+                {
+                    if (User != null)
+                    {
+                        int SessionPortFolioID;
+                        if (Session["dPortFolioID"] != null)
+                        {
+                            SessionPortFolioID = Convert.ToInt32(Session["dPortFolioID"].ToString());
+                        }
+                        else { SessionPortFolioID = 0; }
+                      
+                        int iMissingInfoTotal; 
+                        int iMismatchInfoTotal;
+                        if (SessionPortFolioID == 0)
+                        {
+
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x=>x.IsCheckCompliance == true).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                            DisplayComplianceBand(SessionPortFolioID , ProfileModel);
+                            if (ProfileModel.DocumentDetails.Where(m => m.Reason != null).Count() > 0)
+                            {
+                                iMissingInfoTotal = ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.CustomerName)).Count() + ProfileModel.DocumentDetails.Where(m => m.DOB != null).Count()
+                                + ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.Address)).Count() +
+ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.AccountNo)).Count() +
+ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.DocCustomerID)).Count() +
+ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.AssetJSONIdentifier)).Count();
+                                ViewData["MissingInfoTotal"] = iMissingInfoTotal;
+                            }
+                            if (ProfileModel.DocumentDetails.Where(m => m.ComplianceJSONOutput != null).Count() > 0)
+                            {
+                                iMismatchInfoTotal = ProfileModel.DocumentDetails.Where(m => m.IsCustomerName == "Mismatched" && !string.IsNullOrEmpty(m.IsCustomerName)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsDOB == "Mismatched" && !string.IsNullOrEmpty(m.IsDOB)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsAddress == "Mismatched" && !string.IsNullOrEmpty(m.IsAddress)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsAccountNo == "Mismatched" && !string.IsNullOrEmpty(m.IsAccountNo)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsSignature == "Mismatched" && !string.IsNullOrEmpty(m.IsSignature)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsSSN == "Mismatched" && !string.IsNullOrEmpty(m.IsSSN)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsSubCategory == "Mismatched" && !string.IsNullOrEmpty(m.IsSubCategory)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsMutualViolation == "Mismatched" && !string.IsNullOrEmpty(m.IsMutualViolation)).Count();
+                                ViewData["MismatchInfoTotal"] = iMismatchInfoTotal;
+                            }
+
+                        }
+                        else
+                        {
+
+                            ProfileModel = new ProfileModel
+                            {
+
+                                CustomerDetails = db.CustomerDetails.Where(x => x.PortfolioID == SessionPortFolioID).ToList(),
+                                PortfolioDetails = db.PortfolioDetails.ToList(),
+                                DocumentDetails = db.DocumentDetails.Where(x => x.PortfolioID == SessionPortFolioID && x.IsCheckCompliance == true).ToList(),
+
+                                CategoryDetails = db.CategoryDetails.ToList(),
+                                SubCategoryDetails = db.SubCategoryDetails.Include("CategoryDetail").ToList(),
+                            };
+                            DisplayComplianceBand(SessionPortFolioID, ProfileModel);
+                            if (ProfileModel.DocumentDetails.Where(m => m.Reason != null).Count() > 0)
+                            {
+                                iMissingInfoTotal = ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.CustomerName)).Count() + ProfileModel.DocumentDetails.Where(m => m.DOB != null).Count()
+                                + ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.Address)).Count() +
+ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.AccountNo)).Count() +
+ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.DocCustomerID)).Count() +
+ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.AssetJSONIdentifier)).Count();
+                                ViewData["MissingInfoTotal"] = iMissingInfoTotal;
+                            }
+                            if (ProfileModel.DocumentDetails.Where(m => m.ComplianceJSONOutput != null).Count() > 0)
+                            {
+                                iMismatchInfoTotal = ProfileModel.DocumentDetails.Where(m => m.IsCustomerName == "Mismatched" && !string.IsNullOrEmpty(m.IsCustomerName)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsDOB == "Mismatched" && !string.IsNullOrEmpty(m.IsDOB)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsAddress == "Mismatched" && !string.IsNullOrEmpty(m.IsAddress)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsAccountNo == "Mismatched" && !string.IsNullOrEmpty(m.IsAccountNo)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsSignature == "Mismatched" && !string.IsNullOrEmpty(m.IsSignature)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsSSN == "Mismatched" && !string.IsNullOrEmpty(m.IsSSN)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsSubCategory == "Mismatched" && !string.IsNullOrEmpty(m.IsSubCategory)).Count() +
+    ProfileModel.DocumentDetails.Where(m => m.IsMutualViolation == "Mismatched" && !string.IsNullOrEmpty(m.IsMutualViolation)).Count();
+                                ViewData["MismatchInfoTotal"] = iMismatchInfoTotal;
+                            }
+                        }
+                        
+                        
+                    }
+                    
+                }
+                return View(ProfileModel);
+            }
+            else { return RedirectToAction("Login", "Login"); }
+
+        }
+
+
+        public string DisplayComplianceBand(int? SessionPortFolioID, ProfileModel ProfileModel)
+        {
+            using (docu3cEntities db = new docu3cEntities())
+            {
+
+
+                var cMissingInfo = ProfileModel.DocumentDetails.Where(m=>!string.IsNullOrEmpty(m.Reason)).Count();
+                var cMismatchInfo = ProfileModel.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.ComplianceReason)).Count();
+                int meetCompliance=0;
+                if (SessionPortFolioID == 0)
+                {
+                     meetCompliance = db.DocumentDetails.Where(x => x.IsCheckCompliance == true).Count();
+                }
+                else {
+                    meetCompliance = db.DocumentDetails.Where(x => x.IsCheckCompliance == true && x.PortfolioID== SessionPortFolioID).Count();
+                }
+                ViewData["bMissingInfo"] = cMissingInfo;
+                ViewData["bMismatchInfo"] = cMismatchInfo;
+                ViewData["bMeetCompliance"] = meetCompliance;
+                if (meetCompliance > 0)
+                {
+                    var dividend = cMissingInfo + cMismatchInfo + meetCompliance;
+                    var complianceScore = (Convert.ToDecimal(dividend) / Convert.ToDecimal(meetCompliance));
+                    ViewData["bComplianceScore"] = Convert.ToInt32(complianceScore);
+                }
+                else { ViewData["bComplianceScore"] = 0; }
+            }
+            return string.Empty;
+
+        }
+
+        //class end
     }
 
 }

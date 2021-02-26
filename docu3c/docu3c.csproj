@@ -145,10 +145,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BlobHandling\BlobManager.cs" />
     <Compile Include="Controllers\docu3cAPIClient.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BlogFeed.cs">
+      <DependentUpon>Docu3C.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryDetail.cs">
       <DependentUpon>Docu3C.tt</DependentUpon>
@@ -219,6 +223,7 @@
     <Content Include="Content\Images\docu3c login logo.PNG" />
     <Content Include="Content\Images\Icons\briefcase.svg" />
     <Content Include="Content\Images\Icons\compass.svg" />
+    <Content Include="Content\Images\Icons\complianceicon.jpg" />
     <Content Include="Content\Images\Icons\eye.svg" />
     <Content Include="Content\Images\Icons\graph.svg" />
     <Content Include="Content\Images\Icons\penciledit.svg" />
@@ -439,6 +444,7 @@
       <DependentUpon>Docu3C.edmx</DependentUpon>
     </Content>
     <Content Include="Content\Images\Marco S Ng.pdf" />
+    <None Include="Properties\PublishProfiles\docu3capp - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -840,10 +846,13 @@
     <Content Include="Views\Home\Verification.cshtml" />
     <Content Include="Views\Home\ComplianceScore.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Home\ComplianceDashboard.cshtml" />
+    <Content Include="Views\Home\MissingInfo.cshtml" />
+    <Content Include="Views\Home\MismatchInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\docu3cAPIClient\" />
+    <Folder Include="Views\Document\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

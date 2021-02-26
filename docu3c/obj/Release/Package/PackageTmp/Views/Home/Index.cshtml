@@ -1,0 +1,453 @@
+﻿
+@model docu3c.ViewModel.ProfileModel
+@using docu3c.Models;
+@{
+    ViewBag.Title = "Home Page";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<form role="form" action="/Home/LoadPortfolio" method="get">
+    <div class="row pl-3">
+        <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
+            <option value="0">Portfolio</option>
+
+            @{
+                foreach (var item in Model.PortfolioDetails)
+                {
+                    <option value="@item.PortfolioID">@item.PortfolioName </option>
+                }
+            }
+
+        </select>
+    </div>
+
+
+    <div class="row">
+
+
+        <div class="col ml-0">
+            <div class="card overflow-hidden shadow-lg bg-gradient-warning  badge-curve align-items-center float-left mt-3 mr-3">
+
+                <div class="btn  btn-outline-warning text-dark" type="button">
+                    <div class="">
+                        <div class="float-left">
+                            <svg class="c-icon text-white c-icon-lg">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-briefcase"></use>
+                            </svg>
+                        </div> <div class="text-white text-value-lg pl-0 float-left">&nbsp;@ViewData["NoofCategory"] </div>
+                    </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small pl-2">Category</div>
+                </div>
+
+
+            </div>
+
+            <a href="@Url.Action("CustomerDetails", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
+
+                    <div class="btn  btn-default text-dark">
+                        <div class="">
+                            <div class="float-left">
+                                <svg class="c-icon text-primary c-icon-lg pt-0 ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-user"></use>
+                                </svg>
+                            </div>
+                            <div class="text-primary text-value-lg float-left ">&nbsp;@ViewData["NoofCustomers"] </div>
+                        </div><br />
+                        <div class="row text-muted text-uppercase font-weight-bold small pl-2">Customers</div>
+                    </div>
+
+
+                </div>
+            </a>
+
+            <a href="@Url.Action("InstitutionDetails", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
+
+                    <div class="btn btn-default text-dark">
+                        <div class="">
+                            <div class="float-left">
+                                <svg class="c-icon text-primary c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
+                                </svg>
+                            </div>
+                            <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoOfInstitution"] </div>
+                        </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">INSTITUTION</div>
+                    </div>
+
+                </div>
+            </a>
+
+            <a href="@Url.Action("DocumentDetails", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve align-items-center float-left m-3">
+
+                    <div class="btn btn-default text-dark">
+                        <div class="">
+                            <div class="float-left">
+                                <svg class="c-icon text-primary c-icon-lg ">
+                                    <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-description"></use>
+                                </svg>
+                            </div>
+                            <div class="text-primary text-value-lg float-left">&nbsp; @ViewData["NoofDocumets"] </div>
+                        </div><br /> <div class="row text-muted text-uppercase font-weight-bold small">Documents</div>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-10 mb-4">
+            <div class="nav-tabs-boxed">
+                <ul class="nav nav-tabs " role="tablist">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home-1" role="tab" aria-controls="home">Summary View</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile">Detailed View</a></li>
+
+                </ul>
+                <div class="tab-content shadow-lg">
+                    <div class="tab-pane align-items-center m-5 active" id="home-1" role="tabpanel">
+                        <div class="row ">
+
+                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=1" class="fontcolor">
+                                <div class="card border-warning curve-border float-left m-3 ">
+                                    <div class="card-body w-auto">
+                                        <div class="badge-icon">
+                                            <svg class="c-icon text-warning c-icon-3xl">
+                                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-bank"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="text-value-lg text-warning text-center m-md-auto w-100 pb-2">@ViewData["NewAccountAgreement"]</div>
+                                        <div class="text-center m-md-auto  w-100 ">Client Agreements </div>
+
+                                    </div>
+                                </div>
+                            </a>
+
+
+
+
+
+
+
+
+
+                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=2" class="fontcolor">
+                                <div class="card border-warning curve-border float-left m-3">
+                                    <div class="card-body w-auto">
+                                        <div class="badge-icon">
+                                            <svg class="c-icon text-warning c-icon-3xl ">
+                                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-shield-alt"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="text-value-lg text-warning text-center m-md-auto w-100 pb-2">@ViewData["InvestmentManagementAgreement"]</div>
+                                        <div class="text-center w-100 ">Investment Agreements</div>
+
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=3" class="fontcolor">
+                                <div class="card border-warning curve-border float-left m-3">
+                                    <div class="card-body w-auto">
+                                        <div class="badge-icon">
+                                            <svg class="c-icon text-warning c-icon-3xl">
+                                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-beach-access"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="text-value-lg text-warning text-center m-md-auto w-100 pb-2">@ViewData["AutomatedFundsTransferAgreement"]</div>
+                                        <div class="text-center w-100">Fund Transfer Agreement</div>
+
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=4" class="fontcolor">
+                                <div class="card border-warning curve-border float-left m-3">
+                                    <div class="card-body w-auto">
+                                        <div class="badge-icon">
+                                            <svg class="c-icon text-warning c-icon-3xl">
+                                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-house"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="text-value-lg text-warning text-center m-md-auto w-100 pb-2">@ViewData["AssetTransferAgreements"]</div>
+                                        <div class="text-center w-100 ">Asset Transfer Agreements</div>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+
+
+
+
+                        <div class="row ">
+                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=5" class="fontcolor">
+                                <div class="card border-warning curve-border float-left m-3">
+                                    <div class="card-body w-auto">
+                                        <div class="badge-icon">
+                                            <svg class="c-icon text-warning c-icon-3xl">
+                                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-chart-line"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="text-value-lg text-warning text-center m-md-auto w-100 pb-2">@ViewData["InsuranceContractAgreements"]</div>
+                                        <div class="text-center w-100 ">Insurance Agreements</div>
+
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=6" class="fontcolor">
+                                <div class="card border-warning curve-border float-left m-3">
+                                    <div class="card-body w-auto">
+                                        <div class="badge-icon ">
+                                            <svg class="c-icon text-warning c-icon-3xl">
+                                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-wallet"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="text-value-lg text-warning text-center m-md-auto w-100 pb-2">@ViewData["MiscellaneousInvestments"]</div>
+                                        <div class="text-center w-100">Miscellaneous Investments</div>
+
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=7" class="fontcolor">
+                                <div class="card border-warning curve-border float-left m-3">
+                                    <div class="card-body w-auto">
+                                        <div class="badge-icon  pl-3">
+                                            <svg class="c-icon text-warning c-icon-3xl">
+                                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-money"></use>
+                                            </svg>
+                                        </div>
+                                        <div class="text-value-lg text-warning text-center m-md-auto w-100 pb-2">@ViewData["ClientProfiles"]</div>
+                                        <div class="text-center w-100">Client Profiles</div>
+
+                                    </div>
+                                </div>
+                            </a>
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="profile-1" role="tabpanel">
+
+
+
+
+                        <div class="table-responsive m-6" style="width:95%;margin:2% 0">
+                            <table class="table table-borderless table-striped  table-hover display" id="hdataTable">
+                                <thead style="border-bottom:1px solid #111">
+                                    <tr>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">SubCategory</th>
+
+                                        <th scope="col">Asset</th>
+                                        <th scope="col">Documents</th>
+                                        <th scope="col">Customers</th>
+                                        <th scope="col">Institution</th>
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                    @using (docu3cEntities db = new docu3cEntities())
+                                    {
+                                        foreach (var iCategory in Model.DocumentDetails.GroupBy(o => o.Category).ToList())
+                                        {
+
+                                            foreach (var isubCategory in Model.DocumentDetails.Where(g => g.Category == iCategory.Key).GroupBy(m => m.SubCategory).ToList())
+                                            {
+                                                foreach (var iasset in Model.DocumentDetails.Where(c=>c.Category == iCategory.Key && c.SubCategory == isubCategory.Key ).GroupBy(a => a.AssetJSONIdentifier).ToList())
+                                                {
+                                    <tr>
+                                        
+
+
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                                <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                    @iCategory.Key
+                                                </a>}
+                                            else
+                                            { <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+                                                    @iCategory.Key
+                                                </a>}
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                                <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                    @isubCategory.Key
+                                                </a>}
+                                            else
+                                            { <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+                                                    @isubCategory.Key
+                                                </a>}
+
+
+
+                                        </td>
+
+                                        <td>
+                                            @if(!string.IsNullOrEmpty(isubCategory.Key) &&!string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                            <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                @iasset.Key
+                                            </a>}
+                                            else{ <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+                                                @iasset.Key
+                                            </a>}
+
+
+
+
+
+
+                                           
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                                <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                    @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).ToList().Count
+                                                </a>}
+                                            else
+                                            { <a href="@Url.Action("DocumentDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+                                                    @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).ToList().Count
+                                                </a>}
+
+
+
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                            <a href="@Url.Action("CustomerDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).GroupBy(o => o.CustomerID).ToList().Count
+                                            </a>}
+                                            else
+                                            { <a href="@Url.Action("CustomerDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+    @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).GroupBy(o => o.CustomerID).ToList().Count
+</a>}
+
+
+                                           
+                                        </td>
+                                        <td>
+
+                                            @if (!string.IsNullOrEmpty(isubCategory.Key) && !string.IsNullOrEmpty(iasset.Key))
+                                            {
+                                            <a href="@Url.Action("InstitutionDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()&&SC=@isubCategory.Key&&qa=@iasset.Key">
+                                                @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).GroupBy(o => o.Institution).ToList().Count
+                                            </a>}
+                                            else
+                                            { <a href="@Url.Action("InstitutionDetails", "Home")?queryid=@db.CategoryDetails.FirstOrDefault(c => c.CategoryName.Equals(iCategory.Key)).CategoryID.ToString()">
+    @Model.DocumentDetails.Where(AssetName => AssetName.AssetJSONIdentifier == iasset.Key && AssetName.Category == iCategory.Key && AssetName.SubCategory == isubCategory.Key).GroupBy(o => o.Institution).ToList().Count
+</a>}
+
+
+
+                                           
+                                        </td>
+
+                                    </tr>
+                                            }
+                                        }
+
+                                    }
+
+                                    @*<td>@db.DocumentDetails.FirstOrDefault(m => m.AssetJSONIdentifier.Equals(@item.SCJSONIdentifier)).Category  </td>
+            <td>@item.SubCategoryName </td>
+            <td>@item.SCJSONIdentifier   </td> *@
+                                }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">SubCategory</th>
+
+                                            <th scope="col">Asset</th>
+                                            <th scope="col">Documents</th>
+                                            <th scope="col">Customers</th>
+                                            <th scope="col">Institution</th>
+
+
+
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</form>
+<div class="row justify-content-end" style="width:84%">
+
+    <a class="c-header-nav-link" href='@Url.Action("DocumentsUpload", "Home")'> <div class="mr-5 btn btn-pill btn-block btn-primary active">Upload Documents</div> </a>
+
+</div>
+
+<script>
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                var drpVal = @Session["dPortFolioID"];
+                if (drpVal != "") {
+                    $('#iPortFolioID').val(drpVal);
+                }
+            }, 1000);
+
+        $('#iPortFolioID').change(function () {
+            //  alert($(this).val());
+
+            $.ajax({
+
+                type: 'get',
+                url: '/Home/LoadPortfolio',
+                data: { dPortFolioID: parseInt($(this).val()) },
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        });
+
+
+
+
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#hdataTable').DataTable({
+
+        });
+    });
+</script>

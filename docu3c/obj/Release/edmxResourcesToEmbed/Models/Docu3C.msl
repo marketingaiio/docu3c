@@ -69,6 +69,8 @@
     <EntitySetMapping Name="CustomerDetails">
       <EntityTypeMapping TypeName="docu3cModel.CustomerDetail">
         <MappingFragment StoreEntitySet="CustomerDetails">
+          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+          <ScalarProperty Name="CustomerMiddleName" ColumnName="CustomerMiddleName" />
           <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
@@ -96,6 +98,26 @@
     <EntitySetMapping Name="DocumentDetails">
       <EntityTypeMapping TypeName="docu3cModel.DocumentDetail">
         <MappingFragment StoreEntitySet="DocumentDetails">
+          <ScalarProperty Name="IsSubCategory" ColumnName="IsSubCategory" />
+          <ScalarProperty Name="IsMutualViolation" ColumnName="IsMutualViolation" />
+          <ScalarProperty Name="IsSignature" ColumnName="IsSignature" />
+          <ScalarProperty Name="IsAssetType" ColumnName="IsAssetType" />
+          <ScalarProperty Name="IsSSN" ColumnName="IsSSN" />
+          <ScalarProperty Name="IsCustomerName" ColumnName="IsCustomerName" />
+          <ScalarProperty Name="IsAccountNo" ColumnName="IsAccountNo" />
+          <ScalarProperty Name="IsAddress" ColumnName="IsAddress" />
+          <ScalarProperty Name="IsDOB" ColumnName="IsDOB" />
+          <ScalarProperty Name="ComplianceJSONOutput" ColumnName="ComplianceJSONOutput" />
+          <ScalarProperty Name="Client2Name" ColumnName="Client2Name" />
+          <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+          <ScalarProperty Name="ComplianceJSONInput" ColumnName="ComplianceJSONInput" />
+          <ScalarProperty Name="AssetJSONIdentifier" ColumnName="AssetJSONIdentifier" />
+          <ScalarProperty Name="ClassifyJSON" ColumnName="ClassifyJSON" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="ComplianceReason" ColumnName="ComplianceReason" />
+          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
           <ScalarProperty Name="IsCheckCompliance" ColumnName="IsCheckCompliance" />
           <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
           <ScalarProperty Name="Address" ColumnName="Address" />
@@ -144,6 +166,31 @@
           <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
           <ScalarProperty Name="principal_id" ColumnName="principal_id" />
           <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubCategoryJSONIdentifiers">
+      <EntityTypeMapping TypeName="docu3cModel.SubCategoryJSONIdentifier">
+        <MappingFragment StoreEntitySet="SubCategoryJSONIdentifier">
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="SCJSONIdentifier" ColumnName="SCJSONIdentifier" />
+          <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+          <ScalarProperty Name="SCID" ColumnName="SCID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BlogFeeds">
+      <EntityTypeMapping TypeName="docu3cModel.BlogFeed">
+        <MappingFragment StoreEntitySet="BlogFeed">
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

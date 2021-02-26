@@ -1,0 +1,334 @@
+﻿@model docu3c.ViewModel.ProfileModel
+@using docu3c.Models;
+
+@{
+    ViewBag.Title = "ComplianceScore";
+    // var ic = Model.DocumentDetails.Where(o => o.Category.Equals("Clients Agreements") && o.FileStatus.Equals("Green")).ToList().Count();
+}
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+
+
+
+<form role="form" action="/Home/LoadPortfolio" method="get">
+    <div class="row ml-1">
+        <select id="iPortFolioID" class="border-primary w-25 form-control" asp-for="PortFolioID">
+            <option value="0">Portfolio</option>
+
+            @using (docu3cEntities db = new docu3cEntities())
+            {
+                foreach (var item in db.PortfolioDetails)
+                {
+                    <option value="@item.PortfolioID">@item.PortfolioName </option>
+                }
+            }
+
+        </select>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col">
+
+            <div class="card overflow-hidden shadow-lg bg-gradient-warning badge-curve1 align-items-center float-left mt-3 mr-3 ml-1">
+
+                <div class="btn  btn-outline-warning text-dark" type="button">
+                    <div class="">
+                        <div class="float-left">
+                            <svg class="c-icon text-white c-icon-lg">
+                                <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-thumb-up"></use>
+                            </svg>
+                        </div> <div class="text-white text-value-lg float-left">&nbsp;  @ViewData["bComplianceScore"]% </div>
+                    </div><br /> <div class=" row  text-white text-uppercase font-weight-bold small">Compliance Score</div>
+                </div>
+
+
+            </div>
+
+
+            <a href="@Url.Action("MissingInfo", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+
+                    <div class="btn  btn-default text-dark">
+                        <div class="row" style="height:30px;clear:both;">
+                            @*<div class="float-left pl-4">
+                                    <svg class="c-icon text-danger c-icon-lg ">
+                                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-warning"></use>
+                                    </svg>
+                                </div>*@
+                            <div class="text-danger text-value-lg pl-5 ">&nbsp; @ViewData["bMissingInfo"] </div>
+                        </div>
+                        <div class="row text-muted text-uppercase font-weight-bold small  ">Missing Information</div>
+                    </div>
+                </div>
+            </a>
+            <a href="@Url.Action("MismatchInfo", "Home")">
+                <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+                    <div class="btn btn-default text-dark">
+                        <div class="row" style="height:30px;clear:both;">
+                            @*<div class="float-left pl-4">
+                                    <svg class="c-icon text-white c-icon-lg ">
+                                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-building"></use>
+                                    </svg>
+                                </div>*@
+                            <div class="text-danger text-value-lg pl-5 ">&nbsp; @ViewData["bMismatchInfo"] </div>
+                        </div> <div class="row text-muted text-uppercase font-weight-bold small">Mismatch Information</div>
+                    </div>
+
+                </div>
+            </a>
+
+            @*<a href="@Url.Action("MeetCompliance", "Home")">
+                    <div class="card overflow-hidden shadow-lg badge-curve1 align-items-center float-left m-3">
+
+                        <div class="btn btn-default text-dark">
+                            <div class="row" style="height:30px;clear:both;">
+                                <div class="float-left pl-4">
+                                    <svg class="c-icon text-success c-icon-lg ">
+                                        <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-badge"></use>
+                                    </svg>
+                                </div>
+                                <div class="text-success text-value-lg float-left">&nbsp; @ViewData["bMeetCompliance"] </div>
+                            </div><div class="row text-muted text-uppercase font-weight-bold small">Meets Compliance</div>
+                        </div>
+
+                    </div>
+                </a>*@
+        </div>
+
+    </div>
+    <div class="row">
+
+        <!-- Missing Inforation Start-->
+        <div class="col-lg-4">
+            <div class="card p-3">
+                <div class="row ml-2 mr-2">
+                    <div class="w-75 float-left p-2 pl-3 card-title text-warning font-xl">Missing Information</div>
+                </div>
+                <div class="row border-top ml-2 mr-2">
+                    @if (Convert.ToInt32(ViewData["MissingInfoTotal"]) != 0)
+                    {
+                        <table class="table table-borderless" id="iTable">
+                            <thead class="border-bottom">
+                                <tr>
+                                    <th scope="col">What is missing</th>
+                                    <th scope="col" class="pl-1">
+                                        <svg class="c-icon  bg-danger  c-icon-lg rounded-circle">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                        </svg>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.CustomerName)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Customer Name</td>
+                                        <td>@Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.CustomerName)).Count() </td>
+                                    </tr>
+                                }
+
+                                @if (Model.DocumentDetails.Where(m => m.DOB != null).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>DOB</td>
+                                        <td>@Model.DocumentDetails.Where(m => m.DOB != null).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.Address)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>@Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.Address)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.AccountNo)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Account No</td>
+                                        <td>@Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.AccountNo)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.DocCustomerID)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>SSN</td>
+                                        <td>@Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.DocCustomerID)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.AssetJSONIdentifier)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Sub Category</td>
+                                        <td>@Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.AssetJSONIdentifier)).Count() </td>
+                                    </tr>
+
+                                }
+                               
+                                    <tr class="border-top font-weight-bold">
+                                        <td>Total :</td>
+                                        <td>@ViewData["MissingInfoTotal"].ToString()</td>
+                                    </tr>
+                               
+
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+
+                        <div class="p-2">No Record</div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Missing Inforation End-->
+        <!-- Mismatch Inforation Start-->
+        <div class="col-lg-4 ">
+            <div class="card p-3 ">
+                <div class="row ml-2 mr-2">
+                    <div class="w-75 float-left text-warning p-2 pl-1 card-title text-warning font-xl">Mismatch Information</div>
+                </div>
+
+                <div class="row border-top ml-2 mr-2">
+                    @if (Convert.ToInt32(ViewData["MismatchInfoTotal"]) != 0)
+                    {
+                        <table class="table table-borderless" id="iTable">
+                            <thead class="border-bottom">
+                                <tr>
+                                    <th scope="col">What is mismatch</th>
+                                    <th scope="col" class="pl-1">
+                                        <svg class="c-icon  bg-danger  c-icon-lg rounded-circle">
+                                            <use xlink:href="~/wwwroot/coreui/icons/free.svg#cil-circle"></use>
+                                        </svg>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.IsCustomerName) && m.IsCustomerName == "Mismatched").Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Customer Name</td>
+                                        <td>@Model.DocumentDetails.Where(m => !string.IsNullOrEmpty(m.IsCustomerName) && m.IsCustomerName == "Mismatched").Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => m.IsDOB == "Mismatched" && !string.IsNullOrEmpty(m.IsDOB)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>DOB</td>
+                                        <td>@Model.DocumentDetails.Where(m => m.IsDOB == "Mismatched" && !string.IsNullOrEmpty(m.IsDOB)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => m.IsAddress == "Mismatched" && !string.IsNullOrEmpty(m.IsAddress)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>@Model.DocumentDetails.Where(m => m.IsAddress == "Mismatched" && !string.IsNullOrEmpty(m.IsAddress)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => m.IsAccountNo == "Mismatched" && !string.IsNullOrEmpty(m.IsAccountNo)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Account No</td>
+                                        <td>@Model.DocumentDetails.Where(m => m.IsAccountNo == "Mismatched" && !string.IsNullOrEmpty(m.IsAccountNo)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => m.IsSignature == "Mismatched" && !string.IsNullOrEmpty(m.IsSignature)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Signature</td>
+                                        <td>@Model.DocumentDetails.Where(m => m.IsSignature == "Mismatched" && !string.IsNullOrEmpty(m.IsSignature)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => m.IsSSN == "Mismatched" && !string.IsNullOrEmpty(m.IsSSN)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>SSN</td>
+                                        <td>@Model.DocumentDetails.Where(m => m.IsSSN == "Mismatched" && !string.IsNullOrEmpty(m.IsSSN)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => m.IsSubCategory == "Mismatched" && !string.IsNullOrEmpty(m.IsSubCategory)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Sub Category</td>
+                                        <td>@Model.DocumentDetails.Where(m => m.IsSubCategory == "Mismatched" && !string.IsNullOrEmpty(m.IsSubCategory)).Count() </td>
+                                    </tr>
+                                }
+                                @if (Model.DocumentDetails.Where(m => m.IsMutualViolation == "Mismatched" && !string.IsNullOrEmpty(m.IsMutualViolation)).Count() > 0)
+                                {
+                                    <tr>
+                                        <td>Mutual Violation</td>
+                                        <td>@Model.DocumentDetails.Where(m => m.IsMutualViolation == "Mismatched" && !string.IsNullOrEmpty(m.IsMutualViolation)).Count() </td>
+                                    </tr>
+                                }
+
+                                <tr class="font-weight-bold border-top">
+                                    <td class="font-weight-bold">Total :</td>
+                                    <td>@ViewData["MismatchInfoTotal"].ToString()</td>
+                                </tr>
+
+
+
+
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+
+                        <div class="p-2">No Record</div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Mismatch Inforation End-->
+
+
+
+    </div>
+</form>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                var drpVal = '@Session["dPortFolioID"]';
+                if (drpVal != "") {
+                    $('#iPortFolioID').val(drpVal);
+                }
+            }, 1000);
+
+        $('#iPortFolioID').change(function () {
+            //  alert($(this).val());
+
+            $.ajax({
+
+                type: 'get',
+                url: '/Home/LoadPortfolio',
+                data: { dPortFolioID: parseInt($(this).val()) },
+                contentType: "application/json; charset=utf-8",
+                success: function (Data) {
+                    window.location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        });
+
+
+
+    });
+
+</script>

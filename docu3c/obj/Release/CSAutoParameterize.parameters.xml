@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="docu3cEntities-Web.config Connection String" description="docu3cEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.Docu3C.csdl|res://*/Models.Docu3C.ssdl|res://*/Models.Docu3C.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=docu3c.database.windows.net;initial catalog=docu3c;user id=docu3cdb;password=cu3cDBai;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\WebSites\\docu3c\\docu3c\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='docu3cEntities']/@connectionString" />
+  </parameter>
+</parameters>

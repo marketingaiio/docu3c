@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="docu3cModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'docu3c.dbo.BlogFeed' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="BlogFeed">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varbinary(max)" />
+    <Property Name="Description" Type="varbinary(max)" />
+    <Property Name="Tags" Type="varbinary" MaxLength="50" />
+  </EntityType>
   <EntityType Name="CategoryDetails">
     <Key>
       <PropertyRef Name="CategoryID" />
@@ -60,16 +71,29 @@
     <Property Name="Reason" Type="nvarchar(max)" />
     <Property Name="ComplianceReason" Type="nvarchar(max)" />
     <Property Name="ClassifyJSON" Type="nvarchar(max)" />
+    <Property Name="ComplianceJSONInput" Type="nvarchar(max)" />
+    <Property Name="ComplianceJSONOutput" Type="nvarchar(max)" />
     <Property Name="FileStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="IsCheckCompliance" Type="bit" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="DOB" Type="date" />
+    <Property Name="IsDOB" Type="nvarchar" MaxLength="50" />
     <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="IsAddress" Type="nvarchar(max)" />
     <Property Name="City" Type="nvarchar" MaxLength="50" />
     <Property Name="State" Type="nvarchar" MaxLength="50" />
     <Property Name="PostalCode" Type="nchar" MaxLength="50" />
     <Property Name="AccountNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsAccountNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="AccountType" Type="nvarchar" MaxLength="50" />
     <Property Name="CustomerName" Type="nvarchar(max)" />
+    <Property Name="IsCustomerName" Type="nvarchar(max)" />
+    <Property Name="IsSSN" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsAssetType" Type="nvarchar(max)" />
+    <Property Name="IsSignature" Type="nvarchar(max)" />
+    <Property Name="IsMutualViolation" Type="nvarchar(max)" />
+    <Property Name="IsSubCategory" Type="nvarchar" MaxLength="50" />
+    <Property Name="Client2Name" Type="nvarchar(max)" />
     <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
     <Property Name="ModifiedBy" Type="nvarchar(max)" />
@@ -267,6 +291,14 @@ warning 6002: The table/view 'docu3c.dbo.SubCategoryJSONIdentifier' does not hav
     <EntitySet Name="SubCategoryDetails" EntityType="Self.SubCategoryDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BlogFeed" EntityType="Self.BlogFeed" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [BlogFeed].[ID] AS [ID], 
+    [BlogFeed].[Title] AS [Title], 
+    [BlogFeed].[Description] AS [Description], 
+    [BlogFeed].[Tags] AS [Tags]
+    FROM [dbo].[BlogFeed] AS [BlogFeed]</DefiningQuery>
+    </EntitySet>
     <EntitySet Name="DocumentIdentifier" EntityType="Self.DocumentIdentifier" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [DocumentIdentifier].[CIdentifierID] AS [CIdentifierID], 

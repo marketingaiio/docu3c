@@ -98,6 +98,19 @@
     <EntitySetMapping Name="DocumentDetails">
       <EntityTypeMapping TypeName="docu3cModel.DocumentDetail">
         <MappingFragment StoreEntitySet="DocumentDetails">
+          <ScalarProperty Name="IsSubCategory" ColumnName="IsSubCategory" />
+          <ScalarProperty Name="IsMutualViolation" ColumnName="IsMutualViolation" />
+          <ScalarProperty Name="IsSignature" ColumnName="IsSignature" />
+          <ScalarProperty Name="IsAssetType" ColumnName="IsAssetType" />
+          <ScalarProperty Name="IsSSN" ColumnName="IsSSN" />
+          <ScalarProperty Name="IsCustomerName" ColumnName="IsCustomerName" />
+          <ScalarProperty Name="IsAccountNo" ColumnName="IsAccountNo" />
+          <ScalarProperty Name="IsAddress" ColumnName="IsAddress" />
+          <ScalarProperty Name="IsDOB" ColumnName="IsDOB" />
+          <ScalarProperty Name="ComplianceJSONOutput" ColumnName="ComplianceJSONOutput" />
+          <ScalarProperty Name="Client2Name" ColumnName="Client2Name" />
+          <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+          <ScalarProperty Name="ComplianceJSONInput" ColumnName="ComplianceJSONInput" />
           <ScalarProperty Name="AssetJSONIdentifier" ColumnName="AssetJSONIdentifier" />
           <ScalarProperty Name="ClassifyJSON" ColumnName="ClassifyJSON" />
           <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
@@ -168,6 +181,16 @@
           <ScalarProperty Name="SCJSONIdentifier" ColumnName="SCJSONIdentifier" />
           <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
           <ScalarProperty Name="SCID" ColumnName="SCID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BlogFeeds">
+      <EntityTypeMapping TypeName="docu3cModel.BlogFeed">
+        <MappingFragment StoreEntitySet="BlogFeed">
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

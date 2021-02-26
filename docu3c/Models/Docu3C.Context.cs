@@ -34,5 +34,6 @@ namespace docu3c.Models
         public virtual DbSet<DocumentIdentifier> DocumentIdentifiers { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<SubCategoryJSONIdentifier> SubCategoryJSONIdentifiers { get; set; }
+        public virtual DbSet<BlogFeed> BlogFeeds { get; set; }
     }
 }
